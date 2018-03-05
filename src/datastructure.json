@@ -1,0 +1,38 @@
+{
+  "users": [
+    {
+      "id": null,
+      "name": null,
+      "email": null,
+      "password": null,
+      "folders": [
+        {
+          "id": null,
+          "name": null,
+          "lists": [
+            {
+              "id": null,
+              "name": null,
+              "date-created": null,
+              "theme": null,
+              "scores": [
+                {
+                  "date": null,
+                  "score": null
+                }
+              ],
+              "items": [
+                {
+                  "id": null,
+                  "side1": null,
+                  "side2": null,
+                  "level": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

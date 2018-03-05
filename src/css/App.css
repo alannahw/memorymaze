@@ -1,0 +1,157 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700");
+
+body {
+  overflow-x: hidden;
+  font-family: "Montserrat";
+  font-weight: 400;
+}
+.App {
+  text-align: center;
+  position: relative;
+}
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+}
+
+/* Side Bar Transitions */
+
+.slideInFromRight-enter .tFromRight {
+  transform: translate(300px, 0);
+}
+.slideInFromRight-enter.slideInFromRight-enter-active .tFromRight {
+  transform: translate(0, 0);
+  transition: transform 300ms ease-in;
+}
+.slideInFromRight-leave .tFromRight {
+  transform: translate(0, 0);
+}
+.slideInFromRight-leave.slideInFromRight-leave-active .tFromRight {
+  transform: translate(300px, 0);
+  transition: transform 300ms ease-in;
+}
+
+/* END Side Bar Transitions */
+
+/* Back Panel Transitions */
+
+.slideUpDown-enter .tFromTop {
+  transform: translate(0, 100vh);
+}
+.slideUpDown-enter.slideUpDown-enter-active .tFromTop {
+  transform: translate(0, 0);
+  transition: transform 500ms ease-in;
+}
+.slideUpDown-leave .tFromTop {
+  transform: translate(0, 0);
+}
+.slideUpDown-leave.slideUpDown-leave-active .tFromTop {
+  transform: translate(0, 100vh);
+  transition: transform 500ms ease-in;
+}
+
+.slideUpDown-enter .tFromBottom {
+  transform: translate(0, -100vh);
+}
+.slideUpDown-enter.slideUpDown-enter-active .tFromBottom {
+  transform: translate(0, 0);
+  transition: transform 500ms ease-in;
+}
+.slideUpDown-leave .tFromBottom {
+  transform: translate(0, 0);
+}
+.slideUpDown-leave.slideUpDown-leave-active .tFromBottom {
+  transform: translate(0, -100vh);
+  transition: transform 500ms ease-in;
+}
+
+/* END Back Panel Transitions */
+
+/* SideBar Accordian Styling */
+.accordianMain {
+  text-align: right;
+  width: 100%;
+}
+.accordianMain__trigger {
+  display: block;
+  text-decoration: none;
+  position: relative;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+.accordianMain__trigger:after {
+  font-family: "Ionicons";
+  content: "\f125";
+  position: absolute;
+  left: 20px;
+  top: 25px;
+  display: block;
+  transition: transform 300ms;
+}
+.accordianMain__trigger.is-open:after {
+  transform: rotateZ(90deg);
+}
+.accordianMain__contentInner {
+  text-align: left;
+  padding: 20px;
+}
+.accordianSub {
+  color: rgba(255, 255, 255, 0.5);
+  position: relative;
+  font-size: 0.9em;
+  text-align: left;
+  width: 100%;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+.accordianSub__trigger {
+  display: block;
+  text-decoration: none;
+  position: relative;
+  padding: 18px 5px;
+}
+.accordianSub__trigger:after {
+  font-family: "Ionicons";
+  content: "\f3d2";
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  display: block;
+  transition: transform 300ms;
+}
+.accordianSub__trigger.is-open:after {
+  transform: rotateZ(-90deg);
+}
+.accordianSub__contentInner {
+  text-align: left;
+  padding: 0px;
+  padding-bottom: 10px;
+}
+.accordianSub input {
+  position: absolute;
+  top: 8px;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 1em;
+  transition: color 200ms;
+}
+.accordianSub input:focus {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.searchBar {
+  font-size: 0.9em;
+  width: 150px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 15px;
+  padding: 5px 10px 5px 30px;
+  margin-bottom: 10px;
+  color: rgba(255, 255, 255, 0.4);
+}
+.searchCt {
+  position: relative;
+  width: 150px;
+}
