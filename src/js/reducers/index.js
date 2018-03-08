@@ -1,91 +1,150 @@
 import { combineReducers } from "redux";
 import * as types from "../actions/actionTypes";
+import {
+  filterLists,
+  editItemPropertyInArray,
+  findListInFolder,
+  editListInFolder,
+  deleteItemFromArray,
+  DEFAULT_LIST
+} from "../util";
 
-function user(state = { userData: [], folders: [] }, action) {
+function user(
+  state = { userData: [], folders: [], list: {}, theme: "themeIndia" },
+  action
+) {
   switch (action.type) {
     case types.SET_USER_DATA:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         userData: action.userData,
-        folders: action.userData.folders
-      });
+        folders: action.userData.folders,
+        list: DEFAULT_LIST
+      };
     case types.SEARCH_FOLDERS: {
-      const { searchValue } = action;
       let folders = [];
-      if (searchValue) {
-        state.userData.folders.forEach(f => {
-          let listMatches = f.lists.filter(l => {
-            let itemMatches = [];
-            l.items.forEach(i => {
-              if (
-                i.side1.includes(searchValue) ||
-                i.side2.includes(searchValue)
-              ) {
-                itemMatches.push([i]);
-              }
-            });
-            return itemMatches[0] ? true : false;
-          });
-          if (listMatches[0]) {
-            folders.push({ ...f, lists: listMatches });
-          }
-        });
+      if (action.searchValue) {
+        folders = filterLists(action.searchValue, state.userData.folders);
       } else {
         folders = state.userData.folders.slice();
       }
-
-      console.log(state.userData.folders);
       return { ...state, folders };
     }
     case types.ADD_FOLDER: {
       const folders = state.userData.folders.concat([
         {
-          id: (+new Date() + Math.floor(Math.random() * 999999)).toString(36),
+          id:
+            "f_" +
+            (+new Date() + Math.floor(Math.random() * 999999)).toString(36),
           name: "New Folder",
           lists: []
         }
       ]);
       const userData = { ...state.userData, folders };
-      return Object.assign({}, state, {
+      return {
+        ...state,
         userData: userData,
         folders: userData.folders
-      });
+      };
     }
     case types.EDIT_FOLDER_NAME: {
-      const folders = state.userData.folders.map(f => {
-        if (f.id === action.folderId) {
-          return {
-            ...f,
-            name: action.folderName
-          };
-        } else {
-          return f;
-        }
-      });
+      const { folderId, folderName } = action;
+      const folders = editItemPropertyInArray(
+        state.userData.folders,
+        folderId,
+        "name",
+        folderName
+      );
       const userData = { ...state.userData, folders };
-      return Object.assign({}, state, {
+      return {
+        ...state,
         userData: userData,
         folders: userData.folders
-      });
+      };
     }
+    case types.DELETE_FOLDER: {
+      const folders = deleteItemFromArray(
+        state.userData.folders,
+        action.folderId
+      );
+      const userData = { ...state.userData, folders };
+      return {
+        ...state,
+        userData: userData,
+        folders: userData.folders
+      };
+    }
+    case types.ADD_LIST: {
+      const folders = [];
+      const newList = DEFAULT_LIST;
+      state.userData.folders.forEach(f => {
+        if (f.id === action.folderId) {
+          f.lists.push(newList);
+        }
+        folders.push(f);
+      });
+      const userData = { ...state.userData, folders };
+      return {
+        ...state,
+        userData: userData,
+        folders: userData.folders
+      };
+    }
+    case types.DELETE_LIST: {
+      const folders = [];
+      state.userData.folders.forEach(f => {
+        folders.push({
+          ...f,
+          lists: deleteItemFromArray(f.lists, action.listId)
+        });
+      });
+      const userData = { ...state.userData, folders };
+      return {
+        ...state,
+        userData: userData,
+        folders: userData.folders
+      };
+    }
+    case types.SET_LIST: {
+      return { ...state, list: action.list };
+    }
+    case types.UPDATE_LIST: {
+      const folders = editListInFolder(
+        state.userData.folders.slice(),
+        action.list.id,
+        action.property,
+        action.value
+      );
+
+      const userData = { ...state.userData, folders };
+      const list = findListInFolder(folders, action.list.id);
+      return {
+        ...state,
+        userData: userData,
+        folders: userData.folders,
+        list: list
+      };
+    }
+    case types.SET_THEME:
+      return { ...state, theme: action.theme };
   }
   return state;
 }
 
-function layout(state = { sideBarState: false }, action) {
+function layout(
+  state = {
+    sideBarState: false,
+    removeBtnState: false,
+    activeSideState: "side2"
+  },
+  action
+) {
   switch (action.type) {
     case types.SET_SIDEBAR_STATE:
-      console.log(action);
-      return Object.assign({}, state, { sideBarState: action.sideBarState });
-  }
-  return state;
-}
+      return { ...state, sideBarState: action.sideBarState };
 
-function list(state = { theme: "themeIndia", listTitle: "" }, action) {
-  switch (action.type) {
-    case types.SET_THEME:
-      return Object.assign({}, state, { theme: action.theme });
-    case types.SET_LIST_TITLE:
-      return Object.assign({}, state, { listTitle: action.listTitle });
+    case types.SET_REMOVEBTN_STATE:
+      return { ...state, removeBtnState: action.removeBtnState };
   }
   return state;
 }
@@ -93,7 +152,7 @@ function list(state = { theme: "themeIndia", listTitle: "" }, action) {
 function game(state = { playState: false }, action) {
   switch (action.type) {
     case types.SET_PLAY_STATE:
-      return Object.assign({}, state, { playState: action.playState });
+      return { ...state, playState: action.playState };
   }
   return state;
 }
@@ -102,7 +161,6 @@ function game(state = { playState: false }, action) {
 var reducers = combineReducers({
   user,
   layout,
-  list,
   game
 });
 

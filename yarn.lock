@@ -5173,6 +5173,10 @@ react-collapsible@^2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/react-collapsible/-/react-collapsible-2.0.4.tgz#fb1761eda57599a045d602534e31cb23a6c3f52a"
 
+react-contenteditable@^2.0.7:
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/react-contenteditable/-/react-contenteditable-2.0.7.tgz#a8d1c1d7b9a393f336c5ecdb74e5e336d786676b"
+
 react-dev-utils@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-5.0.0.tgz#425ac7c9c40c2603bc4f7ab8836c1406e96bb473"
@@ -5263,6 +5267,12 @@ react-scripts@1.1.0:
     whatwg-fetch "2.0.3"
   optionalDependencies:
     fsevents "1.1.2"
+
+react-textarea-autosize@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/react-textarea-autosize/-/react-textarea-autosize-6.0.0.tgz#31e44dc7f40aef4fb140dcc8b8c4e1b9cd15c8e3"
+  dependencies:
+    prop-types "^15.6.0"
 
 react-transition-group@1.x:
   version "1.2.1"

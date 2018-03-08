@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { BtnSubtle } from "../util/styledComponents.js";
 
 class Collapsibles extends Component {
   constructor(props) {
@@ -189,6 +190,7 @@ class Collapsibles extends Component {
     const innerClassString = `${this.props.classParentString}__contentInner ${
       this.props.contentInnerClassName
     }`;
+    const removeBtnId = `removeBtn_${this.props.id}`;
 
     return (
       <div className={parentClassString.trim()}>
@@ -201,7 +203,13 @@ class Collapsibles extends Component {
           id={this.props.id}
           onChange={this.props.handleInputChange}
         />
-
+        <BtnSubtle
+          onClick={this.props.handleRemoveBtnClick}
+          id={removeBtnId}
+          name={this.props.trigger}
+          color="#aaa"
+          className="removeBtn ion-close-round"
+        />
         {this.renderNonClickableTriggerElement()}
 
         <div

@@ -5,9 +5,11 @@
   "dependencies": {
     "react": "^16.2.0",
     "react-collapsible": "^2.0.4",
+    "react-contenteditable": "^2.0.7",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.7",
     "react-scripts": "1.1.0",
+    "react-textarea-autosize": "^6.0.0",
     "react-transition-group": "1.x",
     "react-window-size": "^1.0.1",
     "redux": "^3.7.2",

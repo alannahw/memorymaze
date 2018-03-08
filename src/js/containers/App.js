@@ -1,17 +1,13 @@
 import React, { Component } from "react";
 import { CSSTransitionGroup } from "react-transition-group";
-import styled, { ThemeProvider } from "styled-components";
+import { ThemeProvider } from "styled-components";
 import "../../css/App.css";
 import { connect } from "react-redux";
-import { setListTitle, setUserData, setFolders } from "../actions";
+import { setUserData } from "../actions";
 import {
-  BackPanel,
   SideBarStyle,
   BackPanelLeft,
   BackPanelRight,
-  BtnMain,
-  BtnTheme,
-  BtnInverted,
   PanelContent
 } from "../util/styledComponents.js";
 import NavCt from "./NavCt";
@@ -128,7 +124,7 @@ class App extends Component {
 function mapStateToProps(store) {
   return {
     userData: store.user.userData,
-    theme: store.list.theme,
+    theme: store.user.theme,
     sideBarState: store.layout.sideBarState,
     playState: store.game.playState
   };

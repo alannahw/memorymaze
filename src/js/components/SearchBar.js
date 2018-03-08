@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 import { searchFolders } from "../actions";
 import styled from "styled-components";
+import { SearchBarInput } from "../util/styledComponents.js";
 
 class SearchBar extends Component {
   search = e => {
@@ -11,11 +11,10 @@ class SearchBar extends Component {
 
   render() {
     const { searchValue } = this.props;
+
     const SearchIcon = styled.div`
-      &::after {
+      &::before {
         position: absolute;
-        height: 1em;
-        width: 1em;
         top: 3px;
         left: 10px;
         font-size: 1.2em;
@@ -26,8 +25,7 @@ class SearchBar extends Component {
     `;
     return (
       <div className="searchCt">
-        <input
-          className="searchBar"
+        <SearchBarInput
           placeholder="Search..."
           onChange={this.search}
           value={searchValue}

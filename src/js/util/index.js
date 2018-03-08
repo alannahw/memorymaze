@@ -8,7 +8,7 @@ export function getRandomIntInclusive(min, max) {
 export function LightenDarkenColor(col, amt) {
   let usePound = false;
 
-  if (col[0] == "#") {
+  if (col[0] === "#") {
     col = col.slice(1);
     usePound = true;
   }
@@ -30,6 +30,98 @@ export function LightenDarkenColor(col, amt) {
 
   return (usePound ? "#" : "") + (g | (b << 8) | (r << 16)).toString(16);
 }
+
+export function filterLists(searchValue, folders) {
+  let filtered = [];
+  folders.forEach(f => {
+    let listMatches = f.lists.filter(l => {
+      let itemMatches = [];
+      l.items.forEach(i => {
+        if (i.side1.includes(searchValue) || i.side2.includes(searchValue)) {
+          itemMatches.push([i]);
+        }
+      });
+      return itemMatches[0] ? true : false;
+    });
+    if (listMatches[0]) {
+      filtered.push({ ...f, lists: listMatches });
+    }
+  });
+  return filtered;
+}
+
+export function editItemPropertyInArray(array, id, property, value) {
+  const newArray = array.map(i => {
+    if (i.id === id) {
+      return {
+        ...i,
+        [property]: value
+      };
+    } else {
+      return i;
+    }
+  });
+  return newArray;
+}
+export function findListInFolder(folderArray, listId) {
+  let list = {};
+  folderArray.forEach(f => {
+    const match = f.lists.find(l => l.id === listId);
+    if (match) {
+      list = match;
+    }
+  });
+  return list;
+}
+export function editListInFolder(folderArray, listId, property, value) {
+  let folders = [];
+  folderArray.forEach(f => {
+    const lists = f.lists.map(l => {
+      if (l.id === listId) {
+        return {
+          ...l,
+          [property]: value
+        };
+      } else {
+        return l;
+      }
+    });
+    folders.push({ ...f, lists });
+  });
+  return folders;
+}
+export function deleteItemFromArray(array, itemId) {
+  const copy = array.slice();
+  const item = copy.find(i => i.id === itemId);
+  if (item) {
+    const index = copy.indexOf(item);
+    copy.splice(index, 1);
+  }
+  return copy;
+}
+
+export const DEFAULT_LIST = {
+  id: "l_" + (+new Date() + Math.floor(Math.random() * 999999)).toString(36),
+  name: "New List",
+  "date-created": new Date(),
+  theme: "themeIndia",
+  scores: [],
+  items: [
+    {
+      id:
+        "i_" + (+new Date() + Math.floor(Math.random() * 999999)).toString(36),
+      side1: "",
+      side2: "",
+      level: 0
+    }
+  ]
+};
+export const DEFAULT_ITEM = {
+  id: "i_" + (+new Date() + Math.floor(Math.random() * 999999)).toString(36),
+  side1: "",
+  side2: "",
+  level: 0
+};
 
 export const GRADIENT_INDIA = (
   <radialGradient
@@ -131,7 +223,20 @@ export const THEME_OCEAN = {
   bg3: LightenDarkenColor("#2c2c3a", 30),
   light: "#fff"
 };
-export const ALL_THEMES = [THEME_INDIA, THEME_OCEAN];
+export const THEME_PINEAPPLE = {
+  id: "themePineapple",
+  name: "Pineapple",
+  main: "#fec555",
+  main2: LightenDarkenColor("#fec555", 15),
+  main3: LightenDarkenColor("#fec555", 30),
+  second: "#16b688",
+  third: "#f48044",
+  bg: "#06323a",
+  bg2: LightenDarkenColor("#06323a", 15),
+  bg3: LightenDarkenColor("#06323a", 30),
+  light: "#fff"
+};
+export const ALL_THEMES = [THEME_INDIA, THEME_OCEAN, THEME_PINEAPPLE];
 
 export function translateTheme(newTheme) {
   return ALL_THEMES.find(e => e.id === newTheme);

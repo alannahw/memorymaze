@@ -1,15 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { addFolder } from "../actions";
-import { BtnSubtle, ListLink } from "../util/styledComponents.js";
+import { addFolder, setRemoveBtnState } from "../actions";
+import { BtnSubtle } from "../util/styledComponents.js";
 import Collapsible from "react-collapsible";
-import styled from "styled-components";
 import Folders from "../components/Folders";
 import SearchBar from "../components/SearchBar";
-import { ALL_THEMES } from "../util";
 
 class SidebarProfileCt extends Component {
-  click = () => {
+  handleRemoveBtnClass = () => {
+    this.props.dispatch(setRemoveBtnState(!this.props.removeBtnState));
+  };
+  handleAddFolder = () => {
     this.props.dispatch(addFolder());
   };
   render() {
@@ -22,6 +23,7 @@ class SidebarProfileCt extends Component {
       top: "0",
       right: "0"
     };
+    const trashBtnColor = this.props.removeBtnState ? "#ccc" : "#888";
 
     return (
       <div>
@@ -35,16 +37,22 @@ class SidebarProfileCt extends Component {
         >
           <div style={toolBar}>
             <div style={toolBtns}>
-              <BtnSubtle onClick={this.click}>
+              <BtnSubtle onClick={this.handleAddFolder}>
                 <span className="ion-plus-round" />
               </BtnSubtle>
-              <BtnSubtle color="#888">
+              <BtnSubtle
+                color={trashBtnColor}
+                onClick={this.handleRemoveBtnClass}
+              >
                 <span className="ion-trash-a" />
               </BtnSubtle>
             </div>
           </div>
           <SearchBar />
-          <Folders folders={this.props.folders} />
+          <Folders
+            folders={this.props.folders}
+            removeBtns={this.props.removeBtnState}
+          />
         </Collapsible>
       </div>
     );
@@ -53,7 +61,8 @@ class SidebarProfileCt extends Component {
 
 function mapStateToProps(store) {
   return {
-    folders: store.user.folders
+    folders: store.user.folders,
+    removeBtnState: store.layout.removeBtnState
   };
 }
 
