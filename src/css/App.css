@@ -146,8 +146,8 @@ button:focus {
 }
 
 .removeBtnClass .listLink::after {
-  right: 30px;
-  top: 5px;
+  right: 25px;
+  top: 6px;
 }
 
 .removeBtn {
@@ -155,12 +155,16 @@ button:focus {
   opacity: 0;
   position: absolute;
   right: 0px;
-  top: 1px;
+  top: 3px;
   visibility: hidden;
 }
 .removeBtnClass .removeBtn {
   opacity: 1;
   visibility: visible;
+}
+.listDelete {
+  top: 1px;
+  color: rgba(255, 255, 255, 0.4) !important;
 }
 .searchCt {
   position: relative;

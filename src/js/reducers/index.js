@@ -6,11 +6,18 @@ import {
   findListInFolder,
   editListInFolder,
   deleteItemFromArray,
-  DEFAULT_LIST
+  getDefaultFolder,
+  getDefaultList,
+  getDefaultItem
 } from "../util";
 
 function user(
-  state = { userData: [], folders: [], list: {}, theme: "themeIndia" },
+  state = {
+    userData: [],
+    folders: [getDefaultFolder()],
+    list: {},
+    theme: "themeIndia"
+  },
   action
 ) {
   switch (action.type) {
@@ -18,9 +25,17 @@ function user(
       return {
         ...state,
         userData: action.userData,
-        folders: action.userData.folders,
-        list: DEFAULT_LIST
+        folders: action.userData.folders
       };
+    case types.SET_FOLDERS: {
+      const { folders } = action;
+      const userData = { ...state.userData, folders };
+      return {
+        ...state,
+        userData: userData,
+        folders: folders
+      };
+    }
     case types.SEARCH_FOLDERS: {
       let folders = [];
       if (action.searchValue) {
@@ -31,15 +46,7 @@ function user(
       return { ...state, folders };
     }
     case types.ADD_FOLDER: {
-      const folders = state.userData.folders.concat([
-        {
-          id:
-            "f_" +
-            (+new Date() + Math.floor(Math.random() * 999999)).toString(36),
-          name: "New Folder",
-          lists: []
-        }
-      ]);
+      const folders = state.userData.folders.concat([getDefaultFolder()]);
       const userData = { ...state.userData, folders };
       return {
         ...state,
@@ -68,17 +75,25 @@ function user(
         action.folderId
       );
       const userData = { ...state.userData, folders };
+      const list = findListInFolder(folders, state.list.id);
       return {
         ...state,
         userData: userData,
-        folders: userData.folders
+        folders: userData.folders,
+        list: list ? list : {}
       };
     }
     case types.ADD_LIST: {
+      const { folderId, property, value } = action;
       const folders = [];
-      const newList = DEFAULT_LIST;
+      const newList = {
+        ...getDefaultList(),
+        folderId: folderId,
+        theme: state.theme,
+        [property]: value
+      };
       state.userData.folders.forEach(f => {
-        if (f.id === action.folderId) {
+        if (f.id === folderId) {
           f.lists.push(newList);
         }
         folders.push(f);
@@ -87,7 +102,8 @@ function user(
       return {
         ...state,
         userData: userData,
-        folders: userData.folders
+        folders: userData.folders,
+        list: newList
       };
     }
     case types.DELETE_LIST: {
@@ -99,10 +115,12 @@ function user(
         });
       });
       const userData = { ...state.userData, folders };
+      const list = findListInFolder(folders, state.list.id);
       return {
         ...state,
         userData: userData,
-        folders: userData.folders
+        folders: userData.folders,
+        list: list ? list : {}
       };
     }
     case types.SET_LIST: {
@@ -113,7 +131,8 @@ function user(
         state.userData.folders.slice(),
         action.list.id,
         action.property,
-        action.value
+        action.value,
+        action.list.folderId
       );
 
       const userData = { ...state.userData, folders };

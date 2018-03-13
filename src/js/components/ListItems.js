@@ -17,7 +17,7 @@ class EditableCell extends React.Component {
         <ListItemInput
           type="text"
           placeholder={cellData.type === "side1" ? "Side 1" : "Side 2"}
-          activeColumn={activeSideState === cellData.type ? true : false}
+          weight={activeSideState === cellData.type ? 500 : 100}
           name={cellData.type}
           id={cellData.id}
           value={cellData.value}

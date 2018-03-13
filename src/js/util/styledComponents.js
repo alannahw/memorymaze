@@ -112,7 +112,6 @@ export const SearchBarInput = styled.input`
 `;
 
 export const ListLink = BtnSubtle.extend`
-  width: 100%;
   color: #fff;
   font-size: 0.9em;
   text-align: left;
@@ -121,10 +120,14 @@ export const ListLink = BtnSubtle.extend`
   &:hover {
     color: ${props => props.theme.main};
   }
+`;
+export const ListLinkCt = styled.div`
+  position: relative;
+  width: 100%;
   &::after {
     transition: right 0.3s;
     position: absolute;
-    top: 5px;
+    top: 6px;
     right: 5px;
     font-family: "Ionicons";
     content: "\f21b";
@@ -152,6 +155,11 @@ export const BtnTheme = styled.button`
 `;
 export const PanelContent = styled.div`
   padding-top: 50px;
+`;
+export const SideBarToolBar = styled.div`
+  width: 100%;
+  text-align: right;
+  background: ${props => LightenDarkenColor(props.theme.bg, -5)};
 `;
 export const ListTitleCt = styled.div`
   transition: background 0.1s;
@@ -186,7 +194,7 @@ export const ListItemInput = styled(Textarea)`
   text-align: left;
   background: none;
   margin-top: 3px;
-  font-weight: ${props => (props.activeColumn ? 500 : 100)};
+  font-weight: ${props => props.weight};
   border: none;
   font-size: 14px;
   color: ${props => LightenDarkenColor(props.theme.main, 180)};
@@ -207,4 +215,11 @@ export const ListTable = styled.table`
 export const ListTableCt = styled.div`
   width: 80%;
   margin: 20px auto;
+`;
+export const EmptyListCt = styled.div`
+  width: 60%;
+  margin: 40vh auto;
+  text-align: center;
+  font-size: 1.2em;
+  color: ${props => LightenDarkenColor(props.theme.main, 60)};
 `;

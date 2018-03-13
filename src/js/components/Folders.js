@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Lists from "./Lists";
 import Collapsibles from "./Collapsibles";
 import {
+  setFolders,
   editFolderName,
   deleteFolder,
   deleteList,
@@ -11,8 +12,9 @@ import {
 } from "../actions";
 import { BtnSubtle } from "../util/styledComponents.js";
 import { connect } from "react-redux";
-import { findListInFolder } from "../util";
-//import Collapsible from "react-collapsible";
+import { findListInFolder, reorder, reorderMap } from "../util";
+import { DragDropContext } from "react-beautiful-dnd";
+import { Drag, Drop } from "../util/dragDropComponents.js";
 
 class Folder extends Component {
   render() {
@@ -24,9 +26,14 @@ class Folder extends Component {
       handleFolderNameChange,
       handleRemoveBtnClick,
       lists,
-      handleAddList
+      handleAddList,
+      index
     } = this.props;
     const addBtnId = `addBtn_${folderId}`;
+    const addBtnStyle = {
+      fontFamily: "Ionicons",
+      content: "\f2f5"
+    };
     const AddBtn = BtnSubtle.extend`
       &::after {
         height: 1em;
@@ -36,7 +43,7 @@ class Folder extends Component {
       }
     `;
     return (
-      <div>
+      <Drag dragId={folderId} index={index}>
         <Collapsibles
           classParentString={folderClass}
           trigger={folderName}
@@ -45,14 +52,16 @@ class Folder extends Component {
           handleInputChange={handleFolderNameChange}
           handleRemoveBtnClick={handleRemoveBtnClick}
         >
-          <Lists
-            lists={lists}
-            handleRemoveBtnClick={handleRemoveBtnClick}
-            handleSetList={this.props.handleSetList}
-          />
-          <AddBtn id={addBtnId} onClick={handleAddList} />
+          <Drop dropId={folderId} type="INNER">
+            <Lists
+              lists={lists}
+              handleRemoveBtnClick={handleRemoveBtnClick}
+              handleSetList={this.props.handleSetList}
+            />
+            <AddBtn id={addBtnId} onClick={handleAddList} />
+          </Drop>
         </Collapsibles>
-      </div>
+      </Drag>
     );
   }
 }
@@ -90,25 +99,55 @@ class Folders extends Component {
       }
     }
   };
+  onDragEnd = result => {
+    // dropped outside the list
+    const { source, destination } = result;
+    if (!destination || !source) {
+      return;
+    }
+    if (
+      source.droppableId === destination.droppableId &&
+      source.index === destination.index
+    ) {
+      return;
+    }
+    if (result.type === "OUTER") {
+      const folders = reorder(
+        this.props.folders,
+        result.source.index,
+        result.destination.index
+      );
+      this.props.dispatch(setFolders(folders));
+      return;
+    } else {
+      const folders = reorderMap(this.props.folders, source, destination);
+      this.props.dispatch(setFolders(folders));
+    }
+  };
   render() {
     return (
-      <div>
-        {this.props.folders.map(f => {
-          return (
-            <Folder
-              key={f.id}
-              folderId={f.id}
-              folderName={f.name}
-              lists={f.lists}
-              handleFolderNameChange={this.handleFolderNameChange}
-              handleRemoveBtnClick={this.handleRemoveBtnClick}
-              removeBtns={this.props.removeBtns}
-              handleAddList={this.handleAddList}
-              handleSetList={this.handleSetList}
-            />
-          );
-        })}
-      </div>
+      <DragDropContext onDragEnd={this.onDragEnd}>
+        <div>
+          <Drop dropId="dropFolders" type="OUTER">
+            {this.props.folders.map((f, index) => {
+              return (
+                <Folder
+                  index={index}
+                  key={f.id}
+                  folderId={f.id}
+                  folderName={f.name}
+                  lists={f.lists}
+                  handleFolderNameChange={this.handleFolderNameChange}
+                  handleRemoveBtnClick={this.handleRemoveBtnClick}
+                  removeBtns={this.props.removeBtns}
+                  handleAddList={this.handleAddList}
+                  handleSetList={this.handleSetList}
+                />
+              );
+            })}
+          </Drop>
+        </div>
+      </DragDropContext>
     );
   }
 }

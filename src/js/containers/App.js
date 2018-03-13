@@ -3,21 +3,23 @@ import { CSSTransitionGroup } from "react-transition-group";
 import { ThemeProvider } from "styled-components";
 import "../../css/App.css";
 import { connect } from "react-redux";
-import { setUserData } from "../actions";
+import { setUserData, setSidebarState } from "../actions";
 import {
+  BtnSubtle,
   SideBarStyle,
   BackPanelLeft,
   BackPanelRight,
-  PanelContent
+  PanelContent,
+  SideBarToolBar
 } from "../util/styledComponents.js";
 import NavCt from "./NavCt";
 import ListCt from "./ListCt";
-import ScoreCt from "./ScoreCt";
+import ListScoreCt from "./ListScoreCt";
 import FlashGameCt from "./FlashGameCt";
 import FlashCardsCt from "./FlashCardsCt";
 import SidebarThemesCt from "./SidebarThemesCt";
 import SidebarProfileCt from "./SidebarProfileCt";
-import { translateTheme } from "../util";
+import { translateTheme } from "../util/themes.js";
 
 class App extends Component {
   componentDidMount() {
@@ -25,6 +27,10 @@ class App extends Component {
       .then(response => response.json())
       .then(data => this.props.dispatch(setUserData(data.users[0])));
   }
+
+  handleSidebarClose = () => {
+    this.props.dispatch(setSidebarState(false));
+  };
 
   render() {
     const PageOne = (
@@ -36,7 +42,7 @@ class App extends Component {
         </BackPanelLeft>
         <BackPanelRight className="tFromBottom">
           <PanelContent>
-            <ScoreCt />
+            <ListScoreCt />
           </PanelContent>
         </BackPanelRight>
       </div>
@@ -54,6 +60,14 @@ class App extends Component {
           </PanelContent>
         </BackPanelRight>
       </div>
+    );
+
+    const sideBarClose = (
+      <SideBarToolBar>
+        <BtnSubtle onClick={this.handleSidebarClose} color={"#888"}>
+          <span className="ion-close-round" />
+        </BtnSubtle>
+      </SideBarToolBar>
     );
 
     const ThemeSideBar = (

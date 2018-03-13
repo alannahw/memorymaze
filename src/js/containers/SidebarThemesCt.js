@@ -1,18 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { setTheme, setSidebarState, updateList } from "../actions";
+import { setTheme, updateList } from "../actions";
 import {} from "../util/styledComponents.js";
-import { ALL_THEMES } from "../util";
+import { ALL_THEMES } from "../util/themes.js";
 
 class SidebarThemesCt extends Component {
   handleSetTheme = e => {
     this.props.dispatch(setTheme(e.target.id));
     this.props.dispatch(updateList(this.props.list, "theme", e.target.id));
-  };
-
-  handleSidebarClose = () => {
-    this.props.dispatch(setSidebarState(false));
   };
 
   render() {
@@ -48,12 +44,7 @@ class SidebarThemesCt extends Component {
     `;
     return (
       <div>
-        <div style={rightAlign}>
-          {/* <BtnSubtle onClick={this.handleSidebarClose}>
-            <div className="ion-close-round" />
-          </BtnSubtle> */}
-          Themes
-        </div>
+        <div style={rightAlign}>Themes</div>
         {ALL_THEMES.map(t => (
           <div key={t.id}>
             <ThemeBtnCt>

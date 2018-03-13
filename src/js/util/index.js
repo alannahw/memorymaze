@@ -32,12 +32,16 @@ export function LightenDarkenColor(col, amt) {
 }
 
 export function filterLists(searchValue, folders) {
+  const val = searchValue.toLowerCase();
   let filtered = [];
   folders.forEach(f => {
     let listMatches = f.lists.filter(l => {
       let itemMatches = [];
       l.items.forEach(i => {
-        if (i.side1.includes(searchValue) || i.side2.includes(searchValue)) {
+        if (
+          i.side1.toLowerCase().includes(val) ||
+          i.side2.toLowerCase().includes(val)
+        ) {
           itemMatches.push([i]);
         }
       });
@@ -73,20 +77,30 @@ export function findListInFolder(folderArray, listId) {
   });
   return list;
 }
-export function editListInFolder(folderArray, listId, property, value) {
+export function editListInFolder(
+  folderArray,
+  listId,
+  property,
+  value,
+  folderId
+) {
   let folders = [];
   folderArray.forEach(f => {
-    const lists = f.lists.map(l => {
-      if (l.id === listId) {
-        return {
-          ...l,
-          [property]: value
-        };
-      } else {
-        return l;
-      }
-    });
-    folders.push({ ...f, lists });
+    if (folderId === f.id) {
+      const lists = f.lists.map(l => {
+        if (l.id === listId) {
+          return {
+            ...l,
+            [property]: value
+          };
+        } else {
+          return l;
+        }
+      });
+      folders.push({ ...f, lists });
+    } else {
+      folders.push({ ...f });
+    }
   });
   return folders;
 }
@@ -100,144 +114,88 @@ export function deleteItemFromArray(array, itemId) {
   return copy;
 }
 
-export const DEFAULT_LIST = {
-  id: "l_" + (+new Date() + Math.floor(Math.random() * 999999)).toString(36),
-  name: "New List",
-  "date-created": new Date(),
-  theme: "themeIndia",
-  scores: [],
-  items: [
-    {
-      id:
-        "i_" + (+new Date() + Math.floor(Math.random() * 999999)).toString(36),
-      side1: "",
-      side2: "",
-      level: 0
-    }
-  ]
-};
-export const DEFAULT_ITEM = {
-  id: "i_" + (+new Date() + Math.floor(Math.random() * 999999)).toString(36),
-  side1: "",
-  side2: "",
-  level: 0
-};
+export function getDefaultFolder() {
+  return {
+    id: "f_" + (+new Date() + Math.floor(Math.random() * 999999)).toString(36),
+    name: "New Folder",
+    lists: []
+  };
+}
 
-export const GRADIENT_INDIA = (
-  <radialGradient
-    id="myGradient"
-    gradientUnits="userSpaceOnUse"
-    cx="0"
-    cy="0"
-    r="150"
-  >
-    <stop offset="30%" stopColor="gold" />
-    <stop offset="70%" stopColor="IndianRed" />
-    <stop offset="95%" stopColor="DarkSlateBlue" />
-  </radialGradient>
-);
-export const GRADIENT_OCEAN = (
-  <radialGradient
-    id="myGradient"
-    gradientUnits="userSpaceOnUse"
-    cx="0"
-    cy="0"
-    r="150"
-  >
-    <stop offset="30%" stopColor="Aqua" />
-    <stop offset="70%" stopColor="SteelBlue" />
-    <stop offset="95%" stopColor="LightCoral" />
-  </radialGradient>
-);
-export const GRADIENT_DARKNESS = (
-  <radialGradient
-    id="myGradient"
-    gradientUnits="userSpaceOnUse"
-    cx="0"
-    cy="0"
-    r="150"
-  >
-    <stop offset="30%" stopColor="MediumTurquoise" />
-    <stop offset="70%" stopColor="MidnightBlue" />
-    <stop offset="95%" stopColor="Black" />
-  </radialGradient>
-);
-export const GRADIENT_FOREST = (
-  <radialGradient
-    id="myGradient"
-    gradientUnits="userSpaceOnUse"
-    cx="0"
-    cy="0"
-    r="150"
-  >
-    <stop offset="30%" stopColor="PaleGreen" />
-    <stop offset="70%" stopColor="Teal" />
-    <stop offset="95%" stopColor="Purple" />
-  </radialGradient>
-);
-export const GRADIENT_MARSHMALLOW = (
-  <radialGradient
-    id="myGradient"
-    gradientUnits="userSpaceOnUse"
-    cx="0"
-    cy="0"
-    r="150"
-  >
-    <stop offset="30%" stopColor="LemonChiffon" />
-    <stop offset="70%" stopColor="LightPink" />
-    <stop offset="95%" stopColor="PowderBlue" />
-  </radialGradient>
-);
+export function getDefaultList() {
+  return {
+    id: "l_" + (+new Date() + Math.floor(Math.random() * 999999)).toString(36),
+    name: "New List",
+    "date-created": new Date(),
+    theme: "themeIndia",
+    scores: [],
+    items: [
+      {
+        id:
+          "i_" +
+          (+new Date() + Math.floor(Math.random() * 999999)).toString(36),
+        side1: "",
+        side2: "",
+        level: 0
+      }
+    ]
+  };
+}
+export function getDefaultItem() {
+  return {
+    id: "i_" + (+new Date() + Math.floor(Math.random() * 999999)).toString(36),
+    side1: "",
+    side2: "",
+    level: 0
+  };
+}
 
-export const ALL_GRADIENTS = [
-  { id: "btnIndia", name: "India", grad: GRADIENT_INDIA },
-  { id: "btnOcean", name: "Ocean", grad: GRADIENT_OCEAN },
-  { id: "btnDarkness", name: "Darkness", grad: GRADIENT_DARKNESS },
-  { id: "btnForest", name: "Forest", grad: GRADIENT_FOREST },
-  { id: "btnMarshmallow", name: "Marshmallow", grad: GRADIENT_MARSHMALLOW }
-];
+export function reorder(list, startIndex, endIndex) {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+  return result;
+}
 
-export const THEME_INDIA = {
-  id: "themeIndia",
-  name: "India",
-  main: "#e07762",
-  main2: LightenDarkenColor("#e07762", 15),
-  main3: LightenDarkenColor("#e07762", 30),
-  second: "#fbb664",
-  third: "#7b73b5",
-  bg: "#30302f",
-  bg2: LightenDarkenColor("#30302f", 15),
-  bg3: LightenDarkenColor("#30302f", 30),
-  light: "#fff"
-};
-export const THEME_OCEAN = {
-  id: "themeOcean",
-  name: "Ocean",
-  main: "#3b7aa9",
-  main2: LightenDarkenColor("#3b7aa9", 15),
-  main3: LightenDarkenColor("#3b7aa9", 30),
-  second: "#52c1c9",
-  third: "#e5696b",
-  bg: "#2c2c3a",
-  bg2: LightenDarkenColor("#2c2c3a", 15),
-  bg3: LightenDarkenColor("#2c2c3a", 30),
-  light: "#fff"
-};
-export const THEME_PINEAPPLE = {
-  id: "themePineapple",
-  name: "Pineapple",
-  main: "#fec555",
-  main2: LightenDarkenColor("#fec555", 15),
-  main3: LightenDarkenColor("#fec555", 30),
-  second: "#16b688",
-  third: "#f48044",
-  bg: "#06323a",
-  bg2: LightenDarkenColor("#06323a", 15),
-  bg3: LightenDarkenColor("#06323a", 30),
-  light: "#fff"
-};
-export const ALL_THEMES = [THEME_INDIA, THEME_OCEAN, THEME_PINEAPPLE];
+// a little function to help us with reordering the result
+export function reorderMap(array, source, destination) {
+  const current = array.find(i => i.id === source.droppableId);
+  const next = array.find(i => i.id === destination.droppableId);
+  const target = current.lists[source.index];
 
-export function translateTheme(newTheme) {
-  return ALL_THEMES.find(e => e.id === newTheme);
+  if (source.droppableId === destination.droppableId) {
+    const result = array.map(i => {
+      if (i === current) {
+        return {
+          ...i,
+          lists: reorder(i.lists, source.index, destination.index)
+        };
+      } else {
+        return i;
+      }
+    });
+    return result;
+  } else {
+    // remove from original
+    current.lists.splice(source.index, 1);
+    // insert into next
+    next.lists.splice(destination.index, 0, target);
+    // map changed lists into whole array
+    let result = array.map(i => {
+      if (i.id === current.id) {
+        return {
+          ...i,
+          items: current.items
+        };
+      } else if (i.id === next.id) {
+        return {
+          ...i,
+          items: next.items
+        };
+      } else {
+        return i;
+      }
+    });
+    return result;
+  }
 }

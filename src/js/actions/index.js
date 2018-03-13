@@ -4,6 +4,9 @@ import * as types from "./actionTypes";
 export function setUserData(userData) {
   return { type: types.SET_USER_DATA, userData };
 }
+export function setFolders(folders) {
+  return { type: types.SET_FOLDERS, folders };
+}
 export function searchFolders(searchValue) {
   return { type: types.SEARCH_FOLDERS, searchValue };
 }
@@ -16,8 +19,8 @@ export function editFolderName(folderId, folderName) {
 export function deleteFolder(folderId) {
   return { type: types.DELETE_FOLDER, folderId };
 }
-export function addList(folderId) {
-  return { type: types.ADD_LIST, folderId };
+export function addList(folderId, property, value) {
+  return { type: types.ADD_LIST, folderId, property, value };
 }
 export function deleteList(listId) {
   return { type: types.DELETE_LIST, listId };
