@@ -77,30 +77,20 @@ export function findListInFolder(folderArray, listId) {
   });
   return list;
 }
-export function editListInFolder(
-  folderArray,
-  listId,
-  property,
-  value,
-  folderId
-) {
+export function editListInFolder(folderArray, listId, property, value) {
   let folders = [];
   folderArray.forEach(f => {
-    if (folderId === f.id) {
-      const lists = f.lists.map(l => {
-        if (l.id === listId) {
-          return {
-            ...l,
-            [property]: value
-          };
-        } else {
-          return l;
-        }
-      });
-      folders.push({ ...f, lists });
-    } else {
-      folders.push({ ...f });
-    }
+    const lists = f.lists.map(l => {
+      if (l.id === listId) {
+        return {
+          ...l,
+          [property]: value
+        };
+      } else {
+        return l;
+      }
+    });
+    folders.push({ ...f, lists });
   });
   return folders;
 }

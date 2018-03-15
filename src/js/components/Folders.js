@@ -1,6 +1,6 @@
 import React, { PureComponent, Component } from "react";
 import Lists from "./Lists";
-import Collapsibles from "./Collapsibles";
+import Collapsibles from "../lib/Collapsibles";
 import {
   setFolders,
   editFolderName,
@@ -14,7 +14,7 @@ import { BtnSubtle, AddBtn } from "../util/styledComponents.js";
 import { connect } from "react-redux";
 import { findListInFolder, reorder, reorderMap } from "../util";
 import { DragDropContext } from "react-beautiful-dnd";
-import { Drag, Drop } from "../util/dragDropComponents.js";
+import { Drag, Drop } from "../lib/dragDropComponents.js";
 
 class Folder extends Component {
   delEvent = () => {

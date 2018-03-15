@@ -131,8 +131,7 @@ function user(
         state.userData.folders.slice(),
         action.list.id,
         action.property,
-        action.value,
-        action.list.folderId
+        action.value
       );
 
       const userData = { ...state.userData, folders };

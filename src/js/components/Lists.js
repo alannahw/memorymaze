@@ -1,7 +1,7 @@
 import React, { PureComponent, Component } from "react";
 import { ListLink, BtnSubtle, ListLinkCt } from "../util/styledComponents.js";
 import { translateTheme } from "../util/themes.js";
-import { Drag, Drop } from "../util/dragDropComponents.js";
+import { Drag, Drop } from "../lib/dragDropComponents.js";
 
 class List extends PureComponent {
   setListEvent = () => {
