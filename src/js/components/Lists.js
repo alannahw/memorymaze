@@ -1,12 +1,16 @@
-import React, { Component } from "react";
+import React, { PureComponent, Component } from "react";
 import { ListLink, BtnSubtle, ListLinkCt } from "../util/styledComponents.js";
 import { translateTheme } from "../util/themes.js";
 import { Drag, Drop } from "../util/dragDropComponents.js";
 
-class List extends Component {
+class List extends PureComponent {
+  setListEvent = () => {
+    this.props.handleSetList(this.props.listId);
+  };
+  delEvent = () => {
+    this.props.handleRemoveBtnClick(this.props.listId, this.props.listName);
+  };
   render() {
-    const removeBtnId = `removeBtn_${this.props.listId}`;
-
     return (
       <Drag dragId={this.props.listId} index={this.props.index}>
         <ListLinkCt
@@ -14,17 +18,11 @@ class List extends Component {
           grad2={this.props.grad2}
           className="listLink"
         >
-          <ListLink
-            id={this.props.listId}
-            onClick={this.props.handleSetList}
-            className="listLink"
-          >
+          <ListLink onClick={this.setListEvent} className="listLink">
             {this.props.listName}
           </ListLink>
           <BtnSubtle
-            onClick={this.props.handleRemoveBtnClick}
-            id={removeBtnId}
-            name={this.props.listName}
+            onClick={this.delEvent}
             color="#aaa"
             className="removeBtn ion-close-round listDelete"
           />

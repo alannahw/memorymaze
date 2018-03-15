@@ -18,7 +18,6 @@ export const BackPanel = styled.div`
   width: 50vw;
   height: 100vh;
   position: absolute;
-  overflow-y: scroll;
   overflow-x: hidden;
   z-index: 1;
 `;
@@ -89,6 +88,28 @@ export const BtnNavTheme = BtnNav.extend`
     ${props => props.theme.second}
   );
 `;
+export const AddBtn = BtnSubtle.extend`
+  &::after {
+    height: 1em;
+    width: 1em;
+    font-family: "Ionicons";
+    content: "\f217";
+  }
+`;
+export const IconBtn = BtnSubtle.extend`
+  padding: 0 5px;
+  border-radius: 0px;
+  font-size: 1.5em;
+  margin: 1px;
+  color: ${props => LightenDarkenColor(props.theme.second, 15)};
+  border-bottom: 3px solid ${props => LightenDarkenColor(props.theme.second, 5)};
+`;
+export const IconSpanAbsolute = styled.span`
+  position: absolute;
+  top: ${props => props.top || null};
+  left: ${props => props.left || null};
+`;
+
 export const Logo = styled.div`
   display: inline-block;
   color: ${props => props.theme.main};
@@ -155,22 +176,25 @@ export const BtnTheme = styled.button`
 `;
 export const PanelContent = styled.div`
   padding-top: 50px;
+  box-sizing: border-box;
+  height: 100%;
 `;
 export const SideBarToolBar = styled.div`
   width: 100%;
   text-align: right;
   background: ${props => LightenDarkenColor(props.theme.bg, -5)};
 `;
+export const RelativeCt = styled.div`
+  position: relative;
+`;
 export const ListTitleCt = styled.div`
+  box-sizing: border-box;
   transition: background 0.1s;
   padding: 20px 0;
   width: 100%;
   background: ${props => props.theme.second};
   font-size: 21px;
   color: ${props => props.theme.main};
-`;
-export const RelativeCt = styled.div`
-  position: relative;
 `;
 export const ListTitleInput = styled(Textarea)`
   transition: color 0.1s;
@@ -214,12 +238,30 @@ export const ListTable = styled.table`
 `;
 export const ListTableCt = styled.div`
   width: 80%;
-  margin: 20px auto;
+  margin: 20px auto 70px;
+`;
+export const ListToolbar = styled.div`
+  position: absolute;
+  bottom: 0;
+  padding: 5px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 50px;
+  color: ${props => LightenDarkenColor(props.theme.second, 15)};
+  background: ${props => props.theme.third};
 `;
 export const EmptyListCt = styled.div`
   width: 60%;
-  margin: 40vh auto;
+  margin: auto;
   text-align: center;
   font-size: 1.2em;
   color: ${props => LightenDarkenColor(props.theme.main, 60)};
+`;
+
+export const FlexBox = styled.div`
+  min-height: ${props => `calc(100% - ${props.ignore ? props.ignore : "0px"})`};
+  display: flex;
+
+  align-items: center;
+  overflow-y: scroll;
 `;

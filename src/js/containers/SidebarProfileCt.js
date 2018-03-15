@@ -28,7 +28,7 @@ class SidebarProfileCt extends Component {
     return (
       <div>
         <Collapsible classParentString="accordianMain" trigger="Profile">
-          <p>Information relating to your profile can be find here.</p>
+          <p>Information relating to your profile can be found here.</p>
         </Collapsible>
         <Collapsible
           classParentString="accordianMain"

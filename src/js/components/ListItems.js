@@ -9,7 +9,14 @@ import {
   ListTableCt
 } from "../util/styledComponents.js";
 
-class EditableCell extends React.Component {
+class EditableCell extends React.PureComponent {
+  changeEvent = e => {
+    this.props.handleItemTextChange(
+      this.props.cellData.id,
+      this.props.cellData.type,
+      e.target.value
+    );
+  };
   render() {
     const { cellData, activeSideState, handleItemTextChange } = this.props;
     return (
@@ -18,17 +25,15 @@ class EditableCell extends React.Component {
           type="text"
           placeholder={cellData.type === "side1" ? "Side 1" : "Side 2"}
           weight={activeSideState === cellData.type ? 500 : 100}
-          name={cellData.type}
-          id={cellData.id}
           value={cellData.value}
-          onChange={handleItemTextChange}
+          onChange={this.changeEvent}
         />
       </ListItemTd>
     );
   }
 }
 
-class TableRow extends React.Component {
+class TableRow extends React.PureComponent {
   delEvent = () => {
     this.props.deleteItem(this.props.item.id);
   };
@@ -87,7 +92,7 @@ const TableStructure = props => (
   </ListTable>
 );
 
-class Table extends React.Component {
+class Table extends React.PureComponent {
   render() {
     const listEndStyle = {
       textAlign: "right",

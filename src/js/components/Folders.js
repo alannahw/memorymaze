@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent, Component } from "react";
 import Lists from "./Lists";
 import Collapsibles from "./Collapsibles";
 import {
@@ -10,13 +10,22 @@ import {
   setList,
   setTheme
 } from "../actions";
-import { BtnSubtle } from "../util/styledComponents.js";
+import { BtnSubtle, AddBtn } from "../util/styledComponents.js";
 import { connect } from "react-redux";
 import { findListInFolder, reorder, reorderMap } from "../util";
 import { DragDropContext } from "react-beautiful-dnd";
 import { Drag, Drop } from "../util/dragDropComponents.js";
 
 class Folder extends Component {
+  delEvent = () => {
+    this.props.handleRemoveBtnClick(this.props.folderId, this.props.folderName);
+  };
+  folderNameChangeEvent = e => {
+    this.props.handleFolderNameChange(this.props.folderId, e.target.value);
+  };
+  addListEvent = () => {
+    this.props.handleAddList(this.props.folderId);
+  };
   render() {
     const removeBtnClass = this.props.removeBtns ? "removeBtnClass" : "";
     const folderClass = `${removeBtnClass} accordianSub`;
@@ -29,61 +38,52 @@ class Folder extends Component {
       handleAddList,
       index
     } = this.props;
-    const addBtnId = `addBtn_${folderId}`;
     const addBtnStyle = {
       fontFamily: "Ionicons",
       content: "\f2f5"
     };
-    const AddBtn = BtnSubtle.extend`
-      &::after {
-        height: 1em;
-        width: 1em;
-        font-family: "Ionicons";
-        content: "\f217";
-      }
-    `;
+
     return (
       <Drag dragId={folderId} index={index}>
-        <Collapsibles
-          classParentString={folderClass}
-          trigger={folderName}
-          open={true}
-          id={folderId}
-          handleInputChange={handleFolderNameChange}
-          handleRemoveBtnClick={handleRemoveBtnClick}
-        >
-          <Drop dropId={folderId} type="INNER">
+        <Drop dropId={folderId} type="INNER">
+          <Collapsibles
+            classParentString={folderClass}
+            trigger={folderName}
+            open={true}
+            id={folderId}
+            folderNameChangeEvent={this.folderNameChangeEvent}
+            delEvent={this.delEvent}
+          >
             <Lists
               lists={lists}
               handleRemoveBtnClick={handleRemoveBtnClick}
               handleSetList={this.props.handleSetList}
             />
-            <AddBtn id={addBtnId} onClick={handleAddList} />
-          </Drop>
-        </Collapsibles>
+            <AddBtn onClick={this.addListEvent} />
+          </Collapsibles>
+        </Drop>
       </Drag>
     );
   }
 }
 
-class Folders extends Component {
-  handleFolderNameChange = e => {
-    this.props.dispatch(editFolderName(e.target.id, e.target.value));
+class Folders extends PureComponent {
+  handleFolderNameChange = (id, value) => {
+    this.props.dispatch(editFolderName(id, value));
   };
-  handleAddList = e => {
-    this.props.dispatch(addList(e.target.id.split("addBtn_")[1]));
+  handleAddList = folderId => {
+    this.props.dispatch(addList(folderId));
   };
-  handleSetList = e => {
+  handleSetList = id => {
     const folders = this.props.folders.slice(); //necessary?
-    const list = findListInFolder(folders, e.target.id);
+    const list = findListInFolder(folders, id);
     if (list) {
       this.props.dispatch(setList(list));
       this.props.dispatch(setTheme(list.theme));
     }
   };
-  handleRemoveBtnClick = e => {
-    const name = e.target.name;
-    const type = e.target.id.includes("f_") ? "folder" : "list";
+  handleRemoveBtnClick = (id, name) => {
+    const type = id.includes("f_") ? "folder" : "list";
     const msg =
       "Do you really want to delete the " +
       type +
@@ -93,9 +93,9 @@ class Folders extends Component {
 
     if (window.confirm(msg)) {
       if (type === "folder") {
-        this.props.dispatch(deleteFolder(e.target.id.split("removeBtn_")[1]));
+        this.props.dispatch(deleteFolder(id));
       } else {
-        this.props.dispatch(deleteList(e.target.id.split("removeBtn_")[1]));
+        this.props.dispatch(deleteList(id));
       }
     }
   };

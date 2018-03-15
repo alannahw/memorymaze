@@ -198,14 +198,9 @@ class Collapsibles extends Component {
           className={triggerClassString.trim()}
           onClick={this.handleTriggerClick}
         />
-        <input
-          value={trigger}
-          id={this.props.id}
-          onChange={this.props.handleInputChange}
-        />
+        <input value={trigger} onChange={this.props.folderNameChangeEvent} />
         <BtnSubtle
-          onClick={this.props.handleRemoveBtnClick}
-          id={removeBtnId}
+          onClick={this.props.delEvent}
           name={this.props.trigger}
           color="#aaa"
           className="removeBtn ion-close-round"
