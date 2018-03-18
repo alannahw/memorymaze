@@ -104,9 +104,13 @@ export function deleteItemFromArray(array, itemId) {
   return copy;
 }
 
+export function getRandomId() {
+  return (+new Date() + Math.floor(Math.random() * 999999)).toString(36);
+}
+
 export function getDefaultFolder() {
   return {
-    id: "f_" + (+new Date() + Math.floor(Math.random() * 999999)).toString(36),
+    id: "f_" + getRandomId(),
     name: "New Folder",
     lists: []
   };
@@ -114,16 +118,14 @@ export function getDefaultFolder() {
 
 export function getDefaultList() {
   return {
-    id: "l_" + (+new Date() + Math.floor(Math.random() * 999999)).toString(36),
+    id: "l_" + getRandomId(),
     name: "New List",
     "date-created": new Date(),
     theme: "themeIndia",
     scores: [],
     items: [
       {
-        id:
-          "i_" +
-          (+new Date() + Math.floor(Math.random() * 999999)).toString(36),
+        id: "i_" + getRandomId(),
         side1: "",
         side2: "",
         level: 0
@@ -133,7 +135,7 @@ export function getDefaultList() {
 }
 export function getDefaultItem() {
   return {
-    id: "i_" + (+new Date() + Math.floor(Math.random() * 999999)).toString(36),
+    id: "i_" + getRandomId(),
     side1: "",
     side2: "",
     level: 0
