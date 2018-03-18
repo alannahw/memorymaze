@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { addFolder, setRemoveBtnState, searchFolders } from "../actions";
+import { addFolder, setRemoveBtnState, setFolderQuery } from "../actions";
 import { BtnSubtle } from "../util/styledComponents.js";
 import Collapsible from "react-collapsible";
 import Folders from "../components/Folders";
@@ -12,9 +12,10 @@ class SidebarProfileCt extends Component {
   };
   handleAddFolder = () => {
     this.props.dispatch(addFolder());
+    this.props.dispatch(setFolderQuery(""));
   };
   handleSearchFolders = val => {
-    this.props.dispatch(searchFolders(val));
+    this.props.dispatch(setFolderQuery(val));
   };
   render() {
     const toolBar = {
@@ -56,10 +57,7 @@ class SidebarProfileCt extends Component {
             queryVal={this.props.folderQuery}
             color="bg"
           />
-          <Folders
-            folders={this.props.folders}
-            removeBtns={this.props.removeBtnState}
-          />
+          <Folders removeBtns={this.props.removeBtnState} />
         </Collapsible>
       </div>
     );
@@ -68,7 +66,6 @@ class SidebarProfileCt extends Component {
 
 function mapStateToProps(store) {
   return {
-    folders: store.user.folders,
     folderQuery: store.user.folderQuery,
     removeBtnState: store.layout.removeBtnState
   };

@@ -10,14 +10,17 @@ import {
 import {
   editItemPropertyInArray,
   deleteItemFromArray,
-  getDefaultItem
+  getDefaultItem,
+  findListInFolder
 } from "../util";
 import Table from "../components/ListItems";
 import ListPageToolbar from "../components/ListPageToolbar";
 
 class ListCt extends PureComponent {
   handleListNameChange = e => {
-    this.props.dispatch(updateList(this.props.list, "name", e.target.value));
+    this.props.dispatch(
+      updateList(this.props.currentListId, "name", e.target.value)
+    );
   };
   handleItemTextChange = (id, name, value) => {
     const items = editItemPropertyInArray(
@@ -26,17 +29,17 @@ class ListCt extends PureComponent {
       name,
       value
     );
-    this.props.dispatch(updateList(this.props.list, "items", items));
+    this.props.dispatch(updateList(this.props.currentListId, "items", items));
   };
 
   handleDeleteItem = id => {
     const items = deleteItemFromArray(this.props.list.items, id);
-    this.props.dispatch(updateList(this.props.list, "items", items));
+    this.props.dispatch(updateList(this.props.currentListId, "items", items));
   };
   handleAddItem = e => {
     const newItem = getDefaultItem();
     const items = [...this.props.list.items, newItem];
-    this.props.dispatch(updateList(this.props.list, "items", items));
+    this.props.dispatch(updateList(this.props.currentListId, "items", items));
   };
   render() {
     const { list } = this.props;
@@ -86,8 +89,11 @@ class ListCt extends PureComponent {
 
 function mapStateToProps(store) {
   return {
-    folders: store.user.folders,
-    list: store.user.list,
+    currentListId: store.user.currentListId,
+    list: findListInFolder(
+      store.user.userData.folders,
+      store.user.currentListId
+    ),
     activeSideState: store.layout.activeSideState,
     theme: store.user.theme
   };

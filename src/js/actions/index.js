@@ -7,8 +7,8 @@ export function setUserData(userData) {
 export function setFolders(folders) {
   return { type: types.SET_FOLDERS, folders };
 }
-export function searchFolders(searchVal) {
-  return { type: types.SEARCH_FOLDERS, searchVal };
+export function setFolderQuery(searchVal) {
+  return { type: types.SET_FOLDER_QUERY, searchVal };
 }
 export function addFolder() {
   return { type: types.ADD_FOLDER };
@@ -41,11 +41,11 @@ export function setRemoveBtnState(removeBtnState) {
 }
 
 // List
-export function setList(list) {
-  return { type: types.SET_LIST, list };
+export function setList(listId) {
+  return { type: types.SET_LIST, listId };
 }
-export function updateList(list, property, value) {
-  return { type: types.UPDATE_LIST, list, property, value };
+export function updateList(listId, property, value) {
+  return { type: types.UPDATE_LIST, listId, property, value };
 }
 export function setTheme(theme) {
   return { type: types.SET_THEME, theme };

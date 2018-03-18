@@ -7,6 +7,7 @@ import {
   findListInFolder,
   editListInFolder,
   deleteItemFromArray,
+  getDefaultUser,
   getDefaultFolder,
   getDefaultList,
   getDefaultItem
@@ -14,45 +15,36 @@ import {
 
 function user(
   state = {
-    userData: [],
-    folders: [getDefaultFolder()],
-    list: {},
+    userData: [getDefaultUser()],
+    currentListId: "",
     folderQuery: "",
     theme: "themeIndia"
   },
   action
 ) {
-  switch (action.type) {
-    case types.SET_USER_DATA: {
-      return produce(state, draft => {
+  return produce(state, draft => {
+    switch (action.type) {
+      case types.SET_USER_DATA: {
         draft.userData = action.userData;
-        draft.folders = action.userData.folders;
-        draft.list = action.userData.folders[0].lists[0];
-      });
-    }
-    case types.SET_FOLDERS: {
-      return produce(state, draft => {
+        draft.currentListId = action.userData.folders[0].lists[0].id;
+        return;
+      }
+      case types.SET_FOLDERS: {
         draft.userData.folders = action.folders;
-        draft.folders = action.folders;
-      });
-    }
-    case types.SEARCH_FOLDERS: {
-      return produce(state, draft => {
-        if (action.searchVal) {
-          draft.folders = filterLists(action.searchVal, draft.userData.folders);
-        }
+        return;
+      }
+      case types.SET_FOLDER_QUERY: {
         draft.folderQuery = action.searchVal;
-      });
-    }
-    case types.ADD_FOLDER: {
-      return produce(state, draft => {
-        const folders = draft.userData.folders.concat([getDefaultFolder()]);
+        return;
+      }
+      case types.ADD_FOLDER: {
+        const folders = draft.userData.folders.concat([
+          { ...getDefaultFolder(), lists: [] }
+        ]);
         draft.userData.folders = folders;
-        draft.folders = folders;
-      });
-    }
-    case types.EDIT_FOLDER_NAME: {
-      return produce(state, draft => {
+        return;
+      }
+      case types.EDIT_FOLDER_NAME: {
         const { folderId, folderName } = action;
         const folders = editItemPropertyInArray(
           draft.userData.folders,
@@ -61,23 +53,17 @@ function user(
           folderName
         );
         draft.userData.folders = folders;
-        draft.folders = folders;
-      });
-    }
-    case types.DELETE_FOLDER: {
-      return produce(state, draft => {
+        return;
+      }
+      case types.DELETE_FOLDER: {
         const folders = deleteItemFromArray(
-          state.userData.folders,
+          draft.userData.folders,
           action.folderId
         );
-        const list = findListInFolder(folders, state.list.id);
         draft.userData.folders = folders;
-        draft.folders = folders;
-        draft.list = list ? list : {};
-      });
-    }
-    case types.ADD_LIST: {
-      return produce(state, draft => {
+        return;
+      }
+      case types.ADD_LIST: {
         const { folderId } = action;
         const newList = { ...getDefaultList(), theme: draft.theme };
         draft.userData.folders.forEach(f => {
@@ -85,12 +71,10 @@ function user(
             f.lists.push(newList);
           }
         });
-        draft.folders = draft.userData.folders;
-        draft.list = newList;
-      });
-    }
-    case types.DELETE_LIST: {
-      return produce(state, draft => {
+        draft.currentListId = newList.id;
+        return;
+      }
+      case types.DELETE_LIST: {
         let folders = [];
         draft.userData.folders.forEach(f => {
           folders.push({
@@ -98,38 +82,30 @@ function user(
             lists: deleteItemFromArray(f.lists, action.listId)
           });
         });
-        const list = findListInFolder(folders, state.list.id);
         draft.userData.folders = folders;
-        draft.folders = folders;
-        draft.list = list ? list : {};
-      });
-    }
-    case types.SET_LIST: {
-      return produce(state, draft => {
-        draft.list = action.list;
-      });
-    }
-    case types.UPDATE_LIST: {
-      return produce(state, draft => {
+        return;
+      }
+      case types.SET_LIST: {
+        draft.currentListId = action.listId;
+        return;
+      }
+      case types.UPDATE_LIST: {
         const folders = editListInFolder(
           draft.userData.folders,
-          action.list.id,
+          action.listId,
           action.property,
           action.value
         );
-        const list = findListInFolder(folders, state.list.id);
         draft.userData.folders = folders;
-        draft.folders = folders;
-        draft.list = list ? list : {};
-      });
-    }
-    case types.SET_THEME: {
-      return produce(state, draft => {
+        return;
+      }
+      case types.SET_THEME: {
         draft.theme = action.theme;
-      });
+        return;
+      }
     }
-  }
-  return state;
+  });
+  // return state;
 }
 
 function layout(

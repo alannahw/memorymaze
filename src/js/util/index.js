@@ -32,26 +32,28 @@ export function LightenDarkenColor(col, amt) {
 }
 
 export function filterLists(searchValue, folders) {
-  const val = searchValue.toLowerCase();
-  let filtered = [];
-  folders.forEach(f => {
-    let listMatches = f.lists.filter(l => {
-      let itemMatches = [];
-      l.items.forEach(i => {
-        if (
-          i.side1.toLowerCase().includes(val) ||
-          i.side2.toLowerCase().includes(val)
-        ) {
-          itemMatches.push([i]);
-        }
+  if (searchValue) {
+    const val = searchValue.toLowerCase();
+    let filtered = [];
+    folders.forEach(f => {
+      let listMatches = f.lists.filter(l => {
+        let itemMatches = [];
+        l.items.forEach(i => {
+          if (
+            i.side1.toLowerCase().includes(val) ||
+            i.side2.toLowerCase().includes(val)
+          ) {
+            itemMatches.push([i]);
+          }
+        });
+        return itemMatches[0] ? true : false;
       });
-      return itemMatches[0] ? true : false;
+      if (listMatches[0]) {
+        filtered.push({ ...f, lists: listMatches });
+      }
     });
-    if (listMatches[0]) {
-      filtered.push({ ...f, lists: listMatches });
-    }
-  });
-  return filtered;
+    return filtered;
+  } else return folders;
 }
 
 export function editItemPropertyInArray(array, id, property, value) {
@@ -68,14 +70,18 @@ export function editItemPropertyInArray(array, id, property, value) {
   return newArray;
 }
 export function findListInFolder(folderArray, listId) {
-  let list = {};
-  folderArray.forEach(f => {
-    const match = f.lists.find(l => l.id === listId);
-    if (match) {
-      list = match;
-    }
-  });
-  return list;
+  if (folderArray) {
+    let list = {};
+    folderArray.forEach(f => {
+      const match = f.lists.find(l => l.id === listId);
+      if (match) {
+        list = match;
+      }
+    });
+    if (list) {
+      return list;
+    } else return {};
+  } else return {};
 }
 export function editListInFolder(folderArray, listId, property, value) {
   let folders = [];
@@ -108,11 +114,21 @@ export function getRandomId() {
   return (+new Date() + Math.floor(Math.random() * 999999)).toString(36);
 }
 
+export function getDefaultUser() {
+  return {
+    id: "u_" + getRandomId(),
+    name: "New User",
+    email: "",
+    password: "",
+    folders: [getDefaultFolder()]
+  };
+}
+
 export function getDefaultFolder() {
   return {
     id: "f_" + getRandomId(),
     name: "New Folder",
-    lists: []
+    lists: [getDefaultList()]
   };
 }
 
@@ -123,14 +139,7 @@ export function getDefaultList() {
     "date-created": new Date(),
     theme: "themeIndia",
     scores: [],
-    items: [
-      {
-        id: "i_" + getRandomId(),
-        side1: "",
-        side2: "",
-        level: 0
-      }
-    ]
+    items: [getDefaultItem()]
   };
 }
 export function getDefaultItem() {

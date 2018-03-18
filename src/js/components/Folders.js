@@ -12,7 +12,7 @@ import {
 } from "../actions";
 import { AddBtn } from "../util/styledComponents.js";
 import { connect } from "react-redux";
-import { findListInFolder, reorder, reorderMap } from "../util";
+import { findListInFolder, reorder, reorderMap, filterLists } from "../util";
 import { DragDropContext } from "react-beautiful-dnd";
 import { Drag, Drop } from "../lib/dragDropComponents.js";
 
@@ -63,10 +63,9 @@ class Folders extends PureComponent {
     this.props.dispatch(addList(folderId));
   };
   handleSetList = id => {
-    const folders = this.props.folders.slice(); //necessary?
-    const list = findListInFolder(folders, id);
+    const list = findListInFolder(this.props.folders, id);
     if (list) {
-      this.props.dispatch(setList(list));
+      this.props.dispatch(setList(id));
       this.props.dispatch(setTheme(list.theme));
     }
   };
@@ -116,11 +115,12 @@ class Folders extends PureComponent {
     }
   };
   render() {
+    const { filteredFolders } = this.props;
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
         <div>
           <Drop dropId="dropFolders" type="OUTER">
-            {this.props.folders.map((f, index) => {
+            {filteredFolders.map((f, index) => {
               return (
                 <Folder
                   index={index}
@@ -146,7 +146,12 @@ class Folders extends PureComponent {
 
 function mapStateToProps(store) {
   return {
-    folders: store.user.folders
+    folders: store.user.userData.folders,
+    folderQuery: store.user.folderQuery,
+    filteredFolders: filterLists(
+      store.user.folderQuery,
+      store.user.userData.folders
+    )
   };
 }
 

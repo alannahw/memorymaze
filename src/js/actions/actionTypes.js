@@ -1,7 +1,7 @@
 // User
 export const SET_USER_DATA = "SET_USER_DATA";
 export const SET_FOLDERS = "SET_FOLDERS";
-export const SEARCH_FOLDERS = "SEARCH_FOLDERS";
+export const SET_FOLDER_QUERY = "SET_FOLDER_QUERY";
 export const ADD_FOLDER = "ADD_FOLDER";
 export const EDIT_FOLDER_NAME = "EDIT_FOLDER_NAME";
 export const DELETE_FOLDER = "DELETE_FOLDER";
