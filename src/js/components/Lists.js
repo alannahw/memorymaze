@@ -1,14 +1,14 @@
 import React, { PureComponent, Component } from "react";
 import { ListLink, BtnSubtle, ListLinkCt } from "../util/styledComponents.js";
 import { translateTheme } from "../util/themes.js";
-import { Drag, Drop } from "../lib/dragDropComponents.js";
+import { Drag } from "../lib/dragDropComponents.js";
 
 class List extends PureComponent {
   setListEvent = () => {
     this.props.handleSetList(this.props.listId);
   };
   delEvent = () => {
-    this.props.handleRemoveBtnClick(this.props.listId, this.props.listName);
+    this.props.handleListDelete(this.props.listId, this.props.listName);
   };
   render() {
     return (
@@ -44,7 +44,7 @@ class Lists extends Component {
               listName={l.name}
               grad1={translateTheme(l.theme).main}
               grad2={translateTheme(l.theme).second}
-              handleRemoveBtnClick={this.props.handleRemoveBtnClick}
+              handleListDelete={this.props.handleListDelete}
               handleSetList={this.props.handleSetList}
             />
           );

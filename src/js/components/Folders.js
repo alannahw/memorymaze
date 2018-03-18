@@ -10,7 +10,7 @@ import {
   setList,
   setTheme
 } from "../actions";
-import { BtnSubtle, AddBtn } from "../util/styledComponents.js";
+import { AddBtn } from "../util/styledComponents.js";
 import { connect } from "react-redux";
 import { findListInFolder, reorder, reorderMap } from "../util";
 import { DragDropContext } from "react-beautiful-dnd";
@@ -18,7 +18,7 @@ import { Drag, Drop } from "../lib/dragDropComponents.js";
 
 class Folder extends Component {
   delEvent = () => {
-    this.props.handleRemoveBtnClick(this.props.folderId, this.props.folderName);
+    this.props.handleFolderDelete(this.props.folderId, this.props.folderName);
   };
   folderNameChangeEvent = e => {
     this.props.handleFolderNameChange(this.props.folderId, e.target.value);
@@ -29,19 +29,7 @@ class Folder extends Component {
   render() {
     const removeBtnClass = this.props.removeBtns ? "removeBtnClass" : "";
     const folderClass = `${removeBtnClass} accordianSub`;
-    const {
-      folderName,
-      folderId,
-      handleFolderNameChange,
-      handleRemoveBtnClick,
-      lists,
-      handleAddList,
-      index
-    } = this.props;
-    const addBtnStyle = {
-      fontFamily: "Ionicons",
-      content: "\f2f5"
-    };
+    const { folderName, folderId, lists, index } = this.props;
 
     return (
       <Drag dragId={folderId} index={index}>
@@ -56,8 +44,8 @@ class Folder extends Component {
           >
             <Lists
               lists={lists}
-              handleRemoveBtnClick={handleRemoveBtnClick}
               handleSetList={this.props.handleSetList}
+              handleListDelete={this.props.handleListDelete}
             />
             <AddBtn onClick={this.addListEvent} />
           </Collapsibles>
@@ -82,21 +70,24 @@ class Folders extends PureComponent {
       this.props.dispatch(setTheme(list.theme));
     }
   };
-  handleRemoveBtnClick = (id, name) => {
-    const type = id.includes("f_") ? "folder" : "list";
+  handleFolderDelete = (id, name) => {
     const msg =
-      "Do you really want to delete the " +
-      type +
-      " '" +
+      "Do you really want to delete the folder '" +
       name +
-      "''? You will lose all the contents permanently.";
+      "'? You will lose all the contents permanently.";
 
     if (window.confirm(msg)) {
-      if (type === "folder") {
-        this.props.dispatch(deleteFolder(id));
-      } else {
-        this.props.dispatch(deleteList(id));
-      }
+      this.props.dispatch(deleteFolder(id));
+    }
+  };
+  handleListDelete = (id, name) => {
+    const msg =
+      "Do you really want to delete the list '" +
+      name +
+      "'? You will lose all the contents permanently.";
+
+    if (window.confirm(msg)) {
+      this.props.dispatch(deleteList(id));
     }
   };
   onDragEnd = result => {
@@ -138,7 +129,8 @@ class Folders extends PureComponent {
                   folderName={f.name}
                   lists={f.lists}
                   handleFolderNameChange={this.handleFolderNameChange}
-                  handleRemoveBtnClick={this.handleRemoveBtnClick}
+                  handleFolderDelete={this.handleFolderDelete}
+                  handleListDelete={this.handleListDelete}
                   removeBtns={this.props.removeBtns}
                   handleAddList={this.handleAddList}
                   handleSetList={this.handleSetList}

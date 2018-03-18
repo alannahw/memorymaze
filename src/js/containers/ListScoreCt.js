@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PlayBtn from "../components/PlayBtn";
-import { reorder, reorderMap } from "../util";
 
 class ListScoreCt extends Component {
   render() {

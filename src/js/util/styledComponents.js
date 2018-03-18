@@ -39,7 +39,7 @@ export const BackPanelLeft = BackPanel.extend`
 `;
 export const BackPanelRight = BackPanel.extend`
   right: 0;
-  background: ${props => props.theme.bg2};
+  background: ${props => LightenDarkenColor(props.theme.bg, 15)};
 `;
 export const BtnMain = styled.button`
   transition: background 0.1s, border 0.1s;
@@ -96,40 +96,11 @@ export const AddBtn = BtnSubtle.extend`
     content: "\f217";
   }
 `;
-export const IconBtn = BtnSubtle.extend`
-  padding: 0 5px;
-  border-radius: 0px;
-  font-size: 1.5em;
-  margin: 1px;
-  color: ${props => LightenDarkenColor(props.theme.second, 15)};
-  border-bottom: 3px solid ${props => LightenDarkenColor(props.theme.second, 5)};
-`;
-export const IconSpanAbsolute = styled.span`
-  position: absolute;
-  top: ${props => props.top || null};
-  left: ${props => props.left || null};
-`;
 
 export const Logo = styled.div`
   display: inline-block;
   color: ${props => props.theme.main};
   padding: 15px 20px;
-`;
-
-export const SearchBarInput = styled.input`
-  position: relative;
-  width: 150px;
-  font-size: 0.9em;
-  width: 150px;
-  background-color: ${props => props.theme.bg2};
-  border: none;
-  border-radius: 15px;
-  padding: 5px 10px 5px 30px;
-  margin-bottom: 10px;
-  color: ${props => LightenDarkenColor(props.theme.bg, 100)};
-  &::placeholder {
-    color: ${props => LightenDarkenColor(props.theme.bg, 60)};
-  }
 `;
 
 export const ListLink = BtnSubtle.extend`
@@ -239,16 +210,6 @@ export const ListTable = styled.table`
 export const ListTableCt = styled.div`
   width: 80%;
   margin: 20px auto 70px;
-`;
-export const ListToolbar = styled.div`
-  position: absolute;
-  bottom: 0;
-  padding: 5px;
-  box-sizing: border-box;
-  width: 100%;
-  height: 50px;
-  color: ${props => LightenDarkenColor(props.theme.second, 15)};
-  background: ${props => props.theme.third};
 `;
 export const EmptyListCt = styled.div`
   width: 60%;

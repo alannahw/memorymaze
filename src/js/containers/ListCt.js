@@ -1,36 +1,31 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
-import { updateList, addList, setList, setTheme } from "../actions";
+import { updateList } from "../actions";
 import {
   ListTitleCt,
   ListTitleInput,
   EmptyListCt,
-  FlexBox,
-  ListToolbar,
-  IconBtn,
-  IconSpanAbsolute
+  FlexBox
 } from "../util/styledComponents.js";
 import {
   editItemPropertyInArray,
   deleteItemFromArray,
-  getDefaultItem,
-  findListInFolder
+  getDefaultItem
 } from "../util";
 import Table from "../components/ListItems";
+import ListPageToolbar from "../components/ListPageToolbar";
 
 class ListCt extends PureComponent {
   handleListNameChange = e => {
     this.props.dispatch(updateList(this.props.list, "name", e.target.value));
   };
   handleItemTextChange = (id, name, value) => {
-    console.log(id, name, value);
     const items = editItemPropertyInArray(
       this.props.list.items,
       id,
       name,
       value
     );
-    console.log(this.props.list);
     this.props.dispatch(updateList(this.props.list, "items", items));
   };
 
@@ -74,14 +69,7 @@ class ListCt extends PureComponent {
                 />
               </FlexBox>
             </div>
-            <ListToolbar>
-              <IconBtn color={this.props.theme.third}>
-                <span className="ion-arrow-up-c" />
-              </IconBtn>
-              <IconBtn color={this.props.theme.third}>
-                <span className="ion-arrow-down-c" />
-              </IconBtn>
-            </ListToolbar>
+            <ListPageToolbar theme={this.props.theme} />
           </div>
         ) : (
           <FlexBox ignore="50px">

@@ -1,5 +1,4 @@
 import React from "react";
-import { LightenDarkenColor } from "./";
 
 export const GRADIENT_INDIA = (
   <radialGradient
@@ -79,13 +78,9 @@ export const THEME_INDIA = {
   id: "themeIndia",
   name: "India",
   main: "#e07762",
-  main2: LightenDarkenColor("#e07762", 15),
-  main3: LightenDarkenColor("#e07762", 30),
   second: "#fbb664",
   third: "#7b73b5",
   bg: "#30302f",
-  bg2: LightenDarkenColor("#30302f", 15),
-  bg3: LightenDarkenColor("#30302f", 30),
   light: "#fff"
 };
 export const THEME_OCEAN = {
@@ -95,8 +90,6 @@ export const THEME_OCEAN = {
   second: "#52c1c9",
   third: "#e5696b",
   bg: "#2c2c3a",
-  bg2: LightenDarkenColor("#2c2c3a", 15),
-  bg3: LightenDarkenColor("#2c2c3a", 30),
   light: "#fff"
 };
 export const THEME_PINEAPPLE = {
@@ -106,8 +99,6 @@ export const THEME_PINEAPPLE = {
   second: "#16b688",
   third: "#f48044",
   bg: "#06323a",
-  bg2: LightenDarkenColor("#06323a", 15),
-  bg3: LightenDarkenColor("#06323a", 30),
   light: "#fff"
 };
 export const ALL_THEMES = [THEME_INDIA, THEME_OCEAN, THEME_PINEAPPLE];

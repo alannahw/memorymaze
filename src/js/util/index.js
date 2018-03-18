@@ -167,20 +167,34 @@ export function reorderMap(array, source, destination) {
     return result;
   } else {
     // remove from original
-    current.lists.splice(source.index, 1);
+    const newCurrent = {
+      ...current,
+      //.splice(source.index, 1);
+      lists: current.lists.filter((el, i) => i !== source.index)
+    };
+
     // insert into next
-    next.lists.splice(destination.index, 0, target);
+    //next.lists.splice(destination.index, 0, target);
+    const newNext = {
+      ...next,
+      lists: [
+        ...next.lists.slice(0, destination.index),
+        target,
+        ...next.lists.slice(destination.index)
+      ]
+    };
+
     // map changed lists into whole array
     let result = array.map(i => {
-      if (i.id === current.id) {
+      if (i.id === newCurrent.id) {
         return {
           ...i,
-          items: current.items
+          lists: newCurrent.lists
         };
-      } else if (i.id === next.id) {
+      } else if (i.id === newNext.id) {
         return {
           ...i,
-          items: next.items
+          lists: newNext.lists
         };
       } else {
         return i;

@@ -7,8 +7,8 @@ export function setUserData(userData) {
 export function setFolders(folders) {
   return { type: types.SET_FOLDERS, folders };
 }
-export function searchFolders(searchValue) {
-  return { type: types.SEARCH_FOLDERS, searchValue };
+export function searchFolders(searchVal) {
+  return { type: types.SEARCH_FOLDERS, searchVal };
 }
 export function addFolder() {
   return { type: types.ADD_FOLDER };

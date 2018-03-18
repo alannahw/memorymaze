@@ -18,7 +18,7 @@ class EditableCell extends React.PureComponent {
     );
   };
   render() {
-    const { cellData, activeSideState, handleItemTextChange } = this.props;
+    const { cellData, activeSideState } = this.props;
     return (
       <ListItemTd>
         <ListItemInput

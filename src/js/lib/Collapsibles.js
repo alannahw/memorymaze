@@ -190,7 +190,6 @@ class Collapsibles extends Component {
     const innerClassString = `${this.props.classParentString}__contentInner ${
       this.props.contentInnerClassName
     }`;
-    const removeBtnId = `removeBtn_${this.props.id}`;
 
     return (
       <div className={parentClassString.trim()}>

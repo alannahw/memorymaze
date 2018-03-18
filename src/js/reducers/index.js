@@ -16,6 +16,7 @@ function user(
     userData: [],
     folders: [getDefaultFolder()],
     list: {},
+    folderQuery: "",
     theme: "themeIndia"
   },
   action
@@ -25,7 +26,8 @@ function user(
       return {
         ...state,
         userData: action.userData,
-        folders: action.userData.folders
+        folders: action.userData.folders,
+        list: action.userData.folders[0].lists[0]
       };
     case types.SET_FOLDERS: {
       const { folders } = action;
@@ -37,13 +39,11 @@ function user(
       };
     }
     case types.SEARCH_FOLDERS: {
-      let folders = [];
-      if (action.searchValue) {
-        folders = filterLists(action.searchValue, state.userData.folders);
-      } else {
-        folders = state.userData.folders.slice();
+      let folders = state.userData.folders.slice();
+      if (action.searchVal) {
+        folders = filterLists(action.searchVal, folders);
       }
-      return { ...state, folders };
+      return { ...state, folders, folderQuery: action.searchVal };
     }
     case types.ADD_FOLDER: {
       const folders = state.userData.folders.concat([getDefaultFolder()]);
@@ -85,18 +85,16 @@ function user(
     }
     case types.ADD_LIST: {
       const { folderId, property, value } = action;
-      const folders = [];
+      const folders = state.userData.folders.slice();
       const newList = {
         ...getDefaultList(),
-        folderId: folderId,
         theme: state.theme,
         [property]: value
       };
-      state.userData.folders.forEach(f => {
+      folders.forEach(f => {
         if (f.id === folderId) {
           f.lists.push(newList);
         }
-        folders.push(f);
       });
       const userData = { ...state.userData, folders };
       return {
@@ -107,7 +105,7 @@ function user(
       };
     }
     case types.DELETE_LIST: {
-      const folders = [];
+      let folders = [];
       state.userData.folders.forEach(f => {
         folders.push({
           ...f,

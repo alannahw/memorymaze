@@ -1,43 +1,69 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { searchFolders } from "../actions";
+import { LightenDarkenColor } from "../util";
 import styled from "styled-components";
-import { SearchBarInput } from "../util/styledComponents.js";
 
+// SearchBarInput outside class component because otherwise input loses
+// focus after every key press
+const SearchBarInput = styled.input`
+  position: relative;
+  width: 150px;
+  font-size: 0.9em;
+  width: 150px;
+  background-color: ${props =>
+    props.color === "bg"
+      ? LightenDarkenColor(props.theme.bg, 15)
+      : LightenDarkenColor(props.theme.third, 30)};
+  border: none;
+  border-radius: 15px;
+  padding: 5px 10px 5px 30px;
+  margin-bottom: 10px;
+  color: ${props =>
+    props.color === "bg"
+      ? LightenDarkenColor(props.theme.bg, 100)
+      : LightenDarkenColor(props.theme.third, -50)};
+  &::placeholder {
+    color: ${props =>
+      props.color === "bg"
+        ? LightenDarkenColor(props.theme.bg, 60)
+        : LightenDarkenColor(props.theme.third, -15)};
+  }
+`;
+const SearchIcon = styled.div`
+  &::before {
+    position: absolute;
+    top: 3px;
+    left: 10px;
+    font-size: 1.2em;
+    color: ${props =>
+      props.color === "bg"
+        ? props.theme.bg
+        : LightenDarkenColor(props.theme.third, -15)};
+    font-family: "Ionicons";
+    content: "\f2f5";
+  }
+`;
+const SearchCt = styled.div`
+  position: relative;
+  width: 150px;
+`;
 class SearchBar extends Component {
   search = e => {
-    this.props.dispatch(searchFolders(e.target.value));
+    this.props.handleSearch(e.target.value);
   };
 
   render() {
-    const { searchValue } = this.props;
-
-    const SearchIcon = styled.div`
-      &::before {
-        position: absolute;
-        top: 3px;
-        left: 10px;
-        font-size: 1.2em;
-        color: ${props => props.theme.bg};
-        font-family: "Ionicons";
-        content: "\f2f5";
-      }
-    `;
     return (
-      <div className="searchCt">
+      <SearchCt>
         <SearchBarInput
           placeholder="Search..."
           onChange={this.search}
-          value={searchValue}
+          value={this.props.queryVal}
+          color={this.props.color}
         />
-        <SearchIcon />
-      </div>
+        <SearchIcon color={this.props.color} />
+      </SearchCt>
     );
   }
 }
 
-function mapStateToProps(store) {
-  return { searchValue: store.user.searchValue };
-}
-
-export default connect(mapStateToProps)(SearchBar);
+export default SearchBar;
