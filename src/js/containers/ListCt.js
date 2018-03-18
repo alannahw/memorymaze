@@ -11,7 +11,7 @@ import {
   editItemPropertyInArray,
   deleteItemFromArray,
   getDefaultItem,
-  findListInFolder
+  findListInFolders
 } from "../util";
 import Table from "../components/ListItems";
 import ListPageToolbar from "../components/ListPageToolbar";
@@ -90,7 +90,7 @@ class ListCt extends PureComponent {
 function mapStateToProps(store) {
   return {
     currentListId: store.user.currentListId,
-    list: findListInFolder(
+    list: findListInFolders(
       store.user.userData.folders,
       store.user.currentListId
     ),

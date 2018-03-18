@@ -69,7 +69,7 @@ export function editItemPropertyInArray(array, id, property, value) {
   });
   return newArray;
 }
-export function findListInFolder(folderArray, listId) {
+export function findListInFolders(folderArray, listId) {
   if (folderArray) {
     let list = {};
     folderArray.forEach(f => {

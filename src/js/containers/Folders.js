@@ -1,5 +1,5 @@
 import React, { PureComponent, Component } from "react";
-import Lists from "./Lists";
+import Lists from "../components/Lists";
 import Collapsibles from "../lib/Collapsibles";
 import {
   setFolders,
@@ -12,7 +12,7 @@ import {
 } from "../actions";
 import { AddBtn } from "../util/styledComponents.js";
 import { connect } from "react-redux";
-import { findListInFolder, reorder, reorderMap, filterLists } from "../util";
+import { findListInFolders, reorder, reorderMap, filterLists } from "../util";
 import { DragDropContext } from "react-beautiful-dnd";
 import { Drag, Drop } from "../lib/dragDropComponents.js";
 
@@ -63,7 +63,7 @@ class Folders extends PureComponent {
     this.props.dispatch(addList(folderId));
   };
   handleSetList = id => {
-    const list = findListInFolder(this.props.folders, id);
+    const list = findListInFolders(this.props.folders, id);
     if (list) {
       this.props.dispatch(setList(id));
       this.props.dispatch(setTheme(list.theme));

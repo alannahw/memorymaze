@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { addFolder, setRemoveBtnState, setFolderQuery } from "../actions";
 import { BtnSubtle } from "../util/styledComponents.js";
 import Collapsible from "react-collapsible";
-import Folders from "../components/Folders";
+import Folders from "./Folders";
 import SearchBar from "../components/SearchBar";
 
 class SidebarProfileCt extends Component {

@@ -2,15 +2,12 @@ import { combineReducers } from "redux";
 import * as types from "../actions/actionTypes";
 import produce from "immer";
 import {
-  filterLists,
   editItemPropertyInArray,
-  findListInFolder,
   editListInFolder,
   deleteItemFromArray,
   getDefaultUser,
   getDefaultFolder,
-  getDefaultList,
-  getDefaultItem
+  getDefaultList
 } from "../util";
 
 function user(
@@ -22,6 +19,7 @@ function user(
   },
   action
 ) {
+  // produces draft of current state and outputs next immutable state
   return produce(state, draft => {
     switch (action.type) {
       case types.SET_USER_DATA: {
