@@ -158,28 +158,7 @@ export const SideBarToolBar = styled.div`
 export const RelativeCt = styled.div`
   position: relative;
 `;
-export const ListTitleCt = styled.div`
-  box-sizing: border-box;
-  transition: background 0.1s;
-  padding: 20px 0;
-  width: 100%;
-  background: ${props => props.theme.second};
-  font-size: 21px;
-  color: ${props => props.theme.main};
-`;
-export const ListTitleInput = styled(Textarea)`
-  transition: color 0.1s;
-  resize: none;
-  width: 100%;
-  text-align: center;
-  background: none;
-  border: none;
-  font-size: 21px;
-  color: ${props => props.theme.main};
-  &::placeholder {
-    color: ${props => LightenDarkenColor(props.theme.second, 45)};
-  }
-`;
+
 export const ListItemTd = styled.td`
   border-bottom: 1px solid ${props => LightenDarkenColor(props.theme.main, 30)};
 `;

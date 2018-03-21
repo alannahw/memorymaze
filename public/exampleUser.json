@@ -18,8 +18,12 @@
               "theme": "themeIndia",
               "scores": [
                 {
-                  "date": 1519903383428,
+                  "date": 1520895600000,
                   "score": 89
+                },
+                {
+                  "date": 1521068400000,
+                  "score": 95
                 }
               ],
               "items": [
@@ -208,7 +212,7 @@
               "theme": "themePineapple",
               "scores": [
                 {
-                  "date": 1519903383428,
+                  "date": 1519945200000,
                   "score": 100
                 }
               ],

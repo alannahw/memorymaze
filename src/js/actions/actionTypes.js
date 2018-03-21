@@ -17,6 +17,7 @@ export const SET_THEME = "SET_THEME";
 export const SET_LIST = "SET_LIST";
 export const UPDATE_LIST = "UPDATE_LIST";
 export const ADD_ITEM = "ADD_ITEM";
+export const SET_LIST_ITEM_QUERY = "SET_LIST_ITEM_QUERY";
 
 // Game
 export const SET_PLAY_STATE = "SET_PLAY_STATE";

@@ -55,7 +55,7 @@ class SearchBar extends Component {
     return (
       <SearchCt>
         <SearchBarInput
-          placeholder="Search..."
+          placeholder="Search word..."
           onChange={this.search}
           value={this.props.queryVal}
           color={this.props.color}

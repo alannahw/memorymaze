@@ -15,6 +15,7 @@ function user(
     userData: [getDefaultUser()],
     currentListId: "",
     folderQuery: "",
+    listItemQuery: "",
     theme: "themeIndia"
   },
   action
@@ -99,6 +100,10 @@ function user(
       }
       case types.SET_THEME: {
         draft.theme = action.theme;
+        return;
+      }
+      case types.SET_LIST_ITEM_QUERY: {
+        draft.listItemQuery = action.searchVal;
         return;
       }
     }

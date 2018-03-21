@@ -74,32 +74,57 @@ export const ALL_GRADIENTS = [
   { id: "btnMarshmallow", name: "Marshmallow", grad: GRADIENT_MARSHMALLOW }
 ];
 
+const india_red = "#e07762";
+const india_yelow = "#fbb664";
+const india_purple = "#7b73b5";
+const india_darkgrey = "#30302f";
+
 export const THEME_INDIA = {
   id: "themeIndia",
   name: "India",
-  main: "#e07762",
-  second: "#fbb664",
-  third: "#7b73b5",
-  bg: "#30302f",
-  light: "#fff"
+  main: india_red,
+  second: india_yelow,
+  third: india_purple,
+  bg: india_darkgrey,
+  light: "#fff",
+  mainSubtle: india_purple,
+  mainVibrant: india_yelow,
+  mainMiddle: india_red
 };
+
+const ocean_blue = "#3b7aa9";
+const ocean_teal = "#52c1c9";
+const ocean_pink = "#e5696b";
+const ocean_darkblue = "#2c2c3a";
+
 export const THEME_OCEAN = {
   id: "themeOcean",
   name: "Ocean",
-  main: "#3b7aa9",
-  second: "#52c1c9",
-  third: "#e5696b",
-  bg: "#2c2c3a",
-  light: "#fff"
+  main: ocean_blue,
+  second: ocean_teal,
+  third: ocean_pink,
+  bg: ocean_darkblue,
+  light: "#fff",
+  mainSubtle: ocean_blue,
+  mainVibrant: ocean_teal,
+  mainMiddle: ocean_pink
 };
+const pine_yellow = "#fec555";
+const pine_green = "#16b688";
+const pine_orange = "#f48044";
+const pine_darkteal = "#06323a";
+
 export const THEME_PINEAPPLE = {
   id: "themePineapple",
   name: "Pineapple",
-  main: "#fec555",
-  second: "#16b688",
-  third: "#f48044",
-  bg: "#06323a",
-  light: "#fff"
+  main: pine_yellow,
+  second: pine_green,
+  third: pine_orange,
+  bg: pine_darkteal,
+  light: "#fff",
+  mainSubtle: pine_green,
+  mainVibrant: pine_yellow,
+  mainMiddle: pine_orange
 };
 export const ALL_THEMES = [THEME_INDIA, THEME_OCEAN, THEME_PINEAPPLE];
 

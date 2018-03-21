@@ -166,3 +166,6 @@ button:focus {
   top: 1px;
   color: rgba(255, 255, 255, 0.4) !important;
 }
+.linedash {
+  border-style: dashed;
+}

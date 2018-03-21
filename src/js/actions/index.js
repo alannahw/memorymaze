@@ -53,6 +53,9 @@ export function setTheme(theme) {
 export function addItem() {
   return { type: types.ADD_ITEM };
 }
+export function setListItemQuery(searchVal) {
+  return { type: types.SET_LIST_ITEM_QUERY, searchVal };
+}
 
 // Game
 export function setPlayState(playState) {

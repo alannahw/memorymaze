@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { addFolder, setRemoveBtnState, setFolderQuery } from "../actions";
 import { BtnSubtle } from "../util/styledComponents.js";
 import Collapsible from "react-collapsible";
-import Folders from "./Folders";
+import FoldersCt from "./FoldersCt";
 import SearchBar from "../components/SearchBar";
 
 class SidebarProfileCt extends Component {
@@ -32,7 +32,7 @@ class SidebarProfileCt extends Component {
     return (
       <div>
         <Collapsible classParentString="accordianMain" trigger="Profile">
-          <p>Information relating to your profile can be found here.</p>
+          <p>Information relating to the profile.</p>
         </Collapsible>
         <Collapsible
           classParentString="accordianMain"
@@ -57,7 +57,7 @@ class SidebarProfileCt extends Component {
             queryVal={this.props.folderQuery}
             color="bg"
           />
-          <Folders removeBtns={this.props.removeBtnState} />
+          <FoldersCt removeBtns={this.props.removeBtnState} />
         </Collapsible>
       </div>
     );

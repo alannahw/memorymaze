@@ -55,6 +55,18 @@ export function filterLists(searchValue, folders) {
     return filtered;
   } else return folders;
 }
+export function filterItems(searchVal, listItems) {
+  if (searchVal) {
+    const val = searchVal.toLowerCase();
+    let listMatches = listItems.filter(i => {
+      return (
+        i.side1.toLowerCase().includes(val) ||
+        i.side2.toLowerCase().includes(val)
+      );
+    });
+    return listMatches;
+  } else return listItems;
+}
 
 export function editItemPropertyInArray(array, id, property, value) {
   const newArray = array.map(i => {
@@ -212,5 +224,46 @@ export function reorderMap(array, source, destination) {
       }
     });
     return result;
+  }
+}
+
+export function retentionFn(s, t) {
+  return Math.pow(Math.E, -t / s);
+}
+
+export function getCurveData(startDay, index, graphDays) {
+  const daySeries = [];
+  for (let i = 0; i <= graphDays; i++) {
+    daySeries.push(i);
+  }
+  const data = [];
+  daySeries.forEach((t, i) => {
+    if (i >= startDay) {
+      data.push({
+        x: t,
+        y: retentionFn((index + 1) * 3, i - startDay)
+      });
+    }
+  });
+
+  return data;
+}
+
+export function getNextRevisionDate(list) {
+  //const intervals = [1,1,6,11,12];
+  if (list.scores) {
+    const latest = list.scores.reduce((a, b) => (a.date > b.date ? a : b)).date;
+    const earliest = list.scores.reduce((a, b) => (a.date < b.date ? a : b))
+      .date;
+    const currCurveDay = (latest - earliest) / 86400000;
+    const strength = list.scores.length;
+    const curveData = getCurveData(currCurveDay, strength - 1, 30);
+
+    const nextDate = curveData.find(d => d.y < 0.5).x;
+    const today = new Date().setHours(0, 0, 0, 0);
+    const totalDays = (today - earliest) / 86400000;
+    // const DaysSinceLastGame = (today - latest) / 86400000;
+    const daysTill = nextDate - totalDays;
+    return daysTill;
   }
 }
