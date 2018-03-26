@@ -8,6 +8,8 @@ export const DELETE_FOLDER = "DELETE_FOLDER";
 export const ADD_LIST = "ADD_LIST";
 export const DELETE_LIST = "DELETE_LIST";
 
+export const SET_GRAPH_TIMEFRAME = "SET_GRAPH_TIMEFRAME";
+
 // Layout
 export const SET_SIDEBAR_STATE = "SET_SIDEBAR_STATE";
 export const SET_REMOVEBTN_STATE = "SET_REMOVEBTN_STATE";

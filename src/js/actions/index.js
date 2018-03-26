@@ -56,6 +56,9 @@ export function addItem() {
 export function setListItemQuery(searchVal) {
   return { type: types.SET_LIST_ITEM_QUERY, searchVal };
 }
+export function setGraphTimeframe(start, end) {
+  return { type: types.SET_GRAPH_TIMEFRAME, start, end };
+}
 
 // Game
 export function setPlayState(playState) {

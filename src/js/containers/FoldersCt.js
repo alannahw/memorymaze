@@ -7,14 +7,27 @@ import {
   deleteList,
   addList,
   setList,
-  setTheme
+  setTheme,
+  setGraphTimeframe
 } from "../actions";
 import { connect } from "react-redux";
-import { findListInFolders, reorder, reorderMap, filterLists } from "../util";
+import {
+  findListInFolders,
+  reorder,
+  reorderMap,
+  filterLists,
+  getScoreStats
+} from "../util";
 import { DragDropContext } from "react-beautiful-dnd";
 import { Drop } from "../lib/dragDropComponents.js";
 
 class FoldersCt extends PureComponent {
+  handleSetGraphXAxis = list => {
+    const stats = getScoreStats(list);
+    const end = Math.ceil(stats.totalDays / 30.0) * 30;
+    const start = Math.floor(stats.totalDays / 30.0) * 30;
+    this.props.dispatch(setGraphTimeframe(start, end));
+  };
   handleFolderNameChange = (id, value) => {
     this.props.dispatch(editFolderName(id, value));
   };
@@ -26,6 +39,9 @@ class FoldersCt extends PureComponent {
     if (list) {
       this.props.dispatch(setList(id));
       this.props.dispatch(setTheme(list.theme));
+      if (list.scores) {
+        this.handleSetGraphXAxis(list);
+      }
     }
   };
   handleFolderDelete = (id, name) => {

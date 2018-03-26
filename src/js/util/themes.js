@@ -114,9 +114,9 @@ const pine_green = "#16b688";
 const pine_orange = "#f48044";
 const pine_darkteal = "#06323a";
 
-export const THEME_PINEAPPLE = {
-  id: "themePineapple",
-  name: "Pineapple",
+export const THEME_TROPICAL = {
+  id: "themeTropical",
+  name: "Tropical",
   main: pine_yellow,
   second: pine_green,
   third: pine_orange,
@@ -126,7 +126,7 @@ export const THEME_PINEAPPLE = {
   mainVibrant: pine_yellow,
   mainMiddle: pine_orange
 };
-export const ALL_THEMES = [THEME_INDIA, THEME_OCEAN, THEME_PINEAPPLE];
+export const ALL_THEMES = [THEME_INDIA, THEME_OCEAN, THEME_TROPICAL];
 
 export function translateTheme(newTheme) {
   return ALL_THEMES.find(e => e.id === newTheme);

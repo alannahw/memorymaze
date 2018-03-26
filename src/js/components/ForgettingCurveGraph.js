@@ -3,17 +3,22 @@ import {
   XYPlot,
   XAxis,
   YAxis,
-  HorizontalGridLines,
   LineSeries,
   MarkSeries,
-  Hint
+  Hint,
+  Borders
 } from "react-vis";
-import { LightenDarkenColor } from "../util";
+import {
+  LightenDarkenColor,
+  getScoreStats,
+  getCurveData,
+  retentionFn
+} from "../util";
 import styled from "styled-components";
 
 const MyMarker = styled.div`
   font-size: 12px;
-  color: ${props => props.theme.mainMiddle};
+  color: ${props => props.theme.mainVibrant};
   font-weight: 600;
   padding: 0 0 10px 10px;
 `;
@@ -21,61 +26,17 @@ const ScoreMarker = MyMarker.extend`
   color: ${props => props.theme.second};
 `;
 class Example extends React.Component {
-  getInfo = () => {
-    const { scores } = this.props.list;
-    if (scores) {
-      const earliest = scores.reduce((a, b) => (a.date < b.date ? a : b)).date;
-      const strength = scores.length;
-      const latestScore = scores.reduce((a, b) => (a.date > b.date ? a : b));
-      const now = new Date();
-      const totalDays = (now - earliest) / 86400000;
-      const totalGraphDays = totalDays > 30 ? totalDays : 30;
-      const currCurveDay = (latestScore.date - earliest) / 86400000;
-      return {
-        scores: scores,
-        earliest: earliest,
-        strength: strength,
-        latestScore: latestScore,
-        now: now,
-        totalDays: totalDays,
-        totalGraphDays: totalGraphDays,
-        currCurveDay: currCurveDay
-      };
-    } else {
-      return { totalGraphDays: 30 };
-    }
-  };
-
-  getCurveData = (startDay, index) => {
-    const info = this.getInfo();
-
-    const daySeries = [];
-    for (let i = 0; i <= info.totalGraphDays; i++) {
-      daySeries.push(i);
-    }
-    //const daySeries = [0, 1, 2, 7, 18, 30];
-    const data = [];
-    daySeries.forEach((t, i) => {
-      if (i >= startDay) {
-        data.push({
-          x: t,
-          y: this.retentionFn((index + 1) * 3, i - startDay)
-        });
-      }
-    });
-
-    return data;
-  };
   getDummyCurves = () => {
-    const info = this.getInfo();
+    const { start, end } = this.props.graph;
+    const stats = getScoreStats(this.props.list);
     const intervals = [0, 1, 2, 7, 18, 30, 90, 180, 350];
     let series = [];
     intervals.forEach((num, i) => {
-      if (num <= info.totalGraphDays) {
+      if (num <= this.props.graph.end) {
         series.push(
           <LineSeries
             key={i}
-            data={this.getCurveData(num, i)}
+            data={getCurveData(num, i + 1, start, end)}
             style={{
               fill: "none",
               stroke: LightenDarkenColor(this.props.theme.bg, 40),
@@ -89,15 +50,16 @@ class Example extends React.Component {
     return series;
   };
   getPastCurves = () => {
-    const info = this.getInfo();
+    const { start, end } = this.props.graph;
+    const stats = getScoreStats(this.props.list);
     let series = [];
-    info.scores.forEach((s, i) => {
-      const startDay = (s.date - info.earliest) / 86400000;
+    stats.scores.forEach((s, i) => {
+      const startDay = (s.date - stats.earliest) / 86400000;
 
       series.push(
         <LineSeries
           key={`${i}_pastCurves`}
-          data={this.getCurveData(startDay, i)}
+          data={getCurveData(startDay, i + 1, start, end)}
           style={{
             fill: "none",
             stroke: LightenDarkenColor(this.props.theme.bg, 40),
@@ -110,11 +72,17 @@ class Example extends React.Component {
     return series;
   };
   getCurrentCurve = () => {
-    const info = this.getInfo();
+    const { list, graph } = this.props;
+    const stats = getScoreStats(list);
     return (
       <LineSeries
         key={`currCurve`}
-        data={this.getCurveData(info.currCurveDay, info.strength - 1)}
+        data={getCurveData(
+          stats.currCurveDay,
+          stats.strength,
+          graph.start,
+          graph.end
+        )}
         style={{
           fill: "none",
           stroke: this.props.theme.mainMiddle,
@@ -125,10 +93,10 @@ class Example extends React.Component {
     );
   };
   getOldScores = () => {
-    const info = this.getInfo();
+    const stats = getScoreStats(this.props.list);
     let oldScoresData = [];
-    info.scores.forEach((s, i) => {
-      const startDay = (s.date - info.earliest) / 86400000;
+    stats.scores.forEach((s, i) => {
+      const startDay = (s.date - stats.earliest) / 86400000;
       oldScoresData.push({
         x: startDay,
         y: 1 //s.score / 100
@@ -137,37 +105,49 @@ class Example extends React.Component {
     return (
       <MarkSeries
         key={`oldScores`}
-        color={this.props.theme.mainVibrant}
+        color={this.props.theme.mainMiddle}
         size={6}
         data={oldScoresData}
       />
     );
   };
   getCurrentPosition = () => {
-    const info = this.getInfo();
+    const { start, end } = this.props.graph;
+    const stats = getScoreStats(this.props.list);
     const loc = {
-      x: info.totalDays,
-      y: this.retentionFn(info.strength * 3, info.totalDays - info.currCurveDay)
+      x: stats.totalDays,
+      y: retentionFn(stats.strength * 3, stats.totalDays - stats.currCurveDay)
     };
-    return [
+    let marker = [];
+
+    marker.push([
       <MarkSeries
         key={`currPos`}
-        color={this.props.theme.mainMiddle}
+        color={this.props.theme.mainVibrant}
         size={6}
         data={[loc]}
-      />,
-      <Hint value={loc} orientation="topleft">
-        <MyMarker>my position</MyMarker>
-      </Hint>
-    ];
+      />
+    ]);
+    if (start < stats.totalDays && stats.totalDays < end) {
+      marker.push([
+        <Hint value={loc} orientation="topleft">
+          <MyMarker>my position</MyMarker>
+        </Hint>
+      ]);
+    }
+
+    return marker;
   };
   getGameCompletedDays = () => {
+    const { start, end } = this.props.graph;
     const ticks = [];
     if (this.props.list.scores) {
-      const info = this.getInfo();
-      info.scores.forEach((s, i) => {
-        const startDay = (s.date - info.earliest) / 86400000;
-        ticks.push(startDay);
+      const stats = getScoreStats(this.props.list);
+      stats.scores.forEach((s, i) => {
+        const startDay = (s.date - stats.earliest) / 86400000;
+        if (start <= startDay && startDay <= end) {
+          ticks.push(startDay);
+        }
       });
     }
     return ticks;
@@ -187,6 +167,7 @@ class Example extends React.Component {
     }
   };
   getDashedMidline = () => {
+    const { start, end } = this.props.graph;
     const midLine = {
       fill: "none",
       stroke: LightenDarkenColor(this.props.theme.bg, 60),
@@ -200,12 +181,12 @@ class Example extends React.Component {
     };
     return [
       <LineSeries
-        data={[{ x: 0, y: 0.5 }, { x: 30, y: 0.5 }]}
+        data={[{ x: start, y: 0.5 }, { x: end, y: 0.5 }]}
         strokeStyle="dashed"
         style={midLine}
       />,
       <XAxis
-        top={110}
+        top={115}
         hideTicks
         hideLine
         style={midLine}
@@ -215,19 +196,15 @@ class Example extends React.Component {
   };
 
   // retentionFn = (s, l, t) => 1 / (1 + 1 / (l * s) * Math.log(1 + l * t));
-  retentionFn = (s, t) => Math.pow(Math.E, -t / s);
+  // retentionFn = (s, t) => Math.pow(Math.E, -t / s);
   render() {
     const axesStyle = {
-      line: { stroke: LightenDarkenColor(this.props.theme.mainSubtle, 0) },
+      line: { stroke: this.props.theme.mainSubtle },
       text: {
         stroke: "none",
-        fill: LightenDarkenColor(this.props.theme.mainSubtle, 0),
-        fontWeight: 600
-      },
-      title: {
-        fill: LightenDarkenColor(this.props.theme.mainSubtle, 0),
-        fontWeight: 400,
-        fontSize: "10px"
+        fill: this.props.theme.mainSubtle,
+        fontWeight: 600,
+        fontSize: "12px"
       }
     };
 
@@ -235,18 +212,29 @@ class Example extends React.Component {
       line: { stroke: "none" },
       text: {
         stroke: "none",
-        fill: this.props.theme.mainVibrant,
-        fontWeight: 600
+        fill: this.props.theme.mainMiddle,
+        fontWeight: 600,
+        fontSize: "12px"
       }
     };
     const wrapperStyle = {
-      overflow: "visible"
+      //overflow: "visible"
     };
+    const { graph, width } = this.props;
+    const xTickVals =
+      graph.start === 0 ? [0, 1, 2, 7, 18, 30] : [graph.start, graph.end];
 
     return (
-      <XYPlot width={this.props.width} height={250} style={wrapperStyle}>
-        <XAxis tickValues={[1, 2, 7, 18, 30]} tickSize={5} style={axesStyle} />
-
+      <XYPlot
+        animation
+        width={width}
+        height={250}
+        style={wrapperStyle}
+        yDomain={[0, 1]}
+        xDomain={[graph.start, graph.end]}
+        margin={{ bottom: 25 }}
+      >
+        <XAxis tickValues={xTickVals} tickSize={5} style={axesStyle} />
         <XAxis
           tickValues={this.getGameCompletedDays()}
           tickSize={5}
@@ -260,7 +248,6 @@ class Example extends React.Component {
           }}
           style={axesStyle}
         />
-
         {this.currentPlots()}
       </XYPlot>
     );

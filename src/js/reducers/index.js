@@ -16,7 +16,8 @@ function user(
     currentListId: "",
     folderQuery: "",
     listItemQuery: "",
-    theme: "themeIndia"
+    theme: "themeIndia",
+    graph: { start: 0, end: 30 }
   },
   action
 ) {
@@ -104,6 +105,10 @@ function user(
       }
       case types.SET_LIST_ITEM_QUERY: {
         draft.listItemQuery = action.searchVal;
+        return;
+      }
+      case types.SET_GRAPH_TIMEFRAME: {
+        draft.graph = { start: action.start, end: action.end };
         return;
       }
     }

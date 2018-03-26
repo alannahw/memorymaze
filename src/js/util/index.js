@@ -150,7 +150,7 @@ export function getDefaultList() {
     name: "New List",
     "date-created": new Date(),
     theme: "themeIndia",
-    scores: [],
+    scores: null,
     items: [getDefaultItem()]
   };
 }
@@ -231,9 +231,9 @@ export function retentionFn(s, t) {
   return Math.pow(Math.E, -t / s);
 }
 
-export function getCurveData(startDay, index, graphDays) {
+export function getCurveData(startDay, strength, xAxisStart, xAxisEnd) {
   const daySeries = [];
-  for (let i = 0; i <= graphDays; i++) {
+  for (let i = 0; i <= xAxisEnd; i++) {
     daySeries.push(i);
   }
   const data = [];
@@ -241,29 +241,48 @@ export function getCurveData(startDay, index, graphDays) {
     if (i >= startDay) {
       data.push({
         x: t,
-        y: retentionFn((index + 1) * 3, i - startDay)
+        y: retentionFn(strength * 3, i - startDay)
       });
     }
   });
+  const sliceNo = xAxisStart - startDay;
+  const sliceIndex = sliceNo < 0 ? 0 : sliceNo;
+  return data.slice(sliceIndex);
+}
 
-  return data;
+export function getScoreStats(list) {
+  const { scores } = list;
+  if (scores) {
+    const earliest = scores.reduce((a, b) => (a.date < b.date ? a : b)).date;
+    const strength = scores.length;
+    const latest = scores.reduce((a, b) => (a.date > b.date ? a : b)).date;
+    const today = new Date().setHours(0, 0, 0, 0);
+    const totalDays = (today - earliest) / 86400000;
+    const currCurveDay = (latest - earliest) / 86400000;
+    return {
+      scores: scores,
+      earliest: earliest,
+      strength: strength,
+      latest: latest,
+      today: today,
+      totalDays: totalDays,
+      currCurveDay: currCurveDay
+    };
+  }
 }
 
 export function getNextRevisionDate(list) {
-  //const intervals = [1,1,6,11,12];
   if (list.scores) {
-    const latest = list.scores.reduce((a, b) => (a.date > b.date ? a : b)).date;
-    const earliest = list.scores.reduce((a, b) => (a.date < b.date ? a : b))
-      .date;
-    const currCurveDay = (latest - earliest) / 86400000;
-    const strength = list.scores.length;
-    const curveData = getCurveData(currCurveDay, strength - 1, 30);
-
+    const stats = getScoreStats(list);
+    const curveData = getCurveData(
+      stats.currCurveDay,
+      stats.strength,
+      0,
+      stats.totalDays
+    );
     const nextDate = curveData.find(d => d.y < 0.5).x;
-    const today = new Date().setHours(0, 0, 0, 0);
-    const totalDays = (today - earliest) / 86400000;
     // const DaysSinceLastGame = (today - latest) / 86400000;
-    const daysTill = nextDate - totalDays;
+    const daysTill = nextDate - stats.totalDays;
     return daysTill;
   }
 }

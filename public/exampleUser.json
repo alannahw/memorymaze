@@ -209,7 +209,7 @@
               "folderId": "f_002",
               "name": "Quick List",
               "date-created": 1519903296421,
-              "theme": "themePineapple",
+              "theme": "themeTropical",
               "scores": [
                 {
                   "date": 1519945200000,
@@ -249,6 +249,39 @@
                 },
                 {
                   "id": "i_005",
+                  "side1": "deer",
+                  "side2": "der Hirsch(en)",
+                  "level": 0
+                }
+              ]
+            },
+            {
+              "id": "l_004",
+              "folderId": "f_002",
+              "name": "Quicker List",
+              "date-created": 1515711600000,
+              "theme": "themeOcean",
+              "scores": [
+                {
+                  "date": 1515711600000,
+                  "score": 100
+                }
+              ],
+              "items": [
+                {
+                  "id": "i_093",
+                  "side1": "cat",
+                  "side2": "die Katze(n)",
+                  "level": 0
+                },
+                {
+                  "id": "i_094",
+                  "side1": "cow",
+                  "side2": "die Kuh(ü,e)",
+                  "level": 0
+                },
+                {
+                  "id": "i_095",
                   "side1": "deer",
                   "side2": "der Hirsch(en)",
                   "level": 0
