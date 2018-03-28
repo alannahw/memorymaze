@@ -10,7 +10,8 @@ import {
   BackPanelLeft,
   BackPanelRight,
   PanelContent,
-  SideBarToolBar
+  SideBarToolBar,
+  SideBarLarge
 } from "../util/styledComponents.js";
 import NavCt from "./NavCt";
 import ListCt from "./ListCt";
@@ -19,7 +20,8 @@ import FlashGameCt from "./FlashGameCt";
 import FlashCardsCt from "./FlashCardsCt";
 import SidebarThemesCt from "./SidebarThemesCt";
 import SidebarProfileCt from "./SidebarProfileCt";
-import { translateTheme } from "../util/themes.js";
+import SidebarLookupCt from "./SidebarLookupCt";
+import { translateTheme } from "../util/themes";
 
 class App extends Component {
   componentDidMount() {
@@ -79,12 +81,30 @@ class App extends Component {
         </SideBarStyle>
       </div>
     );
+
     const ProfileSideBar = (
       <div key="sbProfile">
         <SideBarStyle className="tFromRight">
           <PanelContent>
             <SidebarProfileCt />
           </PanelContent>
+        </SideBarStyle>
+      </div>
+    );
+
+    const LookupSideBar = (
+      <div key="sbLookup">
+        <SideBarStyle className="tFromRight">
+          <PanelContent>
+            <SidebarLookupCt />
+          </PanelContent>
+        </SideBarStyle>
+      </div>
+    );
+    const HelpSideBar = (
+      <div key="sbHelp">
+        <SideBarStyle className="tFromRight">
+          <PanelContent>How it Works</PanelContent>
         </SideBarStyle>
       </div>
     );
@@ -96,6 +116,10 @@ class App extends Component {
       sideBar = ThemeSideBar;
     } else if (this.props.sideBarState === "profile") {
       sideBar = ProfileSideBar;
+    } else if (this.props.sideBarState === "lookup") {
+      sideBar = LookupSideBar;
+    } else if (this.props.sideBarState === "help") {
+      sideBar = HelpSideBar;
     }
 
     if (!this.props.playState) {
@@ -103,7 +127,6 @@ class App extends Component {
     } else {
       bgPage = PageTwo;
     }
-
     return (
       <div className="App">
         <ThemeProvider theme={translateTheme(this.props.theme)}>

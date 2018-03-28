@@ -39,7 +39,6 @@ export function setRemoveBtnState(removeBtnState) {
     removeBtnState
   };
 }
-
 // List
 export function setList(listId) {
   return { type: types.SET_LIST, listId };

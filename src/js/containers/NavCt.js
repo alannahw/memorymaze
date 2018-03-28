@@ -1,9 +1,72 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { setSidebarState } from "../actions";
-import { TopNav, BtnNav, BtnNavTheme, Logo } from "../util/styledComponents.js";
+import styled from "styled-components";
+import { LightenDarkenColor } from "../util";
+import { BtnSubtle } from "../util/styledComponents.js";
+
+const TopNav = styled.div`
+  text-align: left;
+  position: absolute;
+  top: 0;
+  width: 100vw;
+  height: 50px;
+  background: ${props => props.theme.bg};
+  color: #fff;
+  z-index: 3;
+  font-size: 16px;
+`;
+const MenuCt = styled.div`
+  float: right;
+  margin: 10px;
+  box-sizing: border-box;
+  color: ${props => LightenDarkenColor(props.theme.bg, 40)};
+`;
+const Logo = styled.div`
+  display: inline-block;
+  color: ${props => props.theme.main};
+  padding: 15px 20px;
+`;
+const BtnNav = BtnSubtle.extend`
+  padding: 2px 15px;
+  vertical-align: middle;
+  color: ${props =>
+    props.active ? LightenDarkenColor(props.theme.main, 40) : props.theme.main};
+`;
+const NavIconBook = BtnNav.extend`
+  &::after {
+    font-size: 21px;
+    font-family: "Ionicons";
+    content: "\f3e7";
+  }
+`;
+const NavIconHelp = BtnNav.extend`
+  &::after {
+    font-size: 18px;
+    font-family: "Ionicons";
+    content: "\f143";
+  }
+`;
+const BtnNavTheme = BtnNav.extend`
+  color: transparent;
+  padding: 0;
+  margin: 3px 15px;
+  width: 20px;
+  height: 20px;
+  border-radius: 15px;
+  transition: opacity 0.2s;
+  ${"" /* opacity: ${props => (props.active ? 1 : 0.85)}; */}
+  background: linear-gradient(
+    90deg,
+    ${props => props.theme.main},
+    ${props => props.theme.second}
+  );
+`;
 
 class NavCt extends Component {
+  handleDictionaryOpen = () => {
+    console.log("open sesame");
+  };
   handleSideBarToggle = e => {
     const sideBar =
       this.props.sideBarState === e.target.name ? false : e.target.name;
@@ -12,15 +75,22 @@ class NavCt extends Component {
 
   render() {
     const { sideBarState, userData } = this.props;
-    const style = {
-      padding: "10px",
-      float: "right",
-      color: "rgba(255,255,255,0.5)"
-    };
     return (
       <TopNav>
         <Logo>Memory Maze</Logo>
-        <div style={style}>
+        <MenuCt>
+          <NavIconHelp
+            name="help"
+            active={sideBarState === "help" ? true : false}
+            onClick={this.handleSideBarToggle}
+          />
+          |
+          <NavIconBook
+            name="lookup"
+            active={sideBarState === "lookup" ? true : false}
+            onClick={this.handleSideBarToggle}
+          />
+          |
           <BtnNavTheme
             name="themes"
             active={sideBarState === "themes" ? true : false}
@@ -36,7 +106,7 @@ class NavCt extends Component {
           >
             {userData.name}
           </BtnNav>
-        </div>
+        </MenuCt>
       </TopNav>
     );
   }

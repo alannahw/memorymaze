@@ -2,17 +2,6 @@ import styled from "styled-components";
 import { LightenDarkenColor } from "../util";
 import Textarea from "react-textarea-autosize";
 
-export const TopNav = styled.div`
-  text-align: left;
-  position: absolute;
-  top: 0;
-  width: 100vw;
-  height: 50px;
-  font-size: 14px;
-  background: ${props => props.theme.bg};
-  color: #fff;
-  z-index: 3;
-`;
 export const BackPanel = styled.div`
   transition: background 0.1s;
   width: 50vw;
@@ -32,6 +21,9 @@ export const SideBarStyle = styled.div`
   right: 0;
   z-index: 2;
   overflow: scroll;
+`;
+export const SideBarLarge = SideBarStyle.extend`
+  width: 500px;
 `;
 export const BackPanelLeft = BackPanel.extend`
   left: 0;
@@ -66,27 +58,9 @@ export const BtnSubtle = BtnMain.extend`
   margin: 1px;
   background: transparent;
 `;
-export const BtnNav = BtnSubtle.extend`
-  padding: 0;
-  margin: 5px 15px;
-  color: ${props =>
-    props.active ? LightenDarkenColor(props.theme.main, 40) : props.theme.main};
-`;
+
 export const BtnSubtleToned = BtnSubtle.extend`
   color: ${props => LightenDarkenColor(props.theme.main, props.tone)};
-`;
-export const BtnNavTheme = BtnNav.extend`
-  color: transparent;
-  width: 20px;
-  height: 20px;
-  border-radius: 15px;
-  transition: opacity 0.2s;
-  ${"" /* opacity: ${props => (props.active ? 1 : 0.85)}; */}
-  background: linear-gradient(
-    90deg,
-    ${props => props.theme.main},
-    ${props => props.theme.second}
-  );
 `;
 export const AddBtn = BtnSubtle.extend`
   &::after {
@@ -95,12 +69,6 @@ export const AddBtn = BtnSubtle.extend`
     font-family: "Ionicons";
     content: "\f217";
   }
-`;
-
-export const Logo = styled.div`
-  display: inline-block;
-  color: ${props => props.theme.main};
-  padding: 15px 20px;
 `;
 
 export const ListLink = BtnSubtle.extend`

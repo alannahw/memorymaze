@@ -130,7 +130,7 @@ function layout(
 
     case types.SET_REMOVEBTN_STATE:
       return { ...state, removeBtnState: action.removeBtnState };
-  }
+
   return state;
 }
 

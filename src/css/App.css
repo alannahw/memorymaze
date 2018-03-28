@@ -35,6 +35,25 @@ button:focus {
 
 /* END Side Bar Transitions */
 
+/* Side Bar LARGE Transitions */
+
+.slideInFromRight-enter .tFromRightLarge {
+  transform: translate(500px, 0);
+}
+.slideInFromRight-enter.slideInFromRight-enter-active .tFromRightLarge {
+  transform: translate(0, 0);
+  transition: transform 300ms ease-in;
+}
+.slideInFromRight-leave .tFromRightLarge {
+  transform: translate(0, 0);
+}
+.slideInFromRight-leave.slideInFromRight-leave-active .tFromRightLarge {
+  transform: translate(500px, 0);
+  transition: transform 300ms ease-in;
+}
+
+/* END Side Bar LARGE Transitions */
+
 /* Back Panel Transitions */
 
 .slideUpDown-enter .tFromTop {
