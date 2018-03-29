@@ -120,24 +120,50 @@ function layout(
   state = {
     sideBarState: false,
     removeBtnState: false,
-    activeSideState: "side2"
+    activeSideState: "side1"
   },
   action
 ) {
   switch (action.type) {
     case types.SET_SIDEBAR_STATE:
       return { ...state, sideBarState: action.sideBarState };
-
     case types.SET_REMOVEBTN_STATE:
       return { ...state, removeBtnState: action.removeBtnState };
-
+    case types.SET_ACTIVESIDE_STATE: {
+      console.log(action.activeSideState);
+      return { ...state, activeSideState: action.activeSideState };
+    }
+  }
   return state;
 }
 
-function game(state = { playState: false }, action) {
+function game(
+  state = {
+    playState: false,
+    currItem: { id: "", side1: "", side2: "", level: "" },
+    ansText: "",
+    itemComplete: false,
+    gameComplete: false,
+    attemptCount: 0,
+    successCount: 0
+  },
+  action
+) {
   switch (action.type) {
     case types.SET_PLAY_STATE:
       return { ...state, playState: action.playState };
+    case types.SET_CURRENT_ITEM:
+      return { ...state, currItem: action.currItem };
+    case types.UPDATE_ANSWER_INPUT_TEXT:
+      return { ...state, ansText: action.text };
+    case types.SET_ITEM_COMPLETE_STATE:
+      return { ...state, itemComplete: action.itemComplete };
+    case types.SET_GAME_COMPLETE_STATE:
+      return { ...state, gameComplete: action.gameComplete };
+    case types.SET_ATTEMPT_COUNT:
+      return { ...state, attemptCount: action.count };
+    case types.SET_SUCCESS_COUNT:
+      return { ...state, successCount: action.count };
   }
   return state;
 }

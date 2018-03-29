@@ -39,6 +39,12 @@ export function setRemoveBtnState(removeBtnState) {
     removeBtnState
   };
 }
+export function setActiveSideState(activeSideState) {
+  return {
+    type: types.SET_ACTIVESIDE_STATE,
+    activeSideState
+  };
+}
 // List
 export function setList(listId) {
   return { type: types.SET_LIST, listId };
@@ -61,8 +67,23 @@ export function setGraphTimeframe(start, end) {
 
 // Game
 export function setPlayState(playState) {
-  return {
-    type: types.SET_PLAY_STATE,
-    playState
-  };
+  return { type: types.SET_PLAY_STATE, playState };
+}
+export function setCurrentItem(currItem) {
+  return { type: types.SET_CURRENT_ITEM, currItem };
+}
+export function updateAnswerInputText(text) {
+  return { type: types.UPDATE_ANSWER_INPUT_TEXT, text };
+}
+export function setItemCompleteState(itemComplete) {
+  return { type: types.SET_ITEM_COMPLETE_STATE, itemComplete };
+}
+export function setGameCompleteState(gameComplete) {
+  return { type: types.SET_GAME_COMPLETE_STATE, gameComplete };
+}
+export function setAttemptCount(count) {
+  return { type: types.SET_ATTEMPT_COUNT, count };
+}
+export function setSuccessCount(count) {
+  return { type: types.SET_SUCCESS_COUNT, count };
 }

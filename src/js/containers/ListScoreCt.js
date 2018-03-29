@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import PlayBtn from "../components/PlayBtn";
 import Example from "../components/ForgettingCurveGraph";
-import { BtnSubtle } from "../util/styledComponents";
+import { BtnSubtle, BtnMain } from "../util/styledComponents";
 import { translateTheme } from "../util/themes";
-import { setGraphTimeframe } from "../actions";
+import { setGraphTimeframe, setPlayState, setSidebarState } from "../actions";
 import {
   findListInFolders,
   LightenDarkenColor,
@@ -64,6 +63,12 @@ const NextRevisionAlert = styled.div`
   font-weight: 600;
   color: ${props => props.theme.mainMiddle};
 `;
+const PlayBtnStyle = BtnMain.extend`
+  padding: 10px 50px;
+  font-size: 21px;
+  background-color: ${props => props.theme.mainMiddle};
+  border-color: ${props => props.theme.mainMiddle};
+`;
 
 class ListScoreCt extends Component {
   handleGraphForward = () => {
@@ -80,6 +85,10 @@ class ListScoreCt extends Component {
     if (start > 0) {
       this.props.dispatch(setGraphTimeframe(start - 30, end - 30));
     }
+  };
+  handlePlayState = () => {
+    this.props.dispatch(setPlayState(true));
+    this.props.dispatch(setSidebarState(false));
   };
   render() {
     const { list, theme, graph } = this.props;
@@ -123,7 +132,7 @@ class ListScoreCt extends Component {
           <NextRevisionAlert>{nextRevision}</NextRevisionAlert>
         </NextRevisionCt>
 
-        <PlayBtn />
+        <PlayBtnStyle onClick={this.handlePlayState}>Play</PlayBtnStyle>
       </div>
     );
   }
@@ -136,7 +145,8 @@ function mapStateToProps(store) {
       store.user.userData.folders,
       store.user.currentListId
     ),
-    graph: store.user.graph
+    graph: store.user.graph,
+    playState: store.game.playState
   };
 }
 

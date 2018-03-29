@@ -74,39 +74,43 @@ class NavCt extends Component {
   };
 
   render() {
-    const { sideBarState, userData } = this.props;
+    const { sideBarState, userData, playState } = this.props;
+    const menu = (
+      <MenuCt>
+        <NavIconHelp
+          name="help"
+          active={sideBarState === "help" ? true : false}
+          onClick={this.handleSideBarToggle}
+        />
+        |
+        <NavIconBook
+          name="lookup"
+          active={sideBarState === "lookup" ? true : false}
+          onClick={this.handleSideBarToggle}
+        />
+        |
+        <BtnNavTheme
+          name="themes"
+          active={sideBarState === "themes" ? true : false}
+          onClick={this.handleSideBarToggle}
+        >
+          .
+        </BtnNavTheme>
+        |
+        <BtnNav
+          name="profile"
+          active={sideBarState === "profile" ? true : false}
+          onClick={this.handleSideBarToggle}
+        >
+          {userData.name}
+        </BtnNav>
+      </MenuCt>
+    );
+
     return (
       <TopNav>
         <Logo>Memory Maze</Logo>
-        <MenuCt>
-          <NavIconHelp
-            name="help"
-            active={sideBarState === "help" ? true : false}
-            onClick={this.handleSideBarToggle}
-          />
-          |
-          <NavIconBook
-            name="lookup"
-            active={sideBarState === "lookup" ? true : false}
-            onClick={this.handleSideBarToggle}
-          />
-          |
-          <BtnNavTheme
-            name="themes"
-            active={sideBarState === "themes" ? true : false}
-            onClick={this.handleSideBarToggle}
-          >
-            .
-          </BtnNavTheme>
-          |
-          <BtnNav
-            name="profile"
-            active={sideBarState === "profile" ? true : false}
-            onClick={this.handleSideBarToggle}
-          >
-            {userData.name}
-          </BtnNav>
-        </MenuCt>
+        {!playState ? menu : <div />}
       </TopNav>
     );
   }
@@ -115,7 +119,8 @@ class NavCt extends Component {
 function mapStateToProps(store) {
   return {
     userData: store.user.userData,
-    sideBarState: store.layout.sideBarState
+    sideBarState: store.layout.sideBarState,
+    playState: store.game.playState
   };
 }
 

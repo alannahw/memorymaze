@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
-import { updateList, setListItemQuery } from "../actions";
-import { EmptyListCt, FlexBox } from "../util/styledComponents.js";
+import { updateList, setListItemQuery, setActiveSideState } from "../actions";
+import { EmptyListCt, FlexBox, BtnSubtle } from "../util/styledComponents.js";
 import {
   editItemPropertyInArray,
   deleteItemFromArray,
@@ -10,7 +10,7 @@ import {
   filterItems,
   LightenDarkenColor
 } from "../util";
-import Table from "../components/ListItems";
+import Table from "../components/Table";
 import ListPageToolbar from "../components/ListPageToolbar";
 
 import styled from "styled-components";
@@ -21,7 +21,6 @@ const ListTitleCt = styled.div`
   transition: background 0.1s;
   padding: 20px 0;
   width: 100%;
-
   background: ${props => props.theme.second};
   font-size: 21px;
   color: ${props => props.theme.main};
@@ -70,6 +69,9 @@ class ListCt extends PureComponent {
   handleSearchListItems = val => {
     this.props.dispatch(setListItemQuery(val));
   };
+  handleToggleActiveSide = e => {
+    this.props.dispatch(setActiveSideState(e.target.name));
+  };
   render() {
     const { list, listItemQuery } = this.props;
     const filteredItems = filterItems(listItemQuery, list.items);
@@ -92,6 +94,7 @@ class ListCt extends PureComponent {
                   onChange={this.handleListNameChange}
                 />
               </ListTitleCt>
+
               <FlexBox ignore="125px">
                 <Table
                   items={filteredItems}
@@ -99,13 +102,13 @@ class ListCt extends PureComponent {
                   handleDeleteItem={this.handleDeleteItem}
                   handleAddItem={this.handleAddItem}
                   activeSideState={this.props.activeSideState}
+                  handleToggleActiveSide={this.handleToggleActiveSide}
                 />
               </FlexBox>
             </div>
             <ListPageToolbar
               handleSearch={this.handleSearchListItems}
               queryVal={this.props.listItemQuery}
-              theme={this.props.theme}
             />
           </div>
         ) : (
@@ -129,8 +132,7 @@ function mapStateToProps(store) {
       store.user.currentListId
     ),
     listItemQuery: store.user.listItemQuery,
-    activeSideState: store.layout.activeSideState,
-    theme: store.user.theme
+    activeSideState: store.layout.activeSideState
   };
 }
 

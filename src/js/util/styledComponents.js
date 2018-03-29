@@ -127,37 +127,6 @@ export const RelativeCt = styled.div`
   position: relative;
 `;
 
-export const ListItemTd = styled.td`
-  border-bottom: 1px solid ${props => LightenDarkenColor(props.theme.main, 30)};
-`;
-export const ListItemInput = styled(Textarea)`
-  resize: none;
-  width: 100%;
-  text-align: left;
-  background: none;
-  margin-top: 3px;
-  font-weight: ${props => props.weight};
-  border: none;
-  font-size: 14px;
-  color: ${props => LightenDarkenColor(props.theme.main, 180)};
-  &::placeholder {
-    color: ${props => LightenDarkenColor(props.theme.main, 35)};
-  }
-`;
-export const ListItemIndex = styled.div`
-  font-size: 16px;
-  margin-right: 10px;
-  font-weight: 100;
-  color: ${props => LightenDarkenColor(props.theme.main, 60)};
-`;
-export const ListTable = styled.table`
-  border-spacing: 0;
-  width: 100%;
-`;
-export const ListTableCt = styled.div`
-  width: 80%;
-  margin: 20px auto 70px;
-`;
 export const EmptyListCt = styled.div`
   width: 60%;
   margin: auto;
