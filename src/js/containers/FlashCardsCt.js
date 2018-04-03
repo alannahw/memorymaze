@@ -53,16 +53,19 @@ const AnswerInput = styled.input`
   width: 100%;
   border-radius: 40px;
   box-sizing: border-box;
-  background: ${props => LightenDarkenColor(props.theme.main, 80)};
+  background: ${props =>
+    LightenDarkenColor(props.theme.main, props.theme.scheme + 30)};
   border: none;
   font-size: 18px;
   color: ${props => props.theme.bg};
   &::placeholder {
     transition: color 0.1s;
-    color: ${props => LightenDarkenColor(props.theme.main, 40)};
+    color: ${props =>
+      LightenDarkenColor(props.theme.main, props.theme.scheme + 0)};
   }
   &:disabled {
-    color: ${props => LightenDarkenColor(props.theme.bg, 60)};
+    color: ${props =>
+      LightenDarkenColor(props.theme.bg, props.theme.scheme + 20)};
   }
 `;
 
@@ -71,12 +74,14 @@ const CorrectAnswerCt = styled.div`
   font-weight: 400;
   padding: 30px 0 10px;
   opacity: ${props => (props.show ? 1 : 0)};
-  color: ${props => LightenDarkenColor(props.theme.main, 60)};
+  color: ${props =>
+    LightenDarkenColor(props.theme.main, props.theme.scheme + 50)};
 `;
 const CompletedCt = styled.div`
   font-size: 18px;
   padding: 30px;
-  color: ${props => LightenDarkenColor(props.theme.second, 0)};
+  color: ${props =>
+    LightenDarkenColor(props.theme.second, props.theme.scheme + 10)};
 `;
 const ScoreCt = styled.div`
   font-size: 24px;
@@ -86,7 +91,8 @@ const ScoreCt = styled.div`
 const SubBtnCt = styled.div`
   padding: 15px 0;
   box-sizing: border-box;
-  color: ${props => LightenDarkenColor(props.theme.main, 30)};
+  color: ${props =>
+    LightenDarkenColor(props.theme.main, props.theme.scheme + 30)};
 `;
 const GoBtn = BtnSubtle.extend`
   position: absolute;
@@ -96,10 +102,12 @@ const GoBtn = BtnSubtle.extend`
   padding: 15px;
   font-weight: 600;
   &:focus {
-    color: ${props => LightenDarkenColor(props.theme.main, 20)};
+    color: ${props =>
+      LightenDarkenColor(props.theme.mainMiddle, props.theme.scheme + 20)};
   }
   &:hover {
-    color: ${props => LightenDarkenColor(props.theme.main, 20)};
+    color: ${props =>
+      LightenDarkenColor(props.theme.mainMiddle, props.theme.scheme + 20)};
   }
 `;
 class FlashCardsCt extends Component {
@@ -233,7 +241,8 @@ class FlashCardsCt extends Component {
       ansText,
       itemComplete,
       gameComplete,
-      list
+      list,
+      theme
     } = this.props;
     const QuestionCtStyle = {
       transition: "color 0.1s",
@@ -244,7 +253,7 @@ class FlashCardsCt extends Component {
       fontWeight: "400",
       padding: "35px",
       textAlign: "center",
-      color: this.props.theme.second
+      color: theme.scheme === "+" ? theme.second : theme.bg
     };
     const FullHeightStyle = { height: "100%" };
 

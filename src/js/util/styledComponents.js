@@ -31,7 +31,7 @@ export const BackPanelLeft = BackPanel.extend`
 `;
 export const BackPanelRight = BackPanel.extend`
   right: 0;
-  background: ${props => LightenDarkenColor(props.theme.bg, 15)};
+  background: ${props => props.theme.bg2};
 `;
 export const BtnMain = styled.button`
   transition: background 0.1s, border 0.1s;
@@ -41,9 +41,9 @@ export const BtnMain = styled.button`
   padding: 0.25em 1em;
   border-radius: 3px;
   float: ${props => props.align};
-  background: ${props => props.theme.main};
-  border: 2px solid ${props => props.theme.main};
-  color: ${props => props.theme.light};
+  background: ${props => props.theme.mainMiddle};
+  border: 2px solid ${props => props.theme.mainMiddle};
+  color: ${props => props.theme.btntext};
   cursor: pointer;
 `;
 export const BtnInverted = BtnMain.extend`
@@ -52,7 +52,7 @@ export const BtnInverted = BtnMain.extend`
 `;
 export const BtnSubtle = BtnMain.extend`
   transition: color 0.1s;
-  color: ${props => props.color || props.theme.main};
+  color: ${props => props.color || props.theme.mainMiddle};
   border: none;
   padding: 5px;
   margin: 1px;

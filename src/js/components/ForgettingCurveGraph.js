@@ -40,7 +40,7 @@ class Example extends React.Component {
             data={getCurveData(num, i + 1, start, end)}
             style={{
               fill: "none",
-              stroke: LightenDarkenColor(this.props.theme.bg, 40),
+              stroke: LightenDarkenColor(this.props.theme.bg, 60),
               strokeWidth: 1
             }}
             curve={"curveBasis"}
@@ -63,7 +63,7 @@ class Example extends React.Component {
           data={getCurveData(startDay, i + 1, start, end)}
           style={{
             fill: "none",
-            stroke: LightenDarkenColor(this.props.theme.bg, 40),
+            stroke: LightenDarkenColor(this.props.theme.bg, 60),
             strokeWidth: 1
           }}
           curve={"curveBasis"}

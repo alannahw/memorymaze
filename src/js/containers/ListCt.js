@@ -22,8 +22,6 @@ const ListTitleCt = styled.div`
   padding: 20px 0;
   width: 100%;
   background: ${props => props.theme.second};
-  font-size: 21px;
-  color: ${props => props.theme.main};
 `;
 const ListTitleInput = styled(Textarea)`
   transition: color 0.1s;
@@ -34,7 +32,8 @@ const ListTitleInput = styled(Textarea)`
   background: none;
   border: none;
   font-size: 21px;
-  color: ${props => props.theme.main};
+  color: ${props =>
+    props.theme.scheme === "+" ? props.theme.main : props.theme.bg};
   &::placeholder {
     color: ${props => LightenDarkenColor(props.theme.second, 45)};
   }

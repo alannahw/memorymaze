@@ -1,4 +1,5 @@
 import React from "react";
+import { LightenDarkenColor } from "./";
 
 export const GRADIENT_DARKNESS = (
   <radialGradient
@@ -73,7 +74,10 @@ export const THEME_INDIA = {
   second: india_yellow,
   third: india_purple,
   bg: india_darkgrey,
-  light: "#fff",
+  bg2: LightenDarkenColor(india_darkgrey, 15),
+  toolbar: india_purple,
+  btntext: "#fff",
+  scheme: "+",
   mainSubtle: india_purple,
   mainVibrant: india_yellow,
   mainMiddle: india_red,
@@ -105,7 +109,10 @@ export const THEME_OCEAN = {
   second: ocean_teal,
   third: ocean_pink,
   bg: ocean_darkblue,
-  light: "#fff",
+  bg2: LightenDarkenColor(ocean_darkblue, 15),
+  toolbar: ocean_pink,
+  btntext: "#fff",
+  scheme: "+",
   mainSubtle: ocean_blue,
   mainVibrant: ocean_teal,
   mainMiddle: ocean_pink,
@@ -136,13 +143,56 @@ export const THEME_TROPICAL = {
   second: pine_orange,
   third: pine_green,
   bg: pine_darkteal,
-  light: "#fff",
+  bg2: LightenDarkenColor(pine_darkteal, 15),
+  toolbar: pine_green,
+  btntext: "#fff",
+  scheme: "+",
   mainSubtle: pine_green,
   mainVibrant: pine_yellow,
   mainMiddle: pine_orange,
   gradient: GRADIENT_TROPICAL
 };
-export const ALL_THEMES = [THEME_INDIA, THEME_OCEAN, THEME_TROPICAL];
+
+const plain_white = "#f7f7f7";
+const plain_lgrey = "#eaebec";
+const plain_orange = "#e07762";
+const plain_dgrey = "#404041";
+
+export const GRADIENT_PLAIN = (
+  <radialGradient
+    id="myGradient"
+    gradientUnits="userSpaceOnUse"
+    cx="0"
+    cy="0"
+    r="200"
+  >
+    <stop offset="50%" stopColor={plain_orange} />
+    <stop offset="95%" stopColor={plain_orange} />
+  </radialGradient>
+);
+
+export const THEME_PLAIN = {
+  id: "themePlain",
+  name: "Plain Please",
+  main: plain_white,
+  second: plain_lgrey,
+  third: plain_orange,
+  bg: plain_dgrey,
+  bg2: LightenDarkenColor(plain_lgrey, -15),
+  toolbar: LightenDarkenColor(plain_lgrey, -45),
+  btntext: "#fff",
+  scheme: "-",
+  mainSubtle: plain_dgrey,
+  mainVibrant: plain_orange,
+  mainMiddle: plain_orange,
+  gradient: GRADIENT_PLAIN
+};
+export const ALL_THEMES = [
+  THEME_INDIA,
+  THEME_OCEAN,
+  THEME_TROPICAL,
+  THEME_PLAIN
+];
 
 export function translateTheme(newTheme) {
   return ALL_THEMES.find(e => e.id === newTheme);

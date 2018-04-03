@@ -12,8 +12,8 @@ const ListToolbar = styled.div`
   box-sizing: border-box;
   width: 100%;
   height: 50px;
-  color: ${props => LightenDarkenColor(props.theme.second, 15)};
-  background: ${props => props.theme.third};
+  color: ${props => LightenDarkenColor(props.theme.toolbar, 15)};
+  background: ${props => props.theme.toolbar};
 `;
 const SearchBarCt = styled.div`
   position: absolute;

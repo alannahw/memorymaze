@@ -12,7 +12,7 @@ const SearchBarInput = styled.input`
   background-color: ${props =>
     props.color === "bg"
       ? LightenDarkenColor(props.theme.bg, 15)
-      : LightenDarkenColor(props.theme.third, 30)};
+      : LightenDarkenColor(props.theme.toolbar, 30)};
   border: none;
   border-radius: 15px;
   padding: 5px 10px 5px 30px;
@@ -20,12 +20,12 @@ const SearchBarInput = styled.input`
   color: ${props =>
     props.color === "bg"
       ? LightenDarkenColor(props.theme.bg, 100)
-      : LightenDarkenColor(props.theme.third, -50)};
+      : LightenDarkenColor(props.theme.toolbar, -50)};
   &::placeholder {
     color: ${props =>
       props.color === "bg"
         ? LightenDarkenColor(props.theme.bg, 60)
-        : LightenDarkenColor(props.theme.third, -15)};
+        : LightenDarkenColor(props.theme.toolbar, -15)};
   }
 `;
 const SearchIcon = styled.div`
@@ -37,7 +37,7 @@ const SearchIcon = styled.div`
     color: ${props =>
       props.color === "bg"
         ? props.theme.bg
-        : LightenDarkenColor(props.theme.third, -10)};
+        : LightenDarkenColor(props.theme.toolbar, -10)};
     font-family: "Ionicons";
     content: "\f2f5";
   }

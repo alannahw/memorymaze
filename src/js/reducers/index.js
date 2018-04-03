@@ -97,7 +97,6 @@ function user(
           action.value
         );
         draft.userData.folders = folders;
-        console.log(folders);
         return;
       }
       case types.SET_THEME: {

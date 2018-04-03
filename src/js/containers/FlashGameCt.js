@@ -32,7 +32,7 @@ const CompletedScoreCt = styled.div`
   color: ${props =>
     props.started
       ? props.theme.mainVibrant
-      : LightenDarkenColor(props.theme.bg, 60)};
+      : LightenDarkenColor(props.theme.bg2, props.theme.scheme + 40)};
 `;
 const Completed = styled.div`
   font-size: 42px !important;
@@ -43,11 +43,12 @@ const Total = styled.div`
   transition: color 0.1s;
   font-size: 24px;
   padding: 10px;
-  border-top: 1px solid ${props => LightenDarkenColor(props.theme.bg, 60)};
+  border-top: 1px solid
+    ${props => LightenDarkenColor(props.theme.bg2, props.theme.scheme + 40)};
   color: ${props =>
     props.completed
       ? props.theme.mainVibrant
-      : LightenDarkenColor(props.theme.bg, 60)};
+      : LightenDarkenColor(props.theme.bg2, props.theme.scheme + 40)};
 `;
 
 const BgCircle = props => {
@@ -56,7 +57,7 @@ const BgCircle = props => {
       cx={outerRadius}
       cy={outerRadius}
       r={props.radius}
-      stroke={LightenDarkenColor(props.theme.bg, 25)}
+      stroke={LightenDarkenColor(props.theme.bg2, 25)}
       fill="transparent"
       strokeWidth="1"
     />

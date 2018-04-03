@@ -6,7 +6,9 @@ import { LightenDarkenColor } from "../util";
 
 const ReviseBtn = BtnSubtle.extend`
   color: ${props =>
-    props.active ? LightenDarkenColor(props.theme.second, 20) : "transparent"};
+    props.active
+      ? LightenDarkenColor(props.theme.second, props.theme.scheme + 20)
+      : "transparent"};
   width: 49%;
   padding: 10px;
   font-size: 14px;
@@ -16,8 +18,8 @@ const ReviseBtn = BtnSubtle.extend`
   border-style: dashed;
   border-color: ${props =>
     props.active
-      ? LightenDarkenColor(props.theme.second, 20)
-      : LightenDarkenColor(props.theme.main, 30)};
+      ? LightenDarkenColor(props.theme.second, props.theme.scheme + 20)
+      : LightenDarkenColor(props.theme.main, props.theme.scheme + 30)};
   &::after {
     font-family: "Ionicons";
     content: "\f105";
@@ -29,7 +31,8 @@ const ReviseBtnCt = styled.div`
 `;
 
 const ListItemTd = styled.td`
-  border-bottom: 1px solid ${props => LightenDarkenColor(props.theme.main, 30)};
+  border-bottom: 1px solid
+    ${props => LightenDarkenColor(props.theme.main, props.theme.scheme + 30)};
 `;
 const ListItemInput = styled(Textarea)`
   resize: none;
@@ -41,17 +44,19 @@ const ListItemInput = styled(Textarea)`
   font-size: 14px;
   color: ${props =>
     props.active === "t"
-      ? LightenDarkenColor(props.theme.main, 180)
-      : LightenDarkenColor(props.theme.main, 100)};
+      ? LightenDarkenColor(props.theme.main, props.theme.scheme + 180)
+      : LightenDarkenColor(props.theme.main, props.theme.scheme + 100)};
   &::placeholder {
-    color: ${props => LightenDarkenColor(props.theme.main, 35)};
+    color: ${props =>
+      LightenDarkenColor(props.theme.main, props.theme.scheme + 35)};
   }
 `;
 const ListItemIndex = styled.div`
   font-size: 16px;
   margin-right: 10px;
   font-weight: 100;
-  color: ${props => LightenDarkenColor(props.theme.main, 60)};
+  color: ${props =>
+    LightenDarkenColor(props.theme.main, props.theme.scheme + 60)};
 `;
 const ListTable = styled.table`
   border-spacing: 0;

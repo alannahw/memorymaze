@@ -31,7 +31,9 @@ const BtnNav = BtnSubtle.extend`
   padding: 2px 15px;
   vertical-align: middle;
   color: ${props =>
-    props.active ? LightenDarkenColor(props.theme.main, 40) : props.theme.main};
+    props.active
+      ? LightenDarkenColor(props.theme.mainMiddle, 40)
+      : props.theme.mainMiddle};
 `;
 const NavIconBook = BtnNav.extend`
   &::after {

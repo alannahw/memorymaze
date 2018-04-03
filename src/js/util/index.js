@@ -5,8 +5,9 @@ export function getRandomIntInclusive(min, max) {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive
 }
-export function LightenDarkenColor(col, amt) {
+export function LightenDarkenColor(col, amtstr) {
   let usePound = false;
+  const amt = parseInt(amtstr);
 
   if (col[0] === "#") {
     col = col.slice(1);
@@ -280,15 +281,6 @@ export function getScoreStats(list) {
 export function getNextRevisionDate(list) {
   if (list.scores) {
     const stats = getScoreStats(list);
-
-    // const curveData = getCurveData(
-    //   stats.currCurveDay,
-    //   stats.strength,
-    //   0,
-    //   stats.totalDays
-    // );
-    // const nextDate = curveData.find(d => d.y < 0.5).x;
-    // const DaysSinceLastGame = (today - latest) / 86400000;
 
     const daysTill = Math.round(
       stats.nextRevisionDay - (stats.totalDays - stats.currCurveDay)
