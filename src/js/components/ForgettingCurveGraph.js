@@ -12,7 +12,8 @@ import {
   LightenDarkenColor,
   getScoreStats,
   getCurveData,
-  retentionFn
+  retentionFn,
+  getNextRevisionDate
 } from "../util";
 import styled from "styled-components";
 
@@ -140,15 +141,19 @@ class Example extends React.Component {
   };
   getGameCompletedDays = () => {
     const { start, end } = this.props.graph;
+    const { list } = this.props;
     const ticks = [];
-    if (this.props.list.scores) {
-      const stats = getScoreStats(this.props.list);
+    if (list.scores) {
+      const stats = getScoreStats(list);
       stats.scores.forEach((s, i) => {
         const startDay = (s.date - stats.earliest) / 86400000;
         if (start <= startDay && startDay <= end) {
           ticks.push(startDay);
         }
       });
+      const daysTill = getNextRevisionDate(list);
+      const day = Math.round(stats.totalDays + daysTill);
+      ticks.push(day);
     }
     return ticks;
   };
@@ -217,12 +222,13 @@ class Example extends React.Component {
         fontSize: "12px"
       }
     };
+
     const wrapperStyle = {
       //overflow: "visible"
     };
     const { graph, width } = this.props;
-    const xTickVals =
-      graph.start === 0 ? [0, 1, 2, 7, 18, 30] : [graph.start, graph.end];
+    const xTickVals = [graph.start, graph.end];
+    // graph.start === 0 ? [0, 1, 2, 7, 18, 30] :
 
     return (
       <XYPlot

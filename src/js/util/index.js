@@ -150,6 +150,7 @@ export function getDefaultList() {
     name: "New List",
     "date-created": new Date(),
     theme: "themeIndia",
+    currentGame: { attemptCount: 0, successCount: 0 },
     scores: null,
     items: [getDefaultItem()]
   };
@@ -230,6 +231,9 @@ export function reorderMap(array, source, destination) {
 export function retentionFn(s, t) {
   return Math.pow(Math.E, -t / s);
 }
+export function retentionFnFindTime(s, r) {
+  return Math.log(r) * -s;
+}
 
 export function getCurveData(startDay, strength, xAxisStart, xAxisEnd) {
   const daySeries = [];
@@ -259,6 +263,7 @@ export function getScoreStats(list) {
     const today = new Date().setHours(0, 0, 0, 0);
     const totalDays = (today - earliest) / 86400000;
     const currCurveDay = (latest - earliest) / 86400000;
+    const nextRevisionDay = Math.round(retentionFnFindTime(strength * 3, 0.5));
     return {
       scores: scores,
       earliest: earliest,
@@ -266,7 +271,8 @@ export function getScoreStats(list) {
       latest: latest,
       today: today,
       totalDays: totalDays,
-      currCurveDay: currCurveDay
+      currCurveDay: currCurveDay,
+      nextRevisionDay: nextRevisionDay
     };
   }
 }
@@ -274,15 +280,19 @@ export function getScoreStats(list) {
 export function getNextRevisionDate(list) {
   if (list.scores) {
     const stats = getScoreStats(list);
-    const curveData = getCurveData(
-      stats.currCurveDay,
-      stats.strength,
-      0,
-      stats.totalDays
-    );
-    const nextDate = curveData.find(d => d.y < 0.5).x;
+
+    // const curveData = getCurveData(
+    //   stats.currCurveDay,
+    //   stats.strength,
+    //   0,
+    //   stats.totalDays
+    // );
+    // const nextDate = curveData.find(d => d.y < 0.5).x;
     // const DaysSinceLastGame = (today - latest) / 86400000;
-    const daysTill = nextDate - stats.totalDays;
+
+    const daysTill = Math.round(
+      stats.nextRevisionDay - (stats.totalDays - stats.currCurveDay)
+    );
     return daysTill;
   }
 }

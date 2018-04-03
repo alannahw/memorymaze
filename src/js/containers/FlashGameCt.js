@@ -23,6 +23,33 @@ const GraphPos = styled.div`
   x: 0;
   y: 0;
 `;
+const CompletedScoreCt = styled.div`
+  transition: color 0.1s;
+  height: 100%;
+  margin: auto;
+  text-align: center;
+  font-weight: 600;
+  color: ${props =>
+    props.started
+      ? props.theme.mainVibrant
+      : LightenDarkenColor(props.theme.bg, 60)};
+`;
+const Completed = styled.div`
+  font-size: 42px !important;
+  padding: 10px;
+  font-size: 30px;
+`;
+const Total = styled.div`
+  transition: color 0.1s;
+  font-size: 24px;
+  padding: 10px;
+  border-top: 1px solid ${props => LightenDarkenColor(props.theme.bg, 60)};
+  color: ${props =>
+    props.completed
+      ? props.theme.mainVibrant
+      : LightenDarkenColor(props.theme.bg, 60)};
+`;
+
 const BgCircle = props => {
   return (
     <circle
@@ -71,6 +98,20 @@ class FlashGameCt extends Component {
     this.setState({ graphData: graphData });
   };
 
+  getCompletedNumber = () => {
+    const { list } = this.props;
+    const completed = list.items.filter(i => i.level === 3);
+    return completed.length;
+  };
+  checkIfLastItem = (items, currItem) => {
+    const rest = [];
+    items.forEach((el, i) => {
+      if (el.id !== currItem.id) {
+        rest.push(el);
+      }
+    });
+    return rest.every(i => i.level === 3) ? true : false;
+  };
   componentWillReceiveProps(nextProps) {
     this.updateGraphData(nextProps.list.items);
   }
@@ -80,7 +121,9 @@ class FlashGameCt extends Component {
   }
   render() {
     const { graphData } = this.state;
-    const { theme } = this.props;
+    const { theme, list } = this.props;
+    const firstCompleted = this.getCompletedNumber() > 0;
+    const allCompleted = this.getCompletedNumber() === list.items.length;
     const Gradient = <GradientDefs>{theme.gradient}</GradientDefs>;
 
     return (
@@ -116,6 +159,13 @@ class FlashGameCt extends Component {
               />
             </XYPlot>
           </GraphPos>
+
+          <FlexBox>
+            <CompletedScoreCt started={firstCompleted}>
+              <Completed>{this.getCompletedNumber()}</Completed>
+              <Total completed={allCompleted}>{list.items.length}</Total>
+            </CompletedScoreCt>
+          </FlexBox>
         </GraphCt>
       </FlexBox>
     );

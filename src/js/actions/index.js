@@ -81,9 +81,3 @@ export function setItemCompleteState(itemComplete) {
 export function setGameCompleteState(gameComplete) {
   return { type: types.SET_GAME_COMPLETE_STATE, gameComplete };
 }
-export function setAttemptCount(count) {
-  return { type: types.SET_ATTEMPT_COUNT, count };
-}
-export function setSuccessCount(count) {
-  return { type: types.SET_SUCCESS_COUNT, count };
-}

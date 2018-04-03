@@ -73,6 +73,16 @@ const CorrectAnswerCt = styled.div`
   opacity: ${props => (props.show ? 1 : 0)};
   color: ${props => LightenDarkenColor(props.theme.main, 60)};
 `;
+const CompletedCt = styled.div`
+  font-size: 18px;
+  padding: 30px;
+  color: ${props => LightenDarkenColor(props.theme.second, 0)};
+`;
+const ScoreCt = styled.div`
+  font-size: 24px;
+  padding: 15px;
+`;
+
 const SubBtnCt = styled.div`
   padding: 15px 0;
   box-sizing: border-box;
@@ -102,16 +112,31 @@ class FlashCardsCt extends Component {
   checkGameCompleted = items => {
     return items.every(i => i.level === 3) ? true : false;
   };
+  checkIfLastItem = (items, currItem) => {
+    const rest = [];
+    items.forEach((el, i) => {
+      if (el.id !== currItem.id) {
+        rest.push(el);
+      }
+    });
+    return rest.every(i => i.level === 3) ? true : false;
+  };
   handleSetItem = () => {
     const { items } = this.props.list;
     const { currItem } = this.props;
-    const random = items[Math.floor(Math.random() * items.length)];
-    if (random.level < 3) {
-      this.props.dispatch(setCurrentItem(random));
-      this.props.dispatch(setItemCompleteState(false));
-      this.props.dispatch(updateAnswerInputText(""));
-      this.ansInput.focus();
-    } else {
+    const randomNo = Math.floor(Math.random() * items.length);
+    const nextItem = items[randomNo];
+    const last = this.checkIfLastItem(items, currItem);
+    if (nextItem.level < 3) {
+      if (currItem.id === nextItem.id && !last) {
+        this.handleSetItem();
+      } else {
+        this.props.dispatch(setCurrentItem(nextItem));
+        this.props.dispatch(setItemCompleteState(false));
+        this.props.dispatch(updateAnswerInputText(""));
+        this.ansInput.focus();
+      }
+    } else if (!this.checkGameCompleted(items)) {
       this.handleSetItem();
     }
   };
@@ -126,13 +151,16 @@ class FlashCardsCt extends Component {
     return guess === correctAns || guess === partialMatch;
   };
   handleGoBtnClick = () => {
-    const { attemptCount, successCount } = this.props;
+    const { list } = this.props;
+    const { attemptCount, successCount } = list.currentGame;
+    const counters = { ...list.currentGame, attemptCount: attemptCount + 1 };
     if (this.checkMatch()) {
       this.handleUpdateItem("success");
-      this.props.dispatch(setSuccessCount(successCount + 1));
+      counters.successCount = successCount + 1;
     } else {
       this.handleUpdateItem();
     }
+    this.props.dispatch(updateList(list.id, "currentGame", counters));
   };
 
   handleUpdateItem = success => {
@@ -146,7 +174,16 @@ class FlashCardsCt extends Component {
     );
     this.props.dispatch(updateList(list.id, "items", items));
     this.props.dispatch(setItemCompleteState(true));
+
     if (this.checkGameCompleted(items)) {
+      const { successCount, attemptCount } = list.currentGame;
+      const scores = list.scores.concat([
+        {
+          date: new Date().setHours(0, 0, 0, 0),
+          score: successCount / attemptCount * 100
+        }
+      ]);
+      this.props.dispatch(updateList(list.id, "scores", scores));
       this.props.dispatch(setGameCompleteState(true));
     }
   };
@@ -155,6 +192,24 @@ class FlashCardsCt extends Component {
   };
   handleCheckKeyPress = e => {
     e.key === "Enter" && this.handleGoBtnClick();
+  };
+  handleResetGame = () => {
+    const { list } = this.props;
+    const items = [];
+    list.items.forEach(i => {
+      items.push({
+        ...i,
+        level: 0
+      });
+    });
+    this.props.dispatch(
+      updateList(list.id, "currentGame", { attemptCount: 0, successCount: 0 })
+    );
+    this.props.dispatch(updateList(list.id, "items", items));
+    this.props.dispatch(updateAnswerInputText(""));
+    this.props.dispatch(setItemCompleteState(false));
+    this.props.dispatch(setGameCompleteState(false));
+    this.props.dispatch(setCurrentItem(items[0]));
   };
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.itemComplete !== this.props.itemComplete) {
@@ -165,6 +220,11 @@ class FlashCardsCt extends Component {
   componentDidMount() {
     this.handleSetItem();
   }
+  componentWillUnmount() {
+    if (this.props.gameComplete) {
+      this.handleResetGame();
+    }
+  }
 
   render() {
     const {
@@ -172,7 +232,8 @@ class FlashCardsCt extends Component {
       activeSide,
       ansText,
       itemComplete,
-      gameComplete
+      gameComplete,
+      list
     } = this.props;
     const QuestionCtStyle = {
       transition: "color 0.1s",
@@ -201,27 +262,26 @@ class FlashCardsCt extends Component {
         </CorrectAnswerCt>
       </CollapsibleStylable>
     );
-
+    const completedDisplay = (
+      <CompletedCt>
+        Congrats, you finished with a score of
+        <ScoreCt>
+          {list.currentGame.successCount / list.currentGame.attemptCount * 100}%
+        </ScoreCt>
+      </CompletedCt>
+    );
     if (gameComplete) {
-      display = "Congrats, you finished";
+      display = completedDisplay;
     } else {
       display = questionsDisplay;
     }
-    // let resultIcon = "";
-    // if (itemComplete && this.checkMatch()) {
-    //   resultIcon = (
-    //     <span style={{ padding: "10px" }} className="ion-checkmark" />
-    //   );
-    // } else if (itemComplete && !this.checkMatch()) {
-    //   resultIcon = <span style={{ padding: "10px" }} className="ion-close" />;
-    // }
     return (
       <div style={FullHeightStyle}>
         <ToolbarCt>
           <IconBtn onClick={this.handlePlayState}>
             <span className="ion-arrow-left-c" />
           </IconBtn>
-          <ResetBtn>Reset Game</ResetBtn>
+          <ResetBtn onClick={this.handleResetGame}>Reset Game</ResetBtn>
         </ToolbarCt>
         <FlexBox ignore="100px">
           <div style={{ width: "100%" }}>
@@ -283,8 +343,6 @@ function mapStateToProps(store) {
     ),
     currItem: store.game.currItem,
     ansText: store.game.ansText,
-    attemptCount: store.game.attemptCount,
-    successCount: store.game.successCount,
     itemComplete: store.game.itemComplete,
     gameComplete: store.game.gameComplete,
     theme: translateTheme(store.user.theme)

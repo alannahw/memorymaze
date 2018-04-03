@@ -37,7 +37,7 @@ const SearchIcon = styled.div`
     color: ${props =>
       props.color === "bg"
         ? props.theme.bg
-        : LightenDarkenColor(props.theme.third, -15)};
+        : LightenDarkenColor(props.theme.third, -10)};
     font-family: "Ionicons";
     content: "\f2f5";
   }

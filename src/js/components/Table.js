@@ -18,6 +18,10 @@ const ReviseBtn = BtnSubtle.extend`
     props.active
       ? LightenDarkenColor(props.theme.second, 20)
       : LightenDarkenColor(props.theme.main, 30)};
+  &::after {
+    font-family: "Ionicons";
+    content: "\f105";
+  }
 `;
 const ReviseBtnCt = styled.div`
   width: calc(100% - 60px);
@@ -147,6 +151,9 @@ class Table extends React.PureComponent {
       textAlign: "right",
       fontSize: "21px"
     };
+    const iconStyle = {
+      fontFamily: "Ionicons"
+    };
     return (
       <ListTableCt>
         <ReviseBtnCt>
@@ -155,14 +162,14 @@ class Table extends React.PureComponent {
             active={this.props.activeSideState === "side1"}
             onClick={this.props.handleToggleActiveSide}
           >
-            Revise <span className="ion-arrow-down-c" />
+            Revise{" "}
           </ReviseBtn>
           <ReviseBtn
             name="side2"
             active={this.props.activeSideState === "side2"}
             onClick={this.props.handleToggleActiveSide}
           >
-            Revise <span className="ion-arrow-down-c" />
+            Revise{" "}
           </ReviseBtn>
         </ReviseBtnCt>
         <TableStructure

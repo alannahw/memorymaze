@@ -61,9 +61,8 @@ export const GRADIENT_INDIA = (
     cy="0"
     r="200"
   >
-    <stop offset="50%" stopColor={india_yellow} />
-    <stop offset="70%" stopColor={india_red} />
-    <stop offset="95%" stopColor={india_purple} />
+    <stop offset="50%" stopColor={india_red} />
+    <stop offset="95%" stopColor={india_yellow} />
   </radialGradient>
 );
 
@@ -94,9 +93,8 @@ export const GRADIENT_OCEAN = (
     cy="0"
     r="200"
   >
-    <stop offset="30%" stopColor={ocean_teal} />
-    <stop offset="70%" stopColor={ocean_blue} />
-    <stop offset="95%" stopColor={ocean_pink} />
+    <stop offset="50%" stopColor={ocean_blue} />
+    <stop offset="95%" stopColor={ocean_teal} />
   </radialGradient>
 );
 
@@ -118,18 +116,31 @@ const pine_green = "#16b688";
 const pine_orange = "#f48044";
 const pine_darkteal = "#06323a";
 
+export const GRADIENT_TROPICAL = (
+  <radialGradient
+    id="myGradient"
+    gradientUnits="userSpaceOnUse"
+    cx="0"
+    cy="0"
+    r="200"
+  >
+    <stop offset="50%" stopColor={pine_green} />
+    <stop offset="95%" stopColor={pine_yellow} />
+  </radialGradient>
+);
+
 export const THEME_TROPICAL = {
   id: "themeTropical",
   name: "Tropical",
   main: pine_yellow,
-  second: pine_green,
-  third: pine_orange,
+  second: pine_orange,
+  third: pine_green,
   bg: pine_darkteal,
   light: "#fff",
   mainSubtle: pine_green,
   mainVibrant: pine_yellow,
   mainMiddle: pine_orange,
-  gradient: GRADIENT_FOREST
+  gradient: GRADIENT_TROPICAL
 };
 export const ALL_THEMES = [THEME_INDIA, THEME_OCEAN, THEME_TROPICAL];
 

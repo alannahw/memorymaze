@@ -16,6 +16,7 @@
               "name": "Bathroom",
               "date-created": 1519903296421,
               "theme": "themeIndia",
+              "currentGame": { "attemptCount": 15, "successCount": 15 },
               "scores": [
                 {
                   "date": 1520895600000,
@@ -120,6 +121,7 @@
               "date-created": 1519903296421,
               "theme": "themeOcean",
               "scores": null,
+              "currentGame": { "attemptCount": 0, "successCount": 0 },
               "items": [
                 {
                   "id": "i_071",
@@ -210,6 +212,7 @@
               "name": "Quick List",
               "date-created": 1519903296421,
               "theme": "themeTropical",
+              "currentGame": { "attemptCount": 0, "successCount": 0 },
               "scores": [
                 {
                   "date": 1519945200000,
@@ -261,6 +264,7 @@
               "name": "Quicker List",
               "date-created": 1515711600000,
               "theme": "themeOcean",
+              "currentGame": { "attemptCount": 0, "successCount": 0 },
               "scores": [
                 {
                   "date": 1515711600000,
@@ -272,19 +276,19 @@
                   "id": "i_093",
                   "side1": "cat",
                   "side2": "die Katze(n)",
-                  "level": 0
+                  "level": 2
                 },
                 {
                   "id": "i_094",
                   "side1": "cow",
                   "side2": "die Kuh(ü,e)",
-                  "level": 0
+                  "level": 2
                 },
                 {
                   "id": "i_095",
                   "side1": "deer",
                   "side2": "der Hirsch(en)",
-                  "level": 0
+                  "level": 3
                 }
               ]
             }

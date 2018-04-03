@@ -97,6 +97,7 @@ function user(
           action.value
         );
         draft.userData.folders = folders;
+        console.log(folders);
         return;
       }
       case types.SET_THEME: {
@@ -130,7 +131,6 @@ function layout(
     case types.SET_REMOVEBTN_STATE:
       return { ...state, removeBtnState: action.removeBtnState };
     case types.SET_ACTIVESIDE_STATE: {
-      console.log(action.activeSideState);
       return { ...state, activeSideState: action.activeSideState };
     }
   }
@@ -143,9 +143,7 @@ function game(
     currItem: { id: "", side1: "", side2: "", level: "" },
     ansText: "",
     itemComplete: false,
-    gameComplete: false,
-    attemptCount: 0,
-    successCount: 0
+    gameComplete: false
   },
   action
 ) {
@@ -160,10 +158,6 @@ function game(
       return { ...state, itemComplete: action.itemComplete };
     case types.SET_GAME_COMPLETE_STATE:
       return { ...state, gameComplete: action.gameComplete };
-    case types.SET_ATTEMPT_COUNT:
-      return { ...state, attemptCount: action.count };
-    case types.SET_SUCCESS_COUNT:
-      return { ...state, successCount: action.count };
   }
   return state;
 }
