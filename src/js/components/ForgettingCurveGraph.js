@@ -28,6 +28,7 @@ const ScoreMarker = MyMarker.extend`
 `;
 class Example extends React.Component {
   getDummyCurves = () => {
+    const { theme } = this.props;
     const { start, end } = this.props.graph;
     const stats = getScoreStats(this.props.list);
     const intervals = [0, 1, 2, 7, 18, 30, 90, 180, 350];
@@ -40,7 +41,7 @@ class Example extends React.Component {
             data={getCurveData(num, i + 1, start, end)}
             style={{
               fill: "none",
-              stroke: LightenDarkenColor(this.props.theme.bg, 60),
+              stroke: LightenDarkenColor(theme.bg2, theme.scheme + 40),
               strokeWidth: 1
             }}
             curve={"curveBasis"}
@@ -51,6 +52,7 @@ class Example extends React.Component {
     return series;
   };
   getPastCurves = () => {
+    const { theme } = this.props;
     const { start, end } = this.props.graph;
     const stats = getScoreStats(this.props.list);
     let series = [];
@@ -63,7 +65,7 @@ class Example extends React.Component {
           data={getCurveData(startDay, i + 1, start, end)}
           style={{
             fill: "none",
-            stroke: LightenDarkenColor(this.props.theme.bg, 60),
+            stroke: LightenDarkenColor(theme.bg2, theme.scheme + 40),
             strokeWidth: 1
           }}
           curve={"curveBasis"}

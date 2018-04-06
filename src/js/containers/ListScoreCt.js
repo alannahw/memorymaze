@@ -9,7 +9,8 @@ import {
   findListInFolders,
   LightenDarkenColor,
   getNextRevisionDate,
-  getScoreStats
+  getScoreStats,
+  removeEmptyItems
 } from "../util";
 
 const gWidth = 400;
@@ -34,11 +35,10 @@ const AxesFont = styled.span`
 `;
 const AxesBtn = BtnSubtle.extend`
   font-weight: 600;
-  color: ${props =>
-    props.disabled
-      ? "transparent"
-      : LightenDarkenColor(props.theme.mainSubtle, -15)};
-  cursor: ${props => (props.disabled ? "default" : "pointer")};
+  color: ${props => LightenDarkenColor(props.theme.mainSubtle, -15)};
+  &:disabled {
+    opacity: 0;
+  }
 `;
 const GraphNoData = styled.div`
   position: absolute;
@@ -90,13 +90,14 @@ class ListScoreCt extends Component {
     this.props.dispatch(setPlayState(true));
     this.props.dispatch(setSidebarState(false));
   };
+
   render() {
     const { list, theme, graph } = this.props;
     let noDataNote = "";
     if (!list.scores) {
       noDataNote = <GraphNoData>Start game</GraphNoData>;
     }
-
+    const emptyList = removeEmptyItems(list)[0] ? false : true;
     const stats = getScoreStats(list);
     const totalDays = stats ? stats.totalDays : 0;
     const ForwardBtnDisabled = graph.start + 30 > totalDays ? true : false;
@@ -132,7 +133,9 @@ class ListScoreCt extends Component {
           <NextRevisionAlert>{nextRevision}</NextRevisionAlert>
         </NextRevisionCt>
 
-        <PlayBtnStyle onClick={this.handlePlayState}>Play</PlayBtnStyle>
+        <PlayBtnStyle disabled={emptyList} onClick={this.handlePlayState}>
+          Play
+        </PlayBtnStyle>
       </div>
     );
   }

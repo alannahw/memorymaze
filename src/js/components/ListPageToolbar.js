@@ -25,8 +25,9 @@ const IconBtn = BtnSubtle.extend`
   border-radius: 0px;
   font-size: 1.5em;
   margin: 1px 10px;
-  color: ${props => LightenDarkenColor(props.theme.second, 15)};
-  border-bottom: 3px solid ${props => LightenDarkenColor(props.theme.second, 5)};
+  color: ${props => LightenDarkenColor(props.theme.mainVibrant, 0)};
+  border-bottom: 3px solid
+    ${props => LightenDarkenColor(props.theme.mainVibrant, 0)};
 `;
 
 class ListPageToolbar extends Component {

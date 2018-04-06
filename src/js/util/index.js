@@ -281,10 +281,17 @@ export function getScoreStats(list) {
 export function getNextRevisionDate(list) {
   if (list.scores) {
     const stats = getScoreStats(list);
-
     const daysTill = Math.round(
       stats.nextRevisionDay - (stats.totalDays - stats.currCurveDay)
     );
     return daysTill;
   }
+}
+
+export function removeEmptyItems(list) {
+  let content = [];
+  if (list.items) {
+    content = list.items.filter(i => i.side1.length > 0 || i.side2.length > 0);
+  }
+  return content;
 }

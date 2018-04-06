@@ -28,15 +28,16 @@ const ToolbarCt = styled.div`
   width: 100%;
   font-size: 16px;
   text-align: left;
-  color: ${props => LightenDarkenColor(props.theme.second, 15)};
   background: ${props => props.theme.third};
 `;
 const IconBtn = BtnSubtle.extend`
   font-size: 1.5em;
-  color: ${props => LightenDarkenColor(props.theme.second, 15)};
+  color: ${props =>
+    props.theme.scheme === "+" ? props.theme.mainVibrant : props.theme.main};
 `;
 const ResetBtn = BtnSubtle.extend`
-  color: ${props => LightenDarkenColor(props.theme.second, 15)};
+  color: ${props =>
+    props.theme.scheme === "+" ? props.theme.mainVibrant : props.theme.main};
   padding: 10px;
   float: right;
 `;
@@ -86,6 +87,7 @@ const CompletedCt = styled.div`
 const ScoreCt = styled.div`
   font-size: 24px;
   padding: 15px;
+  color: ${props => props.theme.third};
 `;
 
 const SubBtnCt = styled.div`
@@ -96,18 +98,18 @@ const SubBtnCt = styled.div`
 `;
 const GoBtn = BtnSubtle.extend`
   position: absolute;
-  transition: color 0.3s;
+  transition: opacity 0.3s;
   top: 10px;
   right: 15px;
   padding: 15px;
   font-weight: 600;
+  color: ${props =>
+    props.theme.scheme === "+" ? props.theme.main : props.theme.mainVibrant};
   &:focus {
-    color: ${props =>
-      LightenDarkenColor(props.theme.mainMiddle, props.theme.scheme + 20)};
+    opacity: 0.7;
   }
   &:hover {
-    color: ${props =>
-      LightenDarkenColor(props.theme.mainMiddle, props.theme.scheme + 20)};
+    opacity: 0.7;
   }
 `;
 class FlashCardsCt extends Component {
@@ -185,12 +187,18 @@ class FlashCardsCt extends Component {
 
     if (this.checkGameCompleted(items)) {
       const { successCount, attemptCount } = list.currentGame;
-      const scores = list.scores.concat([
+      const newScore = [
         {
           date: new Date().setHours(0, 0, 0, 0),
           score: successCount / attemptCount * 100
         }
-      ]);
+      ];
+      let scores = null;
+      if (list.scores) {
+        scores = list.scores.concat(newScore);
+      } else {
+        scores = newScore;
+      }
       this.props.dispatch(updateList(list.id, "scores", scores));
       this.props.dispatch(setGameCompleteState(true));
     }
@@ -256,7 +264,10 @@ class FlashCardsCt extends Component {
       color: theme.scheme === "+" ? theme.second : theme.bg
     };
     const FullHeightStyle = { height: "100%" };
-
+    const FullWidthStyle = { width: "100%" };
+    const score = Math.round(
+      list.currentGame.successCount / list.currentGame.attemptCount * 100
+    );
     let display = "";
 
     const questionsDisplay = (
@@ -274,9 +285,7 @@ class FlashCardsCt extends Component {
     const completedDisplay = (
       <CompletedCt>
         Congrats, you finished with a score of
-        <ScoreCt>
-          {list.currentGame.successCount / list.currentGame.attemptCount * 100}%
-        </ScoreCt>
+        <ScoreCt>{score}%</ScoreCt>
       </CompletedCt>
     );
     if (gameComplete) {
@@ -293,7 +302,7 @@ class FlashCardsCt extends Component {
           <ResetBtn onClick={this.handleResetGame}>Reset Game</ResetBtn>
         </ToolbarCt>
         <FlexBox ignore="100px">
-          <div style={{ width: "100%" }}>
+          <div style={FullWidthStyle}>
             {display}
             <InputCt>
               <AnswerInput

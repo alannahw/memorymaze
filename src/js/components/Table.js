@@ -184,9 +184,9 @@ class Table extends React.PureComponent {
           activeSideState={this.props.activeSideState}
         />
         <div style={listEndStyle}>
-          <BtnSubtle color="#fff" onClick={this.props.handleAddItem}>
+          <BtnSubtleToned tone={100} onClick={this.props.handleAddItem}>
             <span className="ion ion-android-add" />
-          </BtnSubtle>
+          </BtnSubtleToned>
         </div>
       </ListTableCt>
     );

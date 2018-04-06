@@ -45,10 +45,18 @@ export const BtnMain = styled.button`
   border: 2px solid ${props => props.theme.mainMiddle};
   color: ${props => props.theme.btntext};
   cursor: pointer;
+  &:disabled {
+    cursor: default;
+    color: rgba(255, 255, 255, 0.5);
+  }
 `;
 export const BtnInverted = BtnMain.extend`
-  color: ${props => props.theme.main};
+  color: ${props => props.theme.mainMiddle};
   background: transparent;
+  &:disabled {
+    color: ${props => props.theme.mainMiddle};
+    opacity: 0.5;
+  }
 `;
 export const BtnSubtle = BtnMain.extend`
   transition: color 0.1s;
@@ -57,10 +65,20 @@ export const BtnSubtle = BtnMain.extend`
   padding: 5px;
   margin: 1px;
   background: transparent;
+  &:disabled {
+    color: ${props => props.color || props.theme.mainMiddle};
+    opacity: 0.5;
+  }
 `;
 
 export const BtnSubtleToned = BtnSubtle.extend`
-  color: ${props => LightenDarkenColor(props.theme.main, props.tone)};
+  color: ${props =>
+    LightenDarkenColor(props.theme.main, props.theme.scheme + props.tone)};
+  &:disabled {
+    color: ${props =>
+      LightenDarkenColor(props.theme.main, props.theme.scheme + props.tone)};
+    opacity: 0.5;
+  }
 `;
 export const AddBtn = BtnSubtle.extend`
   &::after {
