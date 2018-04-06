@@ -1,0 +1,33 @@
+{
+  "lists": [
+    {
+      "id": "l01",
+      "title": "Example List",
+      "items": [
+        { "id": "card071", "side1": "time", "side2": "die Zeit(en)" },
+        { "id": "card072", "side1": "hour", "side2": "die Stunde(n)" },
+        { "id": "card073", "side1": "minute", "side2": "die Minute(n)" },
+        { "id": "card074", "side1": "second", "side2": "die Sekunde(n)" },
+        {
+          "id": "card075",
+          "side1": "at five(o'clock)",
+          "side2": "um fünf(Uhr)"
+        },
+        { "id": "card076", "side1": "earlier", "side2": "früher" },
+        { "id": "card077", "side1": "later", "side2": "später" },
+        { "id": "card078", "side1": "soon", "side2": "bald" },
+        { "id": "card079", "side1": "now", "side2": "jetzt" },
+        { "id": "card080", "side1": "tomorrow", "side2": "morgen" },
+        { "id": "card081", "side1": "today", "side2": "heute" },
+        { "id": "card082", "side1": "yesterday", "side2": "gestern" },
+        { "id": "card083", "side1": "always", "side2": "immer" },
+        { "id": "card084", "side1": "never", "side2": "nie" },
+        {
+          "id": "card085",
+          "side1": "What time is it?",
+          "side2": "Wieviel Uhr ist es?"
+        }
+      ]
+    }
+  ]
+}

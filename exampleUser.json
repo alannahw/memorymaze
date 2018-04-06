@@ -1,0 +1,303 @@
+{
+  "users": [
+    {
+      "id": "u_001",
+      "name": "Ella McCoy",
+      "email": "ellamccoy@mccoy.com",
+      "password": "password",
+      "settings": {
+        "gameLevels": 4
+      },
+      "folders": [
+        {
+          "id": "f_001",
+          "name": "German",
+          "lists": [
+            {
+              "id": "l_001",
+              "folderId": "f_001",
+              "name": "Bathroom",
+              "date-created": 1519903296421,
+              "theme": "themeIndia",
+              "currentGame": { "attemptCount": 15, "successCount": 15 },
+              "scores": [
+                {
+                  "date": 1520895600000,
+                  "score": 89
+                },
+                {
+                  "date": 1521068400000,
+                  "score": 95
+                }
+              ],
+              "items": [
+                {
+                  "id": "i_030",
+                  "side1": "bathroom",
+                  "side2": "das Badezimmer(-)",
+                  "level": 0
+                },
+                {
+                  "id": "i_031",
+                  "side1": "bathtub",
+                  "side2": "die Badewanne(n)",
+                  "level": 2
+                },
+                {
+                  "id": "i_032",
+                  "side1": "conditioner",
+                  "side2": "die Haarspülung(en)",
+                  "level": 0
+                },
+                {
+                  "id": "i_033",
+                  "side1": "drain",
+                  "side2": "das Abflussrohr(e)",
+                  "level": 1
+                },
+                {
+                  "id": "i_034",
+                  "side1": "mirror",
+                  "side2": "der Spiegel(-)",
+                  "level": 1
+                },
+                {
+                  "id": "i_035",
+                  "side1": "pipe",
+                  "side2": "das Rohr(e)",
+                  "level": 3
+                },
+                {
+                  "id": "i_036",
+                  "side1": "shampoo",
+                  "side2": "das Shampoo(s)",
+                  "level": 2
+                },
+                {
+                  "id": "i_037",
+                  "side1": "shower",
+                  "side2": "die Dusche(n)",
+                  "level": 0
+                },
+                {
+                  "id": "i_038",
+                  "side1": "sink",
+                  "side2": "das Waschbecken(-)",
+                  "level": 1
+                },
+                {
+                  "id": "i_039",
+                  "side1": "soap",
+                  "side2": "die Seife(n)",
+                  "level": 0
+                },
+                {
+                  "id": "i_040",
+                  "side1": "tap",
+                  "side2": "der Wasserhahn(ä,e)",
+                  "level": 2
+                },
+                {
+                  "id": "i_041",
+                  "side1": "tile",
+                  "side2": "die Fliese(n)",
+                  "level": 2
+                },
+                {
+                  "id": "i_042",
+                  "side1": "toilet",
+                  "side2": "die Toilette(n)",
+                  "level": 1
+                },
+                {
+                  "id": "i_043",
+                  "side1": "towel",
+                  "side2": "das Handtuch(ü,r)",
+                  "level": 0
+                }
+              ]
+            },
+            {
+              "id": "l_002",
+              "folderId": "f_001",
+              "name": "Time Periods",
+              "date-created": 1519903296421,
+              "theme": "themeOcean",
+              "scores": null,
+              "currentGame": { "attemptCount": 0, "successCount": 0 },
+              "items": [
+                {
+                  "id": "i_071",
+                  "side1": "time",
+                  "side2": "die Zeit(en)",
+                  "level": 0
+                },
+                {
+                  "id": "i_072",
+                  "side1": "hour",
+                  "side2": "die Stunde(n)",
+                  "level": 0
+                },
+                {
+                  "id": "i_073",
+                  "side1": "minute",
+                  "side2": "die Minute(n)",
+                  "level": 0
+                },
+                {
+                  "id": "i_074",
+                  "side1": "second",
+                  "side2": "die Sekunde(n)",
+                  "level": 0
+                },
+                {
+                  "id": "i_075",
+                  "side1": "at five(o'clock)",
+                  "side2": "um fünf(Uhr)",
+                  "level": 0
+                },
+                {
+                  "id": "i_076",
+                  "side1": "earlier",
+                  "side2": "früher",
+                  "level": 0
+                },
+                {
+                  "id": "i_077",
+                  "side1": "later",
+                  "side2": "später",
+                  "level": 0
+                },
+                { "id": "i_078", "side1": "soon", "side2": "bald", "level": 0 },
+                { "id": "i_079", "side1": "now", "side2": "jetzt", "level": 0 },
+                {
+                  "id": "i_080",
+                  "side1": "tomorrow",
+                  "side2": "morgen",
+                  "level": 0
+                },
+                {
+                  "id": "i_081",
+                  "side1": "today",
+                  "side2": "heute",
+                  "level": 0
+                },
+                {
+                  "id": "i_082",
+                  "side1": "yesterday",
+                  "side2": "gestern",
+                  "level": 0
+                },
+                {
+                  "id": "i_083",
+                  "side1": "always",
+                  "side2": "immer",
+                  "level": 0
+                },
+                { "id": "i_084", "side1": "never", "side2": "nie", "level": 0 },
+                {
+                  "id": "i_085",
+                  "side1": "What time is it?",
+                  "side2": "Wieviel Uhr ist es?",
+                  "level": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "f_002",
+          "name": "Misc",
+          "lists": [
+            {
+              "id": "l_003",
+              "folderId": "f_002",
+              "name": "Quick List",
+              "date-created": 1519903296421,
+              "theme": "themeTropical",
+              "currentGame": { "attemptCount": 0, "successCount": 0 },
+              "scores": [
+                {
+                  "date": 1519945200000,
+                  "score": 100
+                }
+              ],
+              "items": [
+                {
+                  "id": "i_000",
+                  "side1": "animal",
+                  "side2": "das Tier(e)",
+                  "level": 0
+                },
+                {
+                  "id": "i_001",
+                  "side1": "bear",
+                  "side2": "der Bär(en)",
+                  "level": 0
+                },
+                {
+                  "id": "i_002",
+                  "side1": "bird",
+                  "side2": "der Vogel(ö)",
+                  "level": 0
+                },
+                {
+                  "id": "i_003",
+                  "side1": "cat",
+                  "side2": "die Katze(n)",
+                  "level": 0
+                },
+                {
+                  "id": "i_004",
+                  "side1": "cow",
+                  "side2": "die Kuh(ü,e)",
+                  "level": 0
+                },
+                {
+                  "id": "i_005",
+                  "side1": "deer",
+                  "side2": "der Hirsch(en)",
+                  "level": 0
+                }
+              ]
+            },
+            {
+              "id": "l_004",
+              "folderId": "f_002",
+              "name": "Quicker List",
+              "date-created": 1515711600000,
+              "theme": "themeOcean",
+              "currentGame": { "attemptCount": 0, "successCount": 0 },
+              "scores": [
+                {
+                  "date": 1515711600000,
+                  "score": 100
+                }
+              ],
+              "items": [
+                {
+                  "id": "i_093",
+                  "side1": "cat",
+                  "side2": "die Katze(n)",
+                  "level": 2
+                },
+                {
+                  "id": "i_094",
+                  "side1": "cow",
+                  "side2": "die Kuh(ü,e)",
+                  "level": 2
+                },
+                {
+                  "id": "i_095",
+                  "side1": "deer",
+                  "side2": "der Hirsch(en)",
+                  "level": 3
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
