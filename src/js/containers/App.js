@@ -17,17 +17,14 @@ import ListCt from "./ListCt";
 import ListScoreCt from "./ListScoreCt";
 import FlashGameCt from "./FlashGameCt";
 import FlashCardsCt from "./FlashCardsCt";
-import SidebarThemesCt from "./SidebarThemesCt";
-import SidebarProfileCt from "./SidebarProfileCt";
-import SidebarLookupCt from "./SidebarLookupCt";
-import SidebarHelpCt from "./SidebarHelpCt";
+import SidebarCt from "./SidebarCt";
 import { translateTheme } from "../util/themes";
 import styled from "styled-components";
 import { LightenDarkenColor } from "../util";
 
 const SidebarHeaderCt = styled.div`
   width: 100%;
-  background: ${props => LightenDarkenColor(props.theme.bg, 30)};
+  background: ${props => LightenDarkenColor(props.theme.bg, 20)};
   text-align: left;
   font-size: 16px;
   padding: 15px;
@@ -76,75 +73,15 @@ class App extends Component {
       </div>
     );
 
-    const SideBarHeader = props => {
-      return (
-        <SidebarHeaderCt>
-          <BtnSubtle
-            style={{ float: "right", padding: "0px" }}
-            onClick={this.handleSidebarClose}
-            color={LightenDarkenColor(this.props.theme.bg, 100)}
-          >
-            <span className="ion-close-round" />
-          </BtnSubtle>
-          {props.header}
-        </SidebarHeaderCt>
-      );
-    };
-
-    const ThemeSideBar = (
-      <div key="sbThemes">
-        <SideBarStyle className="tFromRight">
-          <PanelContent>
-            <SideBarHeader header="Themes" />
-            <SidebarThemesCt handleSidebarClose={this.handleSidebarClose} />
-          </PanelContent>
-        </SideBarStyle>
-      </div>
-    );
-
-    const ProfileSideBar = (
-      <div key="sbProfile">
-        <SideBarStyle className="tFromRight">
-          <PanelContent>
-            <SideBarHeader header="My Lists" />
-            <SidebarProfileCt handleSidebarClose={this.handleSidebarClose} />
-          </PanelContent>
-        </SideBarStyle>
-      </div>
-    );
-
-    const LookupSideBar = (
-      <div key="sbLookup">
-        <SideBarStyle className="tFromRight">
-          <PanelContent>
-            <SideBarHeader header="Dictionary Lookup" />
-            <SidebarLookupCt handleSidebarClose={this.handleSidebarClose} />
-          </PanelContent>
-        </SideBarStyle>
-      </div>
-    );
-    const HelpSideBar = (
-      <div key="sbHelp">
-        <SideBarStyle className="tFromRight">
-          <PanelContent>
-            <SideBarHeader header="How it Works" />
-            <SidebarHelpCt handleSidebarClose={this.handleSidebarClose} />
-          </PanelContent>
-        </SideBarStyle>
-      </div>
-    );
-
     let sideBar = null;
     let bgPage = PageOne;
 
-    if (this.props.sideBarState === "themes") {
-      sideBar = ThemeSideBar;
-    } else if (this.props.sideBarState === "profile") {
-      sideBar = ProfileSideBar;
-    } else if (this.props.sideBarState === "lookup") {
-      sideBar = LookupSideBar;
-    } else if (this.props.sideBarState === "help") {
-      sideBar = HelpSideBar;
+    if (this.props.sideBarState) {
+      sideBar = (
+        <div key="sbAll">
+          <SidebarCt />
+        </div>
+      );
     }
 
     if (!this.props.playState) {

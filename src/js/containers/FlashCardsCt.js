@@ -120,7 +120,7 @@ class FlashCardsCt extends Component {
     return this.props.activeSide === "side1" ? "side2" : "side1";
   };
   checkGameCompleted = items => {
-    return items.every(i => i.level === 3) ? true : false;
+    return items.every(i => i.level === this.props.gameLevels) ? true : false;
   };
   checkIfLastItem = (items, currItem) => {
     const rest = [];
@@ -129,15 +129,15 @@ class FlashCardsCt extends Component {
         rest.push(el);
       }
     });
-    return rest.every(i => i.level === 3) ? true : false;
+    return rest.every(i => i.level === this.props.gameLevels) ? true : false;
   };
   handleSetItem = () => {
     const { items } = this.props.list;
-    const { currItem } = this.props;
+    const { currItem, gameLevels } = this.props;
     const randomNo = Math.floor(Math.random() * items.length);
     const nextItem = items[randomNo];
     const last = this.checkIfLastItem(items, currItem);
-    if (nextItem.level < 3) {
+    if (nextItem.level < gameLevels) {
       if (currItem.id === nextItem.id && !last) {
         this.handleSetItem();
       } else {
@@ -363,7 +363,8 @@ function mapStateToProps(store) {
     ansText: store.game.ansText,
     itemComplete: store.game.itemComplete,
     gameComplete: store.game.gameComplete,
-    theme: translateTheme(store.user.theme)
+    theme: translateTheme(store.user.theme),
+    gameLevels: store.user.gameLevels
   };
 }
 

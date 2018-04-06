@@ -25,6 +25,27 @@ export function addList(folderId, property, value) {
 export function deleteList(listId) {
   return { type: types.DELETE_LIST, listId };
 }
+export function setList(listId) {
+  return { type: types.SET_LIST, listId };
+}
+export function updateList(listId, property, value) {
+  return { type: types.UPDATE_LIST, listId, property, value };
+}
+export function setTheme(theme) {
+  return { type: types.SET_THEME, theme };
+}
+export function addItem() {
+  return { type: types.ADD_ITEM };
+}
+export function setListItemQuery(searchVal) {
+  return { type: types.SET_LIST_ITEM_QUERY, searchVal };
+}
+export function setGameLevels(levels) {
+  return { type: types.SET_GAME_LEVELS, levels };
+}
+export function setGraphTimeframe(start, end) {
+  return { type: types.SET_GRAPH_TIMEFRAME, start, end };
+}
 
 // Layout
 export function setSidebarState(sideBarState) {
@@ -44,25 +65,6 @@ export function setActiveSideState(activeSideState) {
     type: types.SET_ACTIVESIDE_STATE,
     activeSideState
   };
-}
-// List
-export function setList(listId) {
-  return { type: types.SET_LIST, listId };
-}
-export function updateList(listId, property, value) {
-  return { type: types.UPDATE_LIST, listId, property, value };
-}
-export function setTheme(theme) {
-  return { type: types.SET_THEME, theme };
-}
-export function addItem() {
-  return { type: types.ADD_ITEM };
-}
-export function setListItemQuery(searchVal) {
-  return { type: types.SET_LIST_ITEM_QUERY, searchVal };
-}
-export function setGraphTimeframe(start, end) {
-  return { type: types.SET_GRAPH_TIMEFRAME, start, end };
 }
 
 // Game

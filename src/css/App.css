@@ -19,7 +19,7 @@ button:focus {
 /* Side Bar Transitions */
 
 .slideInFromRight-enter .tFromRight {
-  transform: translate(400px, 0);
+  transform: translate(350px, 0);
 }
 .slideInFromRight-enter.slideInFromRight-enter-active .tFromRight {
   transform: translate(0, 0);
@@ -29,30 +29,30 @@ button:focus {
   transform: translate(0, 0);
 }
 .slideInFromRight-leave.slideInFromRight-leave-active .tFromRight {
-  transform: translate(400px, 0);
+  transform: translate(350px, 0);
   transition: transform 300ms ease-in;
 }
 
 /* END Side Bar Transitions */
 
-/* Side Bar LARGE Transitions */
+/* Side Bar Transitions */
 
-.slideInFromRight-enter .tFromRightLarge {
-  transform: translate(500px, 0);
+.fadeIn-enter .tFadeIn {
+  opacity: 0;
 }
-.slideInFromRight-enter.slideInFromRight-enter-active .tFromRightLarge {
-  transform: translate(0, 0);
-  transition: transform 300ms ease-in;
+.fadeIn-enter.fadeIn-enter-active .tFadeIn {
+  opacity: 1;
+  transition: opacity 200ms ease-in;
 }
-.slideInFromRight-leave .tFromRightLarge {
-  transform: translate(0, 0);
+.fadeIn-leave .tFadeIn {
+  opacity: 1;
 }
-.slideInFromRight-leave.slideInFromRight-leave-active .tFromRightLarge {
-  transform: translate(500px, 0);
-  transition: transform 300ms ease-in;
+.fadeIn-leave.fadeIn-leave-active .tFadeIn {
+  opacity: 0;
+  transition: opacity 200ms ease-in;
 }
 
-/* END Side Bar LARGE Transitions */
+/* END Side Bar Transitions */
 
 /* Back Panel Transitions */
 

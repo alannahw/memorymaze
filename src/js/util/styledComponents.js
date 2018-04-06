@@ -16,7 +16,7 @@ export const BackPanel = styled.div`
 `;
 export const SideBarStyle = styled.div`
   transition: background 0.1s;
-  width: 400px;
+  width: 350px;
   height: 100vh;
   max-height: 100vh;
   position: absolute;

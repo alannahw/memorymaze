@@ -49,6 +49,13 @@ const NavIconHelp = BtnNav.extend`
     content: "\f143";
   }
 `;
+const NavIconSettings = BtnNav.extend`
+  &::after {
+    font-size: 18px;
+    font-family: "Ionicons";
+    content: "\f13d";
+  }
+`;
 const BtnNavTheme = BtnNav.extend`
   color: transparent;
   padding: 0;
@@ -79,6 +86,12 @@ class NavCt extends Component {
     const { sideBarState, userData, playState } = this.props;
     const menu = (
       <MenuCt>
+        <NavIconSettings
+          name="settings"
+          active={sideBarState === "settings" ? true : false}
+          onClick={this.handleSideBarToggle}
+        />
+        |
         <NavIconHelp
           name="help"
           active={sideBarState === "help" ? true : false}

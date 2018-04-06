@@ -7,6 +7,7 @@ export const EDIT_FOLDER_NAME = "EDIT_FOLDER_NAME";
 export const DELETE_FOLDER = "DELETE_FOLDER";
 export const ADD_LIST = "ADD_LIST";
 export const DELETE_LIST = "DELETE_LIST";
+export const SET_GAME_LEVELS = "SET_GAME_LEVELS";
 export const SET_GRAPH_TIMEFRAME = "SET_GRAPH_TIMEFRAME";
 
 export const SET_THEME = "SET_THEME";

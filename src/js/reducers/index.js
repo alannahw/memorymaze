@@ -17,7 +17,8 @@ function user(
     folderQuery: "",
     listItemQuery: "",
     theme: "themeIndia",
-    graph: { start: 0, end: 30 }
+    graph: { start: 0, end: 30 },
+    gameLevels: 4
   },
   action
 ) {
@@ -27,6 +28,7 @@ function user(
       case types.SET_USER_DATA: {
         draft.userData = action.userData;
         draft.currentListId = action.userData.folders[0].lists[0].id;
+        draft.gameLevels = action.userData.settings.gameLevels;
         return;
       }
       case types.SET_FOLDERS: {
@@ -105,6 +107,11 @@ function user(
       }
       case types.SET_LIST_ITEM_QUERY: {
         draft.listItemQuery = action.searchVal;
+        return;
+      }
+      case types.SET_GAME_LEVELS: {
+        console.log(action.levels);
+        draft.gameLevels = action.levels;
         return;
       }
       case types.SET_GRAPH_TIMEFRAME: {

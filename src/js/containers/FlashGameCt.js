@@ -1,16 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { setListTitle } from "../actions";
 import { translateTheme } from "../util/themes";
 import { XYPlot, ArcSeries, GradientDefs } from "react-vis";
 import { findListInFolders, LightenDarkenColor } from "../util";
 import { FlexBox } from "../util/styledComponents";
 import styled from "styled-components";
+import SVGCircles from "../components/SVGCircles";
 
 const outerRadius = 200;
-const innerRadius = 100;
-const levels = 3;
-const segmentSize = (outerRadius - innerRadius) / levels;
+const innerRadius = 90;
 
 const GraphCt = styled.div`
   position: relative;
@@ -51,18 +49,6 @@ const Total = styled.div`
       : LightenDarkenColor(props.theme.bg2, props.theme.scheme + 40)};
 `;
 
-const BgCircle = props => {
-  return (
-    <circle
-      cx={outerRadius}
-      cy={outerRadius}
-      r={props.radius}
-      stroke={LightenDarkenColor(props.theme.bg2, 25)}
-      fill="transparent"
-      strokeWidth="1"
-    />
-  );
-};
 class FlashGameCt extends Component {
   constructor() {
     super();
@@ -71,8 +57,17 @@ class FlashGameCt extends Component {
     };
   }
 
+  getSegmentSize = () => {
+    let levels = 3;
+    if (this.props.gameLevels) {
+      levels = this.props.gameLevels;
+    }
+    return (outerRadius - innerRadius) / levels;
+  };
+
   setGraphData = items => {
     const dataCount = items.length;
+    const size = this.getSegmentSize();
     let graphData = this.state.graphData;
     if (graphData.length > 0) {
       graphData = [];
@@ -82,7 +77,7 @@ class FlashGameCt extends Component {
         angle0: i * 2 * Math.PI / dataCount,
         angle: (i + 1) * 2 * Math.PI / dataCount,
         radius0: innerRadius - 1,
-        radius: innerRadius + item.level * segmentSize,
+        radius: innerRadius + item.level * size,
         color: i
       });
     });
@@ -90,28 +85,30 @@ class FlashGameCt extends Component {
   };
   updateGraphData = items => {
     let graphData = [];
+    const size = this.getSegmentSize();
     items.forEach((item, i) => {
       graphData.push({
         ...this.state.graphData[i],
-        radius: innerRadius + item.level * segmentSize
+        radius: innerRadius + item.level * size
       });
     });
     this.setState({ graphData: graphData });
   };
 
   getCompletedNumber = () => {
-    const { list } = this.props;
-    const completed = list.items.filter(i => i.level === 3);
+    const { list, gameLevels } = this.props;
+    const completed = list.items.filter(i => i.level === gameLevels);
     return completed.length;
   };
   checkIfLastItem = (items, currItem) => {
+    const { gameLevels } = this.props;
     const rest = [];
     items.forEach((el, i) => {
       if (el.id !== currItem.id) {
         rest.push(el);
       }
     });
-    return rest.every(i => i.level === 3) ? true : false;
+    return rest.every(i => i.level === gameLevels) ? true : false;
   };
   componentWillReceiveProps(nextProps) {
     this.updateGraphData(nextProps.list.items);
@@ -122,7 +119,7 @@ class FlashGameCt extends Component {
   }
   render() {
     const { graphData } = this.state;
-    const { theme, list } = this.props;
+    const { theme, list, gameLevels } = this.props;
     const firstCompleted = this.getCompletedNumber() > 0;
     const allCompleted = this.getCompletedNumber() === list.items.length;
     const Gradient = <GradientDefs>{theme.gradient}</GradientDefs>;
@@ -131,16 +128,13 @@ class FlashGameCt extends Component {
       <FlexBox>
         <GraphCt>
           <GraphPos>
-            <svg
-              width={outerRadius * 2}
-              height={outerRadius * 2}
-              version="1.1"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <BgCircle radius={segmentSize + innerRadius} theme={theme} />
-              <BgCircle radius={segmentSize * 2 + innerRadius} theme={theme} />
-              <BgCircle radius={segmentSize * 3 + innerRadius} theme={theme} />
-            </svg>
+            <SVGCircles
+              levels={gameLevels}
+              theme={theme}
+              innerRadius={innerRadius}
+              outerRadius={outerRadius}
+              segmentSize={this.getSegmentSize()}
+            />
           </GraphPos>
           <GraphPos>
             <XYPlot
@@ -152,7 +146,7 @@ class FlashGameCt extends Component {
               {Gradient}
               <ArcSeries
                 animation
-                center={{ x: -0.45, y: -0.45 }}
+                center={{ x: -0.42, y: -0.42 }}
                 data={graphData}
                 radiusType={"literal"}
                 color={"url(#myGradient)"}
@@ -179,7 +173,8 @@ function mapStateToProps(store) {
       store.user.userData.folders,
       store.user.currentListId
     ),
-    theme: translateTheme(store.user.theme)
+    theme: translateTheme(store.user.theme),
+    gameLevels: store.user.gameLevels
   };
 }
 

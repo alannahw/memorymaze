@@ -5,6 +5,9 @@
       "name": "Ella McCoy",
       "email": "ellamccoy@mccoy.com",
       "password": "password",
+      "settings": {
+        "gameLevels": 4
+      },
       "folders": [
         {
           "id": "f_001",
