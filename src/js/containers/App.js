@@ -10,7 +10,6 @@ import {
   BackPanelLeft,
   BackPanelRight,
   PanelContent,
-  SideBarToolBar,
   SideBarLarge
 } from "../util/styledComponents.js";
 import NavCt from "./NavCt";
@@ -21,7 +20,20 @@ import FlashCardsCt from "./FlashCardsCt";
 import SidebarThemesCt from "./SidebarThemesCt";
 import SidebarProfileCt from "./SidebarProfileCt";
 import SidebarLookupCt from "./SidebarLookupCt";
+import SidebarHelpCt from "./SidebarHelpCt";
 import { translateTheme } from "../util/themes";
+import styled from "styled-components";
+import { LightenDarkenColor } from "../util";
+
+const SidebarHeaderCt = styled.div`
+  width: 100%;
+  background: ${props => LightenDarkenColor(props.theme.bg, 30)};
+  text-align: left;
+  font-size: 16px;
+  padding: 15px;
+  box-sizing: border-box;
+  color: ${props => LightenDarkenColor(props.theme.main, 15)};
+`;
 
 class App extends Component {
   componentDidMount() {
@@ -64,19 +76,27 @@ class App extends Component {
       </div>
     );
 
-    const sideBarClose = (
-      <SideBarToolBar>
-        <BtnSubtle onClick={this.handleSidebarClose} color={"#888"}>
-          <span className="ion-close-round" />
-        </BtnSubtle>
-      </SideBarToolBar>
-    );
+    const SideBarHeader = props => {
+      return (
+        <SidebarHeaderCt>
+          <BtnSubtle
+            style={{ float: "right", padding: "0px" }}
+            onClick={this.handleSidebarClose}
+            color={LightenDarkenColor(this.props.theme.bg, 100)}
+          >
+            <span className="ion-close-round" />
+          </BtnSubtle>
+          {props.header}
+        </SidebarHeaderCt>
+      );
+    };
 
     const ThemeSideBar = (
       <div key="sbThemes">
         <SideBarStyle className="tFromRight">
           <PanelContent>
-            <SidebarThemesCt />
+            <SideBarHeader header="Themes" />
+            <SidebarThemesCt handleSidebarClose={this.handleSidebarClose} />
           </PanelContent>
         </SideBarStyle>
       </div>
@@ -86,7 +106,8 @@ class App extends Component {
       <div key="sbProfile">
         <SideBarStyle className="tFromRight">
           <PanelContent>
-            <SidebarProfileCt />
+            <SideBarHeader header="My Lists" />
+            <SidebarProfileCt handleSidebarClose={this.handleSidebarClose} />
           </PanelContent>
         </SideBarStyle>
       </div>
@@ -96,7 +117,8 @@ class App extends Component {
       <div key="sbLookup">
         <SideBarStyle className="tFromRight">
           <PanelContent>
-            <SidebarLookupCt />
+            <SideBarHeader header="Dictionary Lookup" />
+            <SidebarLookupCt handleSidebarClose={this.handleSidebarClose} />
           </PanelContent>
         </SideBarStyle>
       </div>
@@ -104,7 +126,10 @@ class App extends Component {
     const HelpSideBar = (
       <div key="sbHelp">
         <SideBarStyle className="tFromRight">
-          <PanelContent>How it Works</PanelContent>
+          <PanelContent>
+            <SideBarHeader header="How it Works" />
+            <SidebarHelpCt handleSidebarClose={this.handleSidebarClose} />
+          </PanelContent>
         </SideBarStyle>
       </div>
     );
@@ -129,7 +154,7 @@ class App extends Component {
     }
     return (
       <div className="App">
-        <ThemeProvider theme={translateTheme(this.props.theme)}>
+        <ThemeProvider theme={this.props.theme}>
           <div>
             <NavCt />
 
@@ -161,7 +186,7 @@ class App extends Component {
 function mapStateToProps(store) {
   return {
     userData: store.user.userData,
-    theme: store.user.theme,
+    theme: translateTheme(store.user.theme),
     sideBarState: store.layout.sideBarState,
     playState: store.game.playState
   };

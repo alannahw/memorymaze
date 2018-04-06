@@ -20,8 +20,8 @@ class SidebarLookupCt extends Component {
 
   render() {
     return (
-      <div>
-        <div>Dictionary Lookup</div>
+      <div style={{ padding: "20px" }}>
+        <div>Dictionary Lookup is not available on the demo version.</div>
       </div>
     );
   }

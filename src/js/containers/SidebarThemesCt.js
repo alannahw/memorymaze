@@ -5,34 +5,34 @@ import { setTheme, updateList } from "../actions";
 import { LightenDarkenColor } from "../util";
 import { ALL_THEMES } from "../util/themes.js";
 
-const rightAlign = {
-  textAlign: "right",
-  padding: "15px 25px"
-};
 const ThemeBtnCt = styled.div`
   position: relative;
-  width: 75%;
+  width: 90%;
   margin: auto;
-  text-align: right;
-  height: 80px;
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.5);
+  box-sizing: border-box;
 `;
 const ThemeBtn = styled.div`
+  transition: color 0.3s;
+  color: ${props => LightenDarkenColor(props.theme.bg, 100)};
   cursor: pointer;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  padding: 45px 0 0;
+  text-align: left;
+  display: inline-block;
+  width: 40%;
+  padding: 10px 0;
+  box-sizing: border-box;
+  &:hover {
+    color: ${props => LightenDarkenColor(props.theme.bg, 160)};
+  }
 `;
 const ColorMainDiv = styled.div`
   display: inline-block;
-  width: 40%;
-  height: 40px;
+  width: 30%;
+  height: 20px;
   background-color: ${props => props.bgColor};
 `;
 const ColorSubDiv = ColorMainDiv.extend`
-  width: 20%;
+  width: 10%;
   background-color: ${props => props.bgColor};
 `;
 
@@ -44,18 +44,17 @@ class SidebarThemesCt extends Component {
 
   render() {
     return (
-      <div>
-        <div style={rightAlign}>Themes</div>
+      <div style={{ paddingTop: "20px" }}>
         {ALL_THEMES.map(t => (
           <div key={t.id}>
             <ThemeBtnCt>
+              <ThemeBtn onClick={() => this.handleSetTheme(t.id)}>
+                {t.name}
+              </ThemeBtn>
               <ColorMainDiv bgColor={t.main} />
               <ColorSubDiv bgColor={t.second} />
               <ColorSubDiv bgColor={t.third} />
               <ColorSubDiv bgColor={LightenDarkenColor(t.bg, 15)} />
-              <ThemeBtn onClick={() => this.handleSetTheme(t.id)}>
-                {t.name}
-              </ThemeBtn>
             </ThemeBtnCt>
           </div>
         ))}

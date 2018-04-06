@@ -30,35 +30,26 @@ class SidebarProfileCt extends Component {
     const trashBtnColor = this.props.removeBtnState ? "#ccc" : "#888";
 
     return (
-      <div>
-        <Collapsible classParentString="accordianMain" trigger="Profile">
-          <p>Information relating to the profile.</p>
-        </Collapsible>
-        <Collapsible
-          classParentString="accordianMain"
-          trigger="Lists"
-          open={true}
-        >
-          <div style={toolBar}>
-            <div style={toolBtns}>
-              <BtnSubtle onClick={this.handleAddFolder}>
-                <span className="ion-plus-round" />
-              </BtnSubtle>
-              <BtnSubtle
-                color={trashBtnColor}
-                onClick={this.handleRemoveBtnClass}
-              >
-                <span className="ion-trash-a" />
-              </BtnSubtle>
-            </div>
+      <div style={{ padding: "20px" }}>
+        <div style={toolBar}>
+          <div style={toolBtns}>
+            <BtnSubtle onClick={this.handleAddFolder}>
+              <span className="ion-plus-round" />
+            </BtnSubtle>
+            <BtnSubtle
+              color={trashBtnColor}
+              onClick={this.handleRemoveBtnClass}
+            >
+              <span className="ion-trash-a" />
+            </BtnSubtle>
           </div>
-          <SearchBar
-            handleSearch={this.handleSearchFolders}
-            queryVal={this.props.folderQuery}
-            color="bg"
-          />
-          <FoldersCt removeBtns={this.props.removeBtnState} />
-        </Collapsible>
+        </div>
+        <SearchBar
+          handleSearch={this.handleSearchFolders}
+          queryVal={this.props.folderQuery}
+          color="bg"
+        />
+        <FoldersCt removeBtns={this.props.removeBtnState} />
       </div>
     );
   }

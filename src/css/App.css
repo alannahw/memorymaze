@@ -19,7 +19,7 @@ button:focus {
 /* Side Bar Transitions */
 
 .slideInFromRight-enter .tFromRight {
-  transform: translate(300px, 0);
+  transform: translate(400px, 0);
 }
 .slideInFromRight-enter.slideInFromRight-enter-active .tFromRight {
   transform: translate(0, 0);
@@ -29,7 +29,7 @@ button:focus {
   transform: translate(0, 0);
 }
 .slideInFromRight-leave.slideInFromRight-leave-active .tFromRight {
-  transform: translate(300px, 0);
+  transform: translate(400px, 0);
   transition: transform 300ms ease-in;
 }
 
@@ -128,7 +128,9 @@ button:focus {
   display: block;
   text-decoration: none;
   position: relative;
-  padding: 18px 5px;
+  min-height: 35px;
+  padding: 10px 0px;
+  box-sizing: border-box;
 }
 .accordianSub__trigger:after {
   font-family: "Ionicons";
@@ -150,6 +152,7 @@ button:focus {
   text-align: left;
   padding: 0px;
   padding-bottom: 10px;
+  color: rgba(255, 255, 255, 1);
 }
 .accordianSub input {
   position: absolute;

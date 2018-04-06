@@ -2,6 +2,10 @@ import styled from "styled-components";
 import { LightenDarkenColor } from "../util";
 import Textarea from "react-textarea-autosize";
 
+export const Link = styled.a`
+  cursor: pointer;
+  color: ${props => props.theme.mainMiddle};
+`;
 export const BackPanel = styled.div`
   transition: background 0.1s;
   width: 50vw;
@@ -12,7 +16,7 @@ export const BackPanel = styled.div`
 `;
 export const SideBarStyle = styled.div`
   transition: background 0.1s;
-  width: 300px;
+  width: 400px;
   height: 100vh;
   max-height: 100vh;
   position: absolute;
@@ -135,11 +139,6 @@ export const PanelContent = styled.div`
   padding-top: 50px;
   box-sizing: border-box;
   height: 100%;
-`;
-export const SideBarToolBar = styled.div`
-  width: 100%;
-  text-align: right;
-  background: ${props => LightenDarkenColor(props.theme.bg, -5)};
 `;
 export const RelativeCt = styled.div`
   position: relative;
