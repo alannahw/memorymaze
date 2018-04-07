@@ -92,7 +92,7 @@ class SidebarHelpCt extends Component {
           </Collapsible>
           <Collapsible
             classParentString="accordianSub"
-            trigger="How do I know which side will be tested?"
+            trigger="How do I change the side to be tested on?"
           >
             <p>
               Select which column you would like to be tested on with the
@@ -109,6 +109,30 @@ class SidebarHelpCt extends Component {
               word that already exists in one of your lists. You can search
               through individual lists by using the search bar on the bottom
               toolbar on the main page.
+            </p>
+          </Collapsible>
+          <Collapsible
+            classParentString="accordianSub"
+            trigger="Can I download my Lists?"
+          >
+            <p>
+              Download individual Lists in CSV format by clicking on the down
+              arrow button on the lower toolbar underneath the list.
+            </p>
+          </Collapsible>
+          <Collapsible
+            classParentString="accordianSub"
+            trigger="Can I upload my own Lists?"
+          >
+            <p>
+              You can upload a CSV file containing your own list by clicking on
+              the up arrow button on the lower toolbar at the bottom of the main
+              page. The items in the CSV file should be in double quotation
+              marks separated by a comma, and a new line separating each row. Eg{" "}
+            </p>
+            <p>
+              “book”, “das Buch”<br />
+              “library”, “die Bibliothek”
             </p>
           </Collapsible>
         </Collapsible>

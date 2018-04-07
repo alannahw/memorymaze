@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { LightenDarkenColor } from "../util";
 import styled from "styled-components";
 import { BtnSubtle } from "../util/styledComponents.js";
+import ReactFileReader from "react-file-reader";
 import SearchBar from "./SearchBar";
+import { CSVLink } from "react-csv";
 
 const ListToolbar = styled.div`
   position: absolute;
@@ -32,6 +34,7 @@ const IconBtn = BtnSubtle.extend`
 
 class ListPageToolbar extends Component {
   render() {
+    const { list, handleCSVUpload } = this.props;
     return (
       <ListToolbar>
         <SearchBarCt>
@@ -40,12 +43,24 @@ class ListPageToolbar extends Component {
             queryVal={this.props.queryVal}
           />
         </SearchBarCt>
-        <IconBtn>
-          <span className="ion-arrow-up-c" />
-        </IconBtn>
-        <IconBtn>
-          <span className="ion-arrow-down-c" />
-        </IconBtn>
+
+        <CSVLink
+          filename={`${list.name}.csv`}
+          data={list.items}
+          headers={["side1", "side2"]}
+        >
+          <IconBtn>
+            <span className="ion-arrow-down-c" />
+          </IconBtn>
+        </CSVLink>
+
+        <div style={{ float: "right" }}>
+          <ReactFileReader handleFiles={handleCSVUpload} fileTypes={".csv"}>
+            <IconBtn>
+              <span className="ion-arrow-up-c" />
+            </IconBtn>
+          </ReactFileReader>
+        </div>
       </ListToolbar>
     );
   }

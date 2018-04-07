@@ -110,7 +110,6 @@ function user(
         return;
       }
       case types.SET_GAME_LEVELS: {
-        console.log(action.levels);
         draft.gameLevels = action.levels;
         return;
       }
@@ -131,16 +130,24 @@ function layout(
   },
   action
 ) {
-  switch (action.type) {
-    case types.SET_SIDEBAR_STATE:
-      return { ...state, sideBarState: action.sideBarState };
-    case types.SET_REMOVEBTN_STATE:
-      return { ...state, removeBtnState: action.removeBtnState };
-    case types.SET_ACTIVESIDE_STATE: {
-      return { ...state, activeSideState: action.activeSideState };
+  // produces draft of current state and outputs next immutable state
+  return produce(state, draft => {
+    switch (action.type) {
+      case types.SET_SIDEBAR_STATE: {
+        draft.sideBarState = action.sideBarState;
+        return;
+      }
+      case types.SET_REMOVEBTN_STATE: {
+        draft.removeBtnState = action.removeBtnState;
+        return;
+      }
+      case types.SET_ACTIVESIDE_STATE: {
+        draft.activeSideState = action.activeSideState;
+        return;
+      }
     }
-  }
-  return state;
+  });
+  //return state;
 }
 
 function game(
@@ -153,19 +160,36 @@ function game(
   },
   action
 ) {
-  switch (action.type) {
-    case types.SET_PLAY_STATE:
-      return { ...state, playState: action.playState };
-    case types.SET_CURRENT_ITEM:
-      return { ...state, currItem: action.currItem };
-    case types.UPDATE_ANSWER_INPUT_TEXT:
-      return { ...state, ansText: action.text };
-    case types.SET_ITEM_COMPLETE_STATE:
-      return { ...state, itemComplete: action.itemComplete };
-    case types.SET_GAME_COMPLETE_STATE:
-      return { ...state, gameComplete: action.gameComplete };
-  }
-  return state;
+  // produces draft of current state and outputs next immutable state
+  return produce(state, draft => {
+    switch (action.type) {
+      case types.SET_PLAY_STATE: {
+        draft.playState = action.playState;
+        return;
+      }
+
+      case types.SET_CURRENT_ITEM: {
+        draft.currItem = action.currItem;
+        return;
+      }
+
+      case types.UPDATE_ANSWER_INPUT_TEXT: {
+        draft.ansText = action.text;
+        return;
+      }
+
+      case types.SET_ITEM_COMPLETE_STATE: {
+        draft.itemComplete = action.itemComplete;
+        return;
+      }
+
+      case types.SET_GAME_COMPLETE_STATE: {
+        draft.gameComplete = action.gameComplete;
+        return;
+      }
+    }
+  });
+  //return state;
 }
 
 // Combine Reducers

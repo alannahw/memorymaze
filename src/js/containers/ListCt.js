@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { updateList, setListItemQuery, setActiveSideState } from "../actions";
 import { EmptyListCt, FlexBox, BtnSubtle } from "../util/styledComponents.js";
+
 import {
   editItemPropertyInArray,
   deleteItemFromArray,
@@ -71,6 +72,25 @@ class ListCt extends PureComponent {
   handleToggleActiveSide = e => {
     this.props.dispatch(setActiveSideState(e.target.name));
   };
+
+  handleCSVUpload = fileList => {
+    const { currentListId } = this.props;
+    let items = [];
+    const Papa = require("papaparse/papaparse.min.js");
+    Papa.parse(fileList[0], {
+      header: true,
+      complete: res => {
+        res.data.forEach(d => {
+          items.push({
+            ...getDefaultItem(),
+            side1: d.side1,
+            side2: d.side2
+          });
+        });
+        this.props.dispatch(updateList(currentListId, "items", items));
+      }
+    });
+  };
   render() {
     const { list, listItemQuery } = this.props;
     const filteredItems = filterItems(listItemQuery, list.items);
@@ -108,6 +128,8 @@ class ListCt extends PureComponent {
             <ListPageToolbar
               handleSearch={this.handleSearchListItems}
               queryVal={this.props.listItemQuery}
+              list={list}
+              handleCSVUpload={this.handleCSVUpload}
             />
           </div>
         ) : (

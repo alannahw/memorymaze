@@ -34,7 +34,7 @@ const SidebarHeaderCt = styled.div`
 
 class App extends Component {
   componentDidMount() {
-    fetch("/exampleUser.json")
+    fetch("exampleUser.json")
       .then(response => response.json())
       .then(data => this.props.dispatch(setUserData(data.users[0])));
   }

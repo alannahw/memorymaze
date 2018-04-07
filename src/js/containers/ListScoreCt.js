@@ -2,9 +2,14 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import Example from "../components/ForgettingCurveGraph";
-import { BtnSubtle, BtnMain } from "../util/styledComponents";
+import { BtnSubtle, BtnMain, BtnInverted } from "../util/styledComponents";
 import { translateTheme } from "../util/themes";
-import { setGraphTimeframe, setPlayState, setSidebarState } from "../actions";
+import {
+  setGraphTimeframe,
+  setPlayState,
+  setSidebarState,
+  updateList
+} from "../actions";
 import {
   findListInFolders,
   LightenDarkenColor,
@@ -26,6 +31,19 @@ const GraphHeaderCt = styled.div`
   font-weight: 600;
   color: ${props => props.theme.mainSubtle};
   padding: 25px 0px;
+`;
+const HeaderDivider = styled.span`
+  font-weight: 200;
+  color: ${props => props.theme.mainSubtle};
+  padding: 0 15px;
+`;
+const ResetBtn = BtnSubtle.extend`
+  transition: color 0.3s;
+  color: ${props => LightenDarkenColor(props.theme.mainSubtle, 5)};
+  font-size: 12px;
+  &:hover {
+    color: ${props => LightenDarkenColor(props.theme.mainSubtle, 20)};
+  }
 `;
 const AxesFont = styled.span`
   font-weight: 600;
@@ -90,7 +108,17 @@ class ListScoreCt extends Component {
     this.props.dispatch(setPlayState(true));
     this.props.dispatch(setSidebarState(false));
   };
-
+  handleResetScores = () => {
+    const { list } = this.props;
+    const scores = null;
+    const msg =
+      "Do you really want to reset all your scores for List '" +
+      list.name +
+      "'?";
+    if (window.confirm(msg)) {
+      this.props.dispatch(updateList(list.id, "scores", scores));
+    }
+  };
   render() {
     const { list, theme, graph } = this.props;
     let noDataNote = "";
@@ -111,7 +139,10 @@ class ListScoreCt extends Component {
     }
     return (
       <div>
-        <GraphHeaderCt>Current Forgetting Curve</GraphHeaderCt>
+        <GraphHeaderCt>
+          Current Forgetting Curve <HeaderDivider>|</HeaderDivider>
+          <ResetBtn onClick={this.handleResetScores}>Reset Scores</ResetBtn>
+        </GraphHeaderCt>
         <GraphCt>
           <Example list={list} width={gWidth} theme={theme} graph={graph} />
           {noDataNote}
