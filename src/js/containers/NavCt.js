@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { setSidebarState } from "../actions";
+import { setSidebarState, addList } from "../actions";
 import styled from "styled-components";
 import { LightenDarkenColor } from "../util";
-import { BtnSubtle } from "../util/styledComponents.js";
+import { BtnSubtle, BtnInverted } from "../util/styledComponents.js";
 
 const TopNav = styled.div`
   text-align: left;
@@ -27,6 +27,11 @@ const Logo = styled.div`
   color: ${props => props.theme.main};
   padding: 15px 20px;
 `;
+const BtnNavInverted = BtnInverted.extend`
+  margin: 0;
+  font-size: 14px;
+  margin-left: 5px;
+`;
 const BtnNav = BtnSubtle.extend`
   padding: 2px 15px;
   vertical-align: middle;
@@ -34,6 +39,13 @@ const BtnNav = BtnSubtle.extend`
     props.active
       ? LightenDarkenColor(props.theme.mainMiddle, 40)
       : props.theme.mainMiddle};
+`;
+const NavIconList = BtnNav.extend`
+  &::after {
+    font-size: 18px;
+    font-family: "Ionicons";
+    content: "\f20d";
+  }
 `;
 const NavIconBook = BtnNav.extend`
   &::after {
@@ -81,6 +93,9 @@ class NavCt extends Component {
       this.props.sideBarState === e.target.name ? false : e.target.name;
     this.props.dispatch(setSidebarState(sideBar));
   };
+  handleAddList = () => {
+    this.props.dispatch(addList(this.props.folders[0].id));
+  };
 
   render() {
     const { sideBarState, userData, playState } = this.props;
@@ -112,13 +127,12 @@ class NavCt extends Component {
           .
         </BtnNavTheme>
         |
-        <BtnNav
+        <NavIconList
           name="profile"
           active={sideBarState === "profile" ? true : false}
           onClick={this.handleSideBarToggle}
-        >
-          {userData.name}
-        </BtnNav>
+        />
+        | <BtnNavInverted onClick={this.handleAddList}>New List</BtnNavInverted>
       </MenuCt>
     );
 
@@ -135,7 +149,8 @@ function mapStateToProps(store) {
   return {
     userData: store.user.userData,
     sideBarState: store.layout.sideBarState,
-    playState: store.game.playState
+    playState: store.game.playState,
+    folders: store.user.userData.folders
   };
 }
 
