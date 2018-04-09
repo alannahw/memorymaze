@@ -17,7 +17,7 @@ class Folder extends PureComponent {
   render() {
     const removeBtnClass = this.props.removeBtns ? "removeBtnClass" : "";
     const folderClass = `${removeBtnClass} accordianSub`;
-    const { folderName, folderId, lists, index } = this.props;
+    const { folderName, folderId, lists, index, currentListId } = this.props;
 
     return (
       <Drag dragId={folderId} index={index}>
@@ -32,6 +32,7 @@ class Folder extends PureComponent {
           >
             <Lists
               lists={lists}
+              currentListId={currentListId}
               handleSetList={this.props.handleSetList}
               handleListDelete={this.props.handleListDelete}
             />

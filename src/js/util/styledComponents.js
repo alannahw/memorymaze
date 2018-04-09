@@ -93,37 +93,6 @@ export const AddBtn = BtnSubtle.extend`
   }
 `;
 
-export const ListLink = BtnSubtle.extend`
-  color: #fff;
-  font-size: 0.9em;
-  text-align: left;
-  transition: color 0.25s;
-  position: relative;
-  &:hover {
-    color: ${props => props.theme.main};
-  }
-`;
-export const ListLinkCt = styled.div`
-  position: relative;
-  width: 100%;
-  &::after {
-    transition: right 0.3s;
-    position: absolute;
-    top: 6px;
-    right: 5px;
-    font-family: "Ionicons";
-    content: "\f21b";
-    color: transparent;
-    font-size: 21px;
-    height: 17px;
-    border-radius: 15px;
-    background: linear-gradient(
-      90deg,
-      ${props => props.grad1},
-      ${props => props.grad2}
-    );
-  }
-`;
 export const BtnTheme = styled.button`
   transition: background 0.1s;
   font-size: 1em;

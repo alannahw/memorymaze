@@ -8,7 +8,8 @@ import {
   setSuccessCount,
   updateList,
   setItemCompleteState,
-  setGameCompleteState
+  setGameCompleteState,
+  setActiveSideState
 } from "../actions";
 import {
   findListInFolders,
@@ -79,13 +80,13 @@ const CorrectAnswerCt = styled.div`
     LightenDarkenColor(props.theme.main, props.theme.scheme + 50)};
 `;
 const CompletedCt = styled.div`
-  font-size: 18px;
+  font-size: 16px;
   padding: 30px;
   color: ${props =>
     LightenDarkenColor(props.theme.second, props.theme.scheme + 10)};
 `;
 const ScoreCt = styled.div`
-  font-size: 24px;
+  font-size: 28px;
   padding: 15px;
   color: ${props => props.theme.third};
 `;
@@ -227,6 +228,11 @@ class FlashCardsCt extends Component {
     this.props.dispatch(setGameCompleteState(false));
     this.props.dispatch(setCurrentItem(items[0]));
   };
+  handleReviseOtherSide = () => {
+    const nextSide = this.props.activeSide === "side1" ? "side2" : "side1";
+    this.props.dispatch(setActiveSideState(nextSide));
+    this.handleResetGame();
+  };
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.itemComplete !== this.props.itemComplete) {
       this.ansInput.focus();
@@ -284,8 +290,15 @@ class FlashCardsCt extends Component {
     );
     const completedDisplay = (
       <CompletedCt>
-        Congrats, you finished with a score of
+        <p>Congrats, you finished with a score of</p>
         <ScoreCt>{score}%</ScoreCt>
+        <p>Would you like to revise the other side?</p>
+        <BtnSubtleToned tone={50} onClick={this.handlePlayState}>
+          Back to Main Page
+        </BtnSubtleToned>|
+        <BtnSubtleToned tone={90} onClick={this.handleReviseOtherSide}>
+          Revise other side
+        </BtnSubtleToned>
       </CompletedCt>
     );
     if (gameComplete) {

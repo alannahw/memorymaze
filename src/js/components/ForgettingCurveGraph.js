@@ -28,6 +28,11 @@ const ScoreMarker = MyMarker.extend`
 `;
 class Example extends React.Component {
   getDummyCurves = () => {
+    const dashedLine = {
+      fill: "none",
+      stroke: LightenDarkenColor(this.props.theme.bg, 60),
+      strokeWidth: 1
+    };
     const { theme } = this.props;
     const { start, end } = this.props.graph;
     const stats = getScoreStats(this.props.list);
@@ -45,6 +50,13 @@ class Example extends React.Component {
               strokeWidth: 1
             }}
             curve={"curveBasis"}
+          />
+        );
+        series.push(
+          <LineSeries
+            data={[{ x: num, y: 0 }, { x: num, y: 1 }]}
+            strokeStyle="dashed"
+            style={dashedLine}
           />
         );
       }
@@ -96,23 +108,39 @@ class Example extends React.Component {
     );
   };
   getOldScores = () => {
+    const dashedLine = {
+      fill: "none",
+      stroke: LightenDarkenColor(this.props.theme.bg, 60),
+      strokeWidth: 1
+    };
     const stats = getScoreStats(this.props.list);
+    let oldScores = [];
     let oldScoresData = [];
+    let oldScoresLines = [];
     stats.scores.forEach((s, i) => {
       const startDay = (s.date - stats.earliest) / 86400000;
       oldScoresData.push({
         x: startDay,
         y: 1 //s.score / 100
       });
+      oldScoresLines.push(
+        <LineSeries
+          data={[{ x: startDay, y: 0 }, { x: startDay, y: 1 }]}
+          strokeStyle="dashed"
+          style={dashedLine}
+        />
+      );
     });
-    return (
+    oldScores = [
+      oldScoresLines,
       <MarkSeries
         key={`oldScores`}
         color={this.props.theme.mainMiddle}
         size={6}
         data={oldScoresData}
       />
-    );
+    ];
+    return oldScores;
   };
   getCurrentPosition = () => {
     const { start, end } = this.props.graph;
@@ -230,8 +258,6 @@ class Example extends React.Component {
     };
     const { graph, width } = this.props;
     const xTickVals = [graph.start, graph.end];
-    // graph.start === 0 ? [0, 1, 2, 7, 18, 30] :
-
     return (
       <XYPlot
         animation

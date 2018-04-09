@@ -62,7 +62,7 @@ const GraphNoData = styled.div`
   position: absolute;
   top: 100px;
   text-align: center;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.5em;
   width: 100%;
   color: ${props => LightenDarkenColor(props.theme.bg, 50)};
@@ -145,7 +145,6 @@ class ListScoreCt extends Component {
         </GraphHeaderCt>
         <GraphCt>
           <Example list={list} width={gWidth} theme={theme} graph={graph} />
-          {noDataNote}
         </GraphCt>
         <div>
           <AxesBtn disabled={BackBtnDisabled} onClick={this.handleGraphBack}>

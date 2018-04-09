@@ -90,7 +90,7 @@ class FoldersCt extends PureComponent {
     }
   };
   render() {
-    const { filteredFolders } = this.props;
+    const { filteredFolders, currentListId } = this.props;
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
         <div>
@@ -103,6 +103,7 @@ class FoldersCt extends PureComponent {
                   folderId={f.id}
                   folderName={f.name}
                   lists={f.lists}
+                  currentListId={currentListId}
                   handleFolderNameChange={this.handleFolderNameChange}
                   handleFolderDelete={this.handleFolderDelete}
                   handleListDelete={this.handleListDelete}
@@ -121,6 +122,7 @@ class FoldersCt extends PureComponent {
 
 function mapStateToProps(store) {
   return {
+    currentListId: store.user.currentListId,
     folders: store.user.userData.folders,
     folderQuery: store.user.folderQuery,
     filteredFolders: filterLists(
