@@ -82,10 +82,24 @@ export function editItemPropertyInArray(array, id, property, value) {
   });
   return newArray;
 }
-export function findListInFolders(folderArray, listId) {
-  if (folderArray) {
+export function findFolder(folders, listId) {
+  if (folders) {
+    let folder = [];
+    folders.forEach(f => {
+      const match = f.lists.find(l => l.id === listId);
+      if (match) {
+        folder = f;
+      }
+    });
+    if (folder) {
+      return folder;
+    }
+  }
+}
+export function findListInFolders(folders, listId) {
+  if (folders) {
     let list = {};
-    folderArray.forEach(f => {
+    folders.forEach(f => {
       const match = f.lists.find(l => l.id === listId);
       if (match) {
         list = match;

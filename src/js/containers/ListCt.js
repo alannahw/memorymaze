@@ -1,38 +1,62 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
-import { updateList, setListItemQuery, setActiveSideState } from "../actions";
+import {
+  updateList,
+  setListItemQuery,
+  setActiveSideState,
+  setFolders
+} from "../actions";
 import { EmptyListCt, FlexBox, BtnSubtle } from "../util/styledComponents.js";
 
 import {
   editItemPropertyInArray,
   deleteItemFromArray,
   getDefaultItem,
+  findFolder,
   findListInFolders,
   filterItems,
-  LightenDarkenColor
+  LightenDarkenColor,
+  reorderMap
 } from "../util";
 import Table from "../components/Table";
 import ListPageToolbar from "../components/ListPageToolbar";
-
+import DropdownMenu from "../components/DropdownMenu";
 import styled from "styled-components";
 import Textarea from "react-textarea-autosize";
 
-const ListTitleCt = styled.div`
+const TitleCt = styled.div`
   box-sizing: border-box;
   transition: background 0.1s;
-  padding: 20px 0;
+  padding: 15px 0 12px;
   width: 100%;
   background: ${props => props.theme.second};
 `;
+const FolderTitle = styled.div`
+  display: inline-block;
+  vertical-align: top;
+  transition: color 0.1s;
+  font-size: 16px;
+  font-weight: 200;
+  text-align: center;
+  padding-bottom: 5px;
+  box-sizing: border-box;
+  color: ${props =>
+    props.theme.scheme === "+" ? props.theme.main : props.theme.bg};
+`;
 const ListTitleInput = styled(Textarea)`
+  display: inline-block;
   transition: color 0.1s;
   resize: none;
-  width: 100%;
+  width: inherit;
   text-align: center;
   font-weight: 600;
   background: none;
-  border: none;
+  box-sizing: border-box;
   font-size: 21px;
+  border-style: solid;
+  border-width: 0 0 0 1px;
+  border-color: ${props =>
+    props.theme.scheme === "+" ? props.theme.main : props.theme.bg};
   color: ${props =>
     props.theme.scheme === "+" ? props.theme.main : props.theme.bg};
   &::placeholder {
@@ -72,6 +96,14 @@ class ListCt extends PureComponent {
   handleToggleActiveSide = e => {
     this.props.dispatch(setActiveSideState(e.target.name));
   };
+  changeFolder = nextFolder => {
+    const { folder, folders, list } = this.props;
+    const listIndex = folder.lists.indexOf(list);
+    const source = { droppableId: folder.id, index: listIndex };
+    const destination = { droppableId: nextFolder.id, index: 0 };
+    const reordered = reorderMap(folders, source, destination);
+    this.props.dispatch(setFolders(reordered));
+  };
 
   handleCSVUpload = fileList => {
     const { currentListId } = this.props;
@@ -92,7 +124,7 @@ class ListCt extends PureComponent {
     });
   };
   render() {
-    const { list, listItemQuery } = this.props;
+    const { list, listItemQuery, folder, folders } = this.props;
     const filteredItems = filterItems(listItemQuery, list.items);
     const FullHeightStyle = { height: "100%" };
     const ListCtStyle = {
@@ -106,13 +138,21 @@ class ListCt extends PureComponent {
         {list.items ? (
           <div style={FullHeightStyle}>
             <div style={ListCtStyle}>
-              <ListTitleCt>
+              <TitleCt>
+                <FolderTitle>
+                  <DropdownMenu
+                    menuTitle={folder.name}
+                    items={folders}
+                    handleOnClick={this.changeFolder}
+                    activeItemId={folder.id}
+                  />{" "}
+                </FolderTitle>
                 <ListTitleInput
                   value={list.name}
                   placeholder="Title"
                   onChange={this.handleListNameChange}
                 />
-              </ListTitleCt>
+              </TitleCt>
 
               <FlexBox ignore="125px">
                 <Table
@@ -148,6 +188,8 @@ class ListCt extends PureComponent {
 function mapStateToProps(store) {
   return {
     currentListId: store.user.currentListId,
+    folders: store.user.userData.folders,
+    folder: findFolder(store.user.userData.folders, store.user.currentListId),
     list: findListInFolders(
       store.user.userData.folders,
       store.user.currentListId
