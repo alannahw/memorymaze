@@ -30,17 +30,6 @@ class SidebarCt extends Component {
   handleSidebarClose = () => {
     this.props.dispatch(setSidebarState(false));
   };
-  // handleClickOutside = e => {
-  //   if (this.wrapperRef && !this.wrapperRef.contains(e.target)) {
-  //     this.handleSidebarClose();
-  //   }
-  // };
-  // componentDidMount() {
-  //   document.addEventListener("mousedown", this.handleClickOutside);
-  // }
-  // componentWillUnmount() {
-  //   document.removeEventListener("mousedown", this.handleClickOutside);
-  // }
 
   render() {
     const SideBarHeader = props => {
@@ -106,12 +95,7 @@ class SidebarCt extends Component {
     }
 
     return (
-      <SideBarStyle
-        innerRef={el => {
-          this.wrapperRef = el;
-        }}
-        className="tFromRight"
-      >
+      <SideBarStyle className="tFromRight">
         <PanelContent>{sideBar}</PanelContent>
       </SideBarStyle>
     );

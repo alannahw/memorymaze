@@ -1,6 +1,6 @@
 ## Summary
 
-You can see a demo of the app here: [DEMO]
+You can see a demo of the app here: [DEMO](https://alannahw.github.io/memorymaze/)
 
 Memory Maze is a flashcard app which combines Ebbinghaus' theory on memory loss
 over time, with Leitner's set repetition to maximise study efficiency.

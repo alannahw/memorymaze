@@ -5,13 +5,8 @@ import { setTheme, updateList } from "../actions";
 import { LightenDarkenColor } from "../util";
 import { ALL_THEMES } from "../util/themes.js";
 
-const ThemeBtn = styled.div`
-  cursor: pointer;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  padding: 45px 0 0;
-`;
+const ThemeBtn = styled.div``;
+
 class SidebarLookupCt extends Component {
   handleSetTheme = id => {
     this.props.dispatch(setTheme(id));
@@ -21,7 +16,9 @@ class SidebarLookupCt extends Component {
   render() {
     return (
       <div style={{ padding: "20px" }}>
-        <div>Dictionary Lookup is not available on the demo version.</div>
+        <div style={{ fontSize: "14px", opacity: "0.6" }}>
+          Dictionary Lookup is not available on the demo version.
+        </div>
       </div>
     );
   }

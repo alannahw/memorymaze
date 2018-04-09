@@ -33,15 +33,28 @@ const SidebarHeaderCt = styled.div`
 `;
 
 class App extends Component {
+  handleSidebarClose = () => {
+    this.props.dispatch(setSidebarState(false));
+  };
+  handleClickOutsideSidebar = e => {
+    if (
+      this.sideBarEl &&
+      this.navEl &&
+      !this.sideBarEl.contains(e.target) &&
+      !this.navEl.contains(e.target)
+    ) {
+      this.handleSidebarClose();
+    }
+  };
   componentDidMount() {
     fetch("exampleUser.json")
       .then(response => response.json())
       .then(data => this.props.dispatch(setUserData(data.users[0])));
+    document.addEventListener("mousedown", this.handleClickOutsideSidebar);
   }
-
-  handleSidebarClose = () => {
-    this.props.dispatch(setSidebarState(false));
-  };
+  componentWillUnmount() {
+    document.removeEventListener("mousedown", this.handleClickOutsideSidebar);
+  }
 
   render() {
     const PageOne = (
@@ -78,7 +91,7 @@ class App extends Component {
 
     if (this.props.sideBarState) {
       sideBar = (
-        <div key="sbAll">
+        <div key="sbAll" ref={el => (this.sideBarEl = el)}>
           <SidebarCt />
         </div>
       );
@@ -93,7 +106,9 @@ class App extends Component {
       <div className="App">
         <ThemeProvider theme={this.props.theme}>
           <div>
-            <NavCt />
+            <div ref={el => (this.navEl = el)}>
+              <NavCt />
+            </div>
 
             <div>
               <CSSTransitionGroup
