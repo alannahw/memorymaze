@@ -8,7 +8,7 @@ export const Link = styled.a`
 `;
 export const BackPanel = styled.div`
   transition: background 0.1s;
-  width: 50vw;
+  width: 50%;
   height: 100vh;
   position: absolute;
   overflow-x: hidden;

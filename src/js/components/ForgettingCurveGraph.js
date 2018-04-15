@@ -54,6 +54,7 @@ class Example extends React.Component {
         );
         series.push(
           <LineSeries
+            key={`${i}_pastVLines_dummy`}
             data={[{ x: num, y: 0 }, { x: num, y: 1 }]}
             strokeStyle="dashed"
             style={dashedLine}
@@ -125,6 +126,7 @@ class Example extends React.Component {
       });
       oldScoresLines.push(
         <LineSeries
+          key={`${i}_pastVLines`}
           data={[{ x: startDay, y: 0 }, { x: startDay, y: 1 }]}
           strokeStyle="dashed"
           style={dashedLine}

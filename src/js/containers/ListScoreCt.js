@@ -91,8 +91,10 @@ const PlayBtnStyle = BtnMain.extend`
 class ListScoreCt extends Component {
   handleGraphForward = () => {
     const stats = getScoreStats(this.props.list);
+
     const { start, end } = this.props.graph;
-    if (start + 30 > stats.totalDays) {
+    const nextRev = stats.nextRevisionDay + stats.currCurveDay;
+    if (start + 30 > stats.totalDays && start + 30 > nextRev) {
       return;
     } else {
       this.props.dispatch(setGraphTimeframe(start + 30, end + 30));
@@ -128,7 +130,10 @@ class ListScoreCt extends Component {
     const emptyList = removeEmptyItems(list)[0] ? false : true;
     const stats = getScoreStats(list);
     const totalDays = stats ? stats.totalDays : 0;
-    const ForwardBtnDisabled = graph.start + 30 > totalDays ? true : false;
+    const nextRev = stats ? stats.nextRevisionDay + stats.currCurveDay : 0;
+    console.log(nextRev);
+    const ForwardBtnDisabled =
+      graph.end > totalDays && graph.end > nextRev ? true : false;
     const BackBtnDisabled = graph.start > 0 ? false : true;
     const daysTill = getNextRevisionDate(list);
 

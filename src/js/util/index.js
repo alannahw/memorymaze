@@ -282,6 +282,7 @@ export function getScoreStats(list) {
     return {
       scores: scores,
       earliest: earliest,
+
       strength: strength,
       latest: latest,
       today: today,

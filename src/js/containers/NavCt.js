@@ -10,6 +10,7 @@ const TopNav = styled.div`
   position: absolute;
   top: 0;
   width: 100vw;
+  min-width: 960px;
   height: 50px;
   background: ${props => props.theme.bg};
   color: #fff;

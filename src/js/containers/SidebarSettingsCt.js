@@ -28,6 +28,7 @@ class SidebarSettingsCt extends Component {
     for (let i = 3; i <= 5; i++) {
       btns.push(
         <PillBtn
+          key={`${i}_gamelevelsettings`}
           active={this.props.gameLevels === i}
           onClick={() => this.handleSetGameLevels(i)}
         >
