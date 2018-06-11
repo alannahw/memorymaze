@@ -17,16 +17,16 @@
               "id": "l_001",
               "folderId": "f_001",
               "name": "Bathroom",
-              "date-created": 1527804000000,
+              "date-created": 1528495200000,
               "theme": "themeIndia",
               "currentGame": { "attemptCount": 15, "successCount": 15 },
               "scores": [
                 {
-                  "date": 1527804000000,
+                  "date": 1528495200000,
                   "score": 89
                 },
                 {
-                  "date": 1527976800000,
+                  "date": 1528668000000,
                   "score": 95
                 }
               ],
@@ -121,8 +121,8 @@
               "id": "l_002",
               "folderId": "f_001",
               "name": "Time Periods",
-              "date-created": 1527804000000,
-              "theme": "themeOcean",
+              "date-created": 1528668000000,
+              "theme": "themePlain",
               "scores": null,
               "currentGame": { "attemptCount": 0, "successCount": 0 },
               "items": [
@@ -213,12 +213,12 @@
               "id": "l_003",
               "folderId": "f_002",
               "name": "Quick List",
-              "date-created": 1527804000000,
-              "theme": "themeTropical",
+              "date-created": 1528668000000,
+              "theme": "themePlain",
               "currentGame": { "attemptCount": 0, "successCount": 0 },
               "scores": [
                 {
-                  "date": 1527804000000,
+                  "date": 1528668000000,
                   "score": 100
                 }
               ],
@@ -265,12 +265,12 @@
               "id": "l_004",
               "folderId": "f_002",
               "name": "Quicker List",
-              "date-created": 1527804000000,
-              "theme": "themeOcean",
+              "date-created": 1528668000000,
+              "theme": "themePlain",
               "currentGame": { "attemptCount": 0, "successCount": 0 },
               "scores": [
                 {
-                  "date": 1527804000000,
+                  "date": 1528668000000,
                   "score": 100
                 }
               ],
